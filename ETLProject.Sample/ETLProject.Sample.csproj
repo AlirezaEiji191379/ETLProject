@@ -7,4 +7,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ETLProject.Common\ETLProject.Common.csproj" />
+    <ProjectReference Include="..\ETLProject.DataAccess\ETLProject.DataSource.Access.csproj" />
+    <ProjectReference Include="..\ETLProject.DataSource.Query\ETLProject.DataSource.Query.csproj" />
+    <ProjectReference Include="..\ETLProject.Pipeline\ETLProject.Pipeline.csproj" />
+  </ItemGroup>
+
 </Project>
