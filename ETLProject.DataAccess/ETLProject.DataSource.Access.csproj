@@ -10,4 +10,10 @@
     <ProjectReference Include="..\ETLProject.Common\ETLProject.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DataSourceReading\" />
+    <Folder Include="DataSourceInserting\" />
+    <Folder Include="Abstractions\" />
+  </ItemGroup>
+
 </Project>
