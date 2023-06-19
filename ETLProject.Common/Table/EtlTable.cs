@@ -2,7 +2,7 @@
 
 namespace ETLProject.Common.Table
 {
-    public class Table
+    public class ETLTable
     {
         public DataSourceType DataSourceType { get; set; }
         public TableType TableType { get; set; }
