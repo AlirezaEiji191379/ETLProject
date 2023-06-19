@@ -12,8 +12,6 @@
 
   <ItemGroup>
     <Folder Include="DataSourceReading\" />
-    <Folder Include="DataSourceInserting\" />
-    <Folder Include="Abstractions\" />
   </ItemGroup>
 
 </Project>
