@@ -1,6 +1,6 @@
 ﻿namespace ETLProject.Common.Database.DBConnection
 {
-    public class DatabaseConnection
+    public class DatabaseConnectionParameters
     {
         public string Host { get; set; }
         public string Port { get; set; }

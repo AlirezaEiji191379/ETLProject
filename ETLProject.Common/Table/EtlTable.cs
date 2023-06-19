@@ -9,6 +9,6 @@ namespace ETLProject.Common.Table
         public TableType TableType { get; set; }
         public List<Column> Columns { get; set; }
         public string TableName { get; set; }
-        public DatabaseConnection DatabaseConnection { get; set; }
+        public DatabaseConnectionParameters DatabaseConnection { get; set; }
     }
 }

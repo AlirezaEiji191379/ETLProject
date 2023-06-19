@@ -6,6 +6,6 @@ namespace ETLProject.Common.Abstractions
     internal interface IConnectionStringFactory
     {
         DataSourceType DataSourceType { get; }
-        string GetConnectionString(DatabaseConnection databaseConnection);
+        string GetConnectionString(DatabaseConnectionParameters databaseConnection);
     }
 }

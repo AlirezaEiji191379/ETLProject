@@ -26,7 +26,7 @@ namespace ETLProject.Common.Database.DBConnection.Providers
             }
         }
 
-        public string GetConnectionString(DatabaseConnection databaseConnection)
+        public string GetConnectionString(DatabaseConnectionParameters databaseConnection)
         {
             return _connectionStringCreatorsByDatabaseType[databaseConnection.DataSourceType].GetConnectionString(databaseConnection);
         }

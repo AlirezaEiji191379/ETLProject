@@ -4,6 +4,6 @@ namespace ETLProject.Common.Abstractions
 {
     public interface IConnectionStringProvider
     {
-        string GetConnectionString(DatabaseConnection databaseConnection);
+        string GetConnectionString(DatabaseConnectionParameters databaseConnection);
     }
 }
