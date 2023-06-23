@@ -3,7 +3,7 @@ using System.Data;
 
 namespace ETLProject.DataSource.Query.Abstractions
 {
-    public interface IDbConnectionProvider
+    internal interface IDbConnectionProvider
     {
         IDbConnection GetConnection(DatabaseConnectionParameters databaseConnection);
     }

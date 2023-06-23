@@ -2,7 +2,7 @@
 
 namespace ETLProject.DataSource.Query.Abstractions
 {
-    public interface IQueryCompilerProvider
+    internal interface IQueryCompilerProvider
     {
         SqlKata.Compilers.Compiler GetCompiler(DataSourceType dataSourceType);
     }
