@@ -23,7 +23,8 @@ namespace ETLProject.DataSource.DataSourceReading
         {
             using var queryFactory = _queryFactoryProvider.GetQueryFactory(etlTable);
             var tableName = _tableNameProvider.GetTableName(etlTable);
-            var query = new Query(tableName);
+            var columnString = string.Join(",",etlTable.Columns.Select(x => x.Name));
+            var query = new Query(tableName).Select(columnString);
 
 
 
