@@ -5,6 +5,6 @@ namespace ETLProject.DataSource.Query.Abstractions
 {
     public interface IDataBaseBulkReader
     {
-        DataTable ReadData(ETLTable etlTable);
+        DataTable ReadDataInBulk(ETLTable etlTable);
     }
 }

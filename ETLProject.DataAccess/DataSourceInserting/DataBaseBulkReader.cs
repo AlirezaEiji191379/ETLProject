@@ -6,7 +6,7 @@ namespace ETLProject.DataSource.Query.DataSourceInserting
 {
     internal class DataBaseBulkReader : IDataBaseBulkReader
     {
-        public DataTable ReadData(ETLTable etlTable)
+        public DataTable ReadDataInBulk(ETLTable etlTable)
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,5 @@
 ﻿using ETLProject.Common.Abstractions;
+using ETLProject.Common.Compiler;
 using ETLProject.Common.Database.DBConnection.Providers;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,6 +16,7 @@ namespace ETLProject.Common.Common.DIManager
             services.AddSingleton<IConnectionStringFactory,PostgresqlConnectionStringFactory>();
 
             services.AddSingleton<IConnectionStringProvider,ConnectionStringProvider>();
+            services.AddSingleton<ICompilerFactoryProvider, CompilerFactoryProvider>();
 
         }
 
