@@ -2,9 +2,9 @@
 using ETLProject.Common.Database;
 using SqlKata.Compilers;
 
-namespace ETLProject.Common.Compiler.Factorties
+namespace ETLProject.Common.Database.Compiler.Factorties
 {
-    internal class SqlServerCompilerFactory : ICompilerFactory
+    internal class SqlServerCompilerFactory : IQueryCompilerFactory
     {
         public DataSourceType DataSourceType => DataSourceType.SQLServer;
 

@@ -1,5 +1,5 @@
 ﻿using ETLProject.Common.Abstractions;
-using ETLProject.Common.Compiler;
+using ETLProject.Common.Database.Compiler;
 using ETLProject.Common.Database.DBConnection.Providers;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,12 +11,12 @@ namespace ETLProject.Common.Common.DIManager
         {
             services.AddSingleton<IRandomStringGenerator,RandomStringGenerator>();
 
-            services.AddSingleton<IConnectionStringFactory,SqlServerConnectionStringFactory>();
-            services.AddSingleton<IConnectionStringFactory,MySqlConnectionStringFactory>();
-            services.AddSingleton<IConnectionStringFactory,PostgresqlConnectionStringFactory>();
+            services.AddSingleton<IDbConnectionFactory,SqlServerConnectionFactory>();
+            services.AddSingleton<IDbConnectionFactory,MySqlConnectionFactory>();
+            services.AddSingleton<IDbConnectionFactory,PostgresqlConnectionFactory>();
 
-            services.AddSingleton<IConnectionStringProvider,ConnectionStringProvider>();
-            services.AddSingleton<ICompilerFactoryProvider, CompilerFactoryProvider>();
+            services.AddSingleton<IDbConnectionProvider,DbConnectionProvider>();
+            services.AddSingleton<IQueryCompilerProvider, CompilerFactoryProvider>();
 
         }
 

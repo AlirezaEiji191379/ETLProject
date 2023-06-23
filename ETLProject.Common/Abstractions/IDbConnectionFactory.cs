@@ -1,11 +1,12 @@
 ﻿using ETLProject.Common.Database;
 using ETLProject.Common.Database.DBConnection;
+using System.Data;
 
 namespace ETLProject.Common.Abstractions
 {
-    internal interface IConnectionStringFactory
+    internal interface IDbConnectionFactory
     {
         DataSourceType DataSourceType { get; }
-        string GetConnectionString(DatabaseConnectionParameters databaseConnection);
+        IDbConnection GetConnection(DatabaseConnectionParameters databaseConnection);
     }
 }

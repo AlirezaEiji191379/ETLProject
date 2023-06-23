@@ -2,9 +2,9 @@
 using ETLProject.Common.Database;
 using SqlKata.Compilers;
 
-namespace ETLProject.Common.Compiler.Factorties
+namespace ETLProject.Common.Database.Compiler.Factorties
 {
-    internal class MySqlCompilerFactory : ICompilerFactory
+    internal class MySqlCompilerFactory : IQueryCompilerFactory
     {
         public DataSourceType DataSourceType => DataSourceType.MySql;
 

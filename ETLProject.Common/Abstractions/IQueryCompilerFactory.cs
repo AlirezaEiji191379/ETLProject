@@ -2,7 +2,7 @@
 
 namespace ETLProject.Common.Abstractions
 {
-    public interface ICompilerFactory
+    internal interface IQueryCompilerFactory
     {
         DataSourceType DataSourceType { get; }
         SqlKata.Compilers.Compiler CreateCompiler();

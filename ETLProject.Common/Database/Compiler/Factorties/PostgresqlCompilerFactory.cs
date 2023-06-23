@@ -3,9 +3,9 @@ using ETLProject.Common.Database;
 using SqlKata.Compilers;
 
 
-namespace ETLProject.Common.Compiler.Factorties
+namespace ETLProject.Common.Database.Compiler.Factorties
 {
-    internal class PostgresqlCompilerFactory : ICompilerFactory
+    internal class PostgresqlCompilerFactory : IQueryCompilerFactory
     {
         public DataSourceType DataSourceType => DataSourceType.Postgresql;
 
