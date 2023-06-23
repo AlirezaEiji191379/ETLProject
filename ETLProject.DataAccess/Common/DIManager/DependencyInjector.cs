@@ -1,20 +1,20 @@
 ﻿using ETLProject.DataSource.Query.Abstractions;
-using ETLProject.DataSource.Query.Common.Providers;
-using ETLProject.DataSource.Query.Common.Providers.Compiler;
-using ETLProject.DataSource.Query.Common.Providers.DbConnection;
-using ETLProject.DataSource.Query.Common.Utilities;
-using ETLProject.DataSource.Query.DataSourceInserting;
+using ETLProject.DataSource.QueryManager.Common.Providers;
+using ETLProject.DataSource.QueryManager.Common.Providers.Compiler;
+using ETLProject.DataSource.QueryManager.Common.Providers.DbConnection;
+using ETLProject.DataSource.QueryManager.Common.Utilities;
+using ETLProject.DataSource.QueryManager.DataSourceReading;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ETLProject.DataSource.Query.Common.DIManager
+namespace ETLProject.DataSource.QueryManager.Common.DIManager
 {
     public static class DependencyInjector
     {
         public static void AddDataSourceQueryServices(this IServiceCollection services)
         {
 
-            services.AddTransient<IDataBaseBulkReader,DataBaseBulkReader>();
-            services.AddSingleton<IQueryFactoryProvider,QueryFactoryProvider>();
+            services.AddTransient<IDataBaseBulkReader, DataBaseBulkReader>();
+            services.AddSingleton<IQueryFactoryProvider, QueryFactoryProvider>();
 
             services.AddSingleton<ITableNameProvider, TableNameProvider>();
 

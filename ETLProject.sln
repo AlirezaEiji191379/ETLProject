@@ -10,13 +10,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETLProject.DataSource.Query", "ETLProject.DataAccess\ETLProject.DataSource.Query.csproj", "{3103ACC7-55B8-4F61-B82E-DF111A03F436}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETLProject.DataSource.QueryManager", "ETLProject.DataAccess\ETLProject.DataSource.QueryManager.csproj", "{3103ACC7-55B8-4F61-B82E-DF111A03F436}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETLProject.Pipeline", "ETLProject.Pipeline\ETLProject.Pipeline.csproj", "{89E47583-68FE-488A-850C-C658D9FED59A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETLProject.Common", "ETLProject.Common\ETLProject.Common.csproj", "{DBB11A49-6AB2-4D67-80C5-FA601024CE71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETLProject.Sample", "ETLProject.Sample\ETLProject.Sample.csproj", "{A50432F5-5113-42E5-9A48-490021BDE7FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETLProject.Sample", "ETLProject.Sample\ETLProject.Sample.csproj", "{A50432F5-5113-42E5-9A48-490021BDE7FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

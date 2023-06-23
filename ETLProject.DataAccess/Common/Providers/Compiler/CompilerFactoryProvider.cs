@@ -1,8 +1,8 @@
 ﻿using ETLProject.Common.Database;
 using ETLProject.DataSource.Query.Abstractions;
-using ETLProject.DataSource.Query.Common.Assembly;
+using ETLProject.DataSource.QueryManager.Common.Assembly;
 
-namespace ETLProject.DataSource.Query.Common.Providers.Compiler
+namespace ETLProject.DataSource.QueryManager.Common.Providers.Compiler
 {
     internal class CompilerFactoryProvider : IQueryCompilerProvider
     {

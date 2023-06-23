@@ -3,7 +3,7 @@ using ETLProject.DataSource.Query.Abstractions;
 using MySql.Data.MySqlClient;
 using System.Data;
 
-namespace ETLProject.DataSource.Query.Common.Providers.DbConnection
+namespace ETLProject.DataSource.QueryManager.Common.Providers.DbConnection
 {
     internal class MySqlConnectionFactory : IDbConnectionFactory
     {

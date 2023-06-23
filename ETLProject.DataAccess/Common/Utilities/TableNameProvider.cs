@@ -2,7 +2,7 @@
 using ETLProject.DataSource.Query.Abstractions;
 using System.Text;
 
-namespace ETLProject.DataSource.Query.Common.Utilities
+namespace ETLProject.DataSource.QueryManager.Common.Utilities
 {
     internal class TableNameProvider : ITableNameProvider
     {

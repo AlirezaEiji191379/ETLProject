@@ -2,7 +2,7 @@
 using ETLProject.DataSource.Query.Abstractions;
 using SqlKata.Execution;
 
-namespace ETLProject.DataSource.Query.Common.Providers
+namespace ETLProject.DataSource.QueryManager.Common.Providers
 {
     internal class QueryFactoryProvider : IQueryFactoryProvider
     {

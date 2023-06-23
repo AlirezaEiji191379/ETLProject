@@ -3,7 +3,7 @@ using ETLProject.DataSource.Query.Abstractions;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace ETLProject.DataSource.Query.Common.Providers.DbConnection
+namespace ETLProject.DataSource.QueryManager.Common.Providers.DbConnection
 {
     internal class SqlServerConnectionFactory : IDbConnectionFactory
     {

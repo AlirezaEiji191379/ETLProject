@@ -1,5 +1,5 @@
 ﻿using ETLProject.Common.Table;
-using ETLProject.DataSource.Access.Common;
+using ETLProject.DataSource.QueryManager.Common;
 using System.Data;
 
 namespace ETLProject.DataSource.Query.Abstractions
