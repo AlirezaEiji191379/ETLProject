@@ -1,4 +1,4 @@
-﻿namespace ETLProject.DataSource.QueryManager.Common.Assembly
+﻿namespace ETLProject.DataSource.Common.Assembly
 {
     internal interface IAssemblyMarker
     {

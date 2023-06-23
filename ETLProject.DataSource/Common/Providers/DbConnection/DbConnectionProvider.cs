@@ -1,9 +1,9 @@
 ﻿using ETLProject.Common.Database;
-using ETLProject.DataSource.Query.Abstractions;
-using ETLProject.DataSource.QueryManager.Common.Assembly;
+using ETLProject.DataSource.Abstractions;
+using ETLProject.DataSource.Common.Assembly;
 using System.Data;
 
-namespace ETLProject.DataSource.QueryManager.Common.Providers.DbConnection
+namespace ETLProject.DataSource.Common.Providers.DbConnection
 {
     internal class DbConnectionProvider : IDbConnectionProvider
     {

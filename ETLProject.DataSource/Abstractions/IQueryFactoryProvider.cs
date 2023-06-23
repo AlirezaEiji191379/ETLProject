@@ -1,7 +1,7 @@
 ﻿using ETLProject.Common.Table;
 using SqlKata.Execution;
 
-namespace ETLProject.DataSource.Query.Abstractions
+namespace ETLProject.DataSource.Abstractions
 {
     internal interface IQueryFactoryProvider
     {

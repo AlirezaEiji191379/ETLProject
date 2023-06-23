@@ -1,4 +1,4 @@
-﻿namespace ETLProject.DataSource.QueryManager.Common
+﻿namespace ETLProject.DataSource.Common
 {
     public class BulkConfiguration
     {

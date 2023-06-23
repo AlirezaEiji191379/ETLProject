@@ -1,6 +1,6 @@
 ﻿using ETLProject.Common.Database;
 
-namespace ETLProject.DataSource.Query.Abstractions
+namespace ETLProject.DataSource.Abstractions
 {
     internal interface IQueryCompilerFactory
     {

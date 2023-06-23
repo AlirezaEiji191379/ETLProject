@@ -1,8 +1,8 @@
 ﻿using ETLProject.Common.Database;
-using ETLProject.DataSource.Query.Abstractions;
+using ETLProject.DataSource.Abstractions;
 using SqlKata.Compilers;
 
-namespace ETLProject.DataSource.QueryManager.Common.Providers.Compiler.Factorties
+namespace ETLProject.DataSource.Common.Providers.Compiler.Factorties
 {
     internal class SqlServerCompilerFactory : IQueryCompilerFactory
     {

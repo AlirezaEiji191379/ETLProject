@@ -1,8 +1,8 @@
 ﻿using ETLProject.Common.Table;
-using ETLProject.DataSource.Query.Abstractions;
+using ETLProject.DataSource.Abstractions;
 using SqlKata.Execution;
 
-namespace ETLProject.DataSource.QueryManager.Common.Providers
+namespace ETLProject.DataSource.Common.Providers
 {
     internal class QueryFactoryProvider : IQueryFactoryProvider
     {

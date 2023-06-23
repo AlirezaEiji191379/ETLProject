@@ -1,12 +1,12 @@
-﻿using ETLProject.DataSource.Query.Abstractions;
-using ETLProject.DataSource.QueryManager.Common.Providers;
-using ETLProject.DataSource.QueryManager.Common.Providers.Compiler;
-using ETLProject.DataSource.QueryManager.Common.Providers.DbConnection;
-using ETLProject.DataSource.QueryManager.Common.Utilities;
-using ETLProject.DataSource.QueryManager.DataSourceReading;
+﻿using ETLProject.DataSource.Abstractions;
+using ETLProject.DataSource.Common.Providers;
+using ETLProject.DataSource.Common.Providers.Compiler;
+using ETLProject.DataSource.Common.Providers.DbConnection;
+using ETLProject.DataSource.Common.Utilities;
+using ETLProject.DataSource.DataSourceReading;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ETLProject.DataSource.QueryManager.Common.DIManager
+namespace ETLProject.DataSource.Common.DIManager
 {
     public static class DependencyInjector
     {

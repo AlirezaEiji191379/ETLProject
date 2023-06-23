@@ -1,8 +1,8 @@
 ﻿using ETLProject.Common.Table;
-using ETLProject.DataSource.Query.Abstractions;
+using ETLProject.DataSource.Abstractions;
 using System.Text;
 
-namespace ETLProject.DataSource.QueryManager.Common.Utilities
+namespace ETLProject.DataSource.Common.Utilities
 {
     internal class TableNameProvider : ITableNameProvider
     {

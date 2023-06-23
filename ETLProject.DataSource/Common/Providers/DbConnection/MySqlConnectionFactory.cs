@@ -1,9 +1,9 @@
 ﻿using ETLProject.Common.Database;
-using ETLProject.DataSource.Query.Abstractions;
+using ETLProject.DataSource.Abstractions;
 using MySql.Data.MySqlClient;
 using System.Data;
 
-namespace ETLProject.DataSource.QueryManager.Common.Providers.DbConnection
+namespace ETLProject.DataSource.Common.Providers.DbConnection
 {
     internal class MySqlConnectionFactory : IDbConnectionFactory
     {

@@ -1,6 +1,6 @@
 ﻿using ETLProject.Common.Table;
 
-namespace ETLProject.DataSource.Query.Abstractions
+namespace ETLProject.DataSource.Abstractions
 {
     internal interface ITableNameProvider
     {
