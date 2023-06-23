@@ -23,7 +23,7 @@ namespace ETLProject.DataSource.QueryManager.DataSourceReading
         {
             using var queryFactory = _queryFactoryProvider.GetQueryFactory(etlTable);
             var tableName = _tableNameProvider.GetTableName(etlTable);
-            var query = new Query(tableName);
+            var query = new SqlKata.Query(tableName);
 
 
 
