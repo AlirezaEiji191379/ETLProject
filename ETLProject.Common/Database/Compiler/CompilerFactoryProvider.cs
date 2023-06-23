@@ -32,7 +32,7 @@ namespace ETLProject.Common.Database.Compiler
             return result;
         }
 
-        public SqlKata.Compilers.Compiler GetCompilerFactoryInstance(DataSourceType dataSourceType)
+        public SqlKata.Compilers.Compiler GetCompiler(DataSourceType dataSourceType)
         {
             return _compilerFactoryByDataSourceType[dataSourceType].CreateCompiler();
         }
