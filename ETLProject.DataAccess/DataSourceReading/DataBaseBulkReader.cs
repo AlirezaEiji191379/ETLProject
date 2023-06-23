@@ -1,10 +1,7 @@
-﻿using ETLProject.Common.Abstractions;
-using ETLProject.Common.Table;
+﻿using ETLProject.Common.Table;
 using ETLProject.DataSource.Access.Common;
 using ETLProject.DataSource.Query.Abstractions;
-using SqlKata.Execution;
 using System.Data;
-using System.Text;
 
 namespace ETLProject.DataSource.Query.DataSourceInserting
 {

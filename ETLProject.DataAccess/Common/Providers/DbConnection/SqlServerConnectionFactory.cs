@@ -1,8 +1,9 @@
-﻿using ETLProject.Common.Abstractions;
+﻿using ETLProject.Common.Database;
+using ETLProject.DataSource.Query.Abstractions;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace ETLProject.Common.Database.DBConnection.Providers
+namespace ETLProject.DataSource.Query.Common.Providers.DbConnection
 {
     internal class SqlServerConnectionFactory : IDbConnectionFactory
     {

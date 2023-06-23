@@ -1,8 +1,9 @@
-﻿using ETLProject.Common.Abstractions;
+﻿using ETLProject.Common.Database;
+using ETLProject.DataSource.Query.Abstractions;
 using Npgsql;
 using System.Data;
 
-namespace ETLProject.Common.Database.DBConnection.Providers
+namespace ETLProject.DataSource.Query.Common.Providers.DbConnection
 {
     internal class PostgresqlConnectionFactory : IDbConnectionFactory
     {

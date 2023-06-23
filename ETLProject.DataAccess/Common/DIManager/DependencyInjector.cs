@@ -1,5 +1,7 @@
 ﻿using ETLProject.DataSource.Query.Abstractions;
 using ETLProject.DataSource.Query.Common.Providers;
+using ETLProject.DataSource.Query.Common.Providers.Compiler;
+using ETLProject.DataSource.Query.Common.Providers.DbConnection;
 using ETLProject.DataSource.Query.Common.Utilities;
 using ETLProject.DataSource.Query.DataSourceInserting;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +18,13 @@ namespace ETLProject.DataSource.Query.Common.DIManager
 
             services.AddSingleton<ITableNameProvider, TableNameProvider>();
 
+
+            services.AddSingleton<IDbConnectionFactory, SqlServerConnectionFactory>();
+            services.AddSingleton<IDbConnectionFactory, MySqlConnectionFactory>();
+            services.AddSingleton<IDbConnectionFactory, PostgresqlConnectionFactory>();
+
+            services.AddSingleton<IDbConnectionProvider, DbConnectionProvider>();
+            services.AddSingleton<IQueryCompilerProvider, CompilerFactoryProvider>();
         }
 
     }

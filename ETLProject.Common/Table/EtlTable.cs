@@ -1,5 +1,4 @@
 ﻿using ETLProject.Common.Database;
-using ETLProject.Common.Database.DBConnection;
 
 namespace ETLProject.Common.Table
 {

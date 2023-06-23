@@ -1,9 +1,9 @@
-﻿using ETLProject.Common.Abstractions;
-using ETLProject.Common.Database;
+﻿using ETLProject.Common.Database;
+using ETLProject.DataSource.Query.Abstractions;
 using SqlKata.Compilers;
 
 
-namespace ETLProject.Common.Database.Compiler.Factorties
+namespace ETLProject.DataSource.Query.Common.Providers.Compiler.Factorties
 {
     internal class PostgresqlCompilerFactory : IQueryCompilerFactory
     {

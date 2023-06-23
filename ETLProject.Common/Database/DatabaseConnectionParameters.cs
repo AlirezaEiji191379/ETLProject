@@ -1,4 +1,4 @@
-﻿namespace ETLProject.Common.Database.DBConnection
+﻿namespace ETLProject.Common.Database
 {
     public class DatabaseConnectionParameters
     {

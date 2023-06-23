@@ -1,7 +1,7 @@
-﻿using ETLProject.Common.Database.DBConnection;
+﻿using ETLProject.Common.Database;
 using System.Data;
 
-namespace ETLProject.Common.Abstractions
+namespace ETLProject.DataSource.Query.Abstractions
 {
     public interface IDbConnectionProvider
     {

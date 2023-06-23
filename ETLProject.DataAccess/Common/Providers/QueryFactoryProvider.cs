@@ -1,5 +1,4 @@
-﻿using ETLProject.Common.Abstractions;
-using ETLProject.Common.Table;
+﻿using ETLProject.Common.Table;
 using ETLProject.DataSource.Query.Abstractions;
 using SqlKata.Execution;
 
