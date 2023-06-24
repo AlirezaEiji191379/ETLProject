@@ -1,5 +1,5 @@
 using ETLProject.Common.Common.DIManager;
-using ETLProject.DataSource.QueryManager.Common.DIManager;
+using ETLProject.DataSource.Common.DIManager;
 
 var builder = WebApplication.CreateBuilder(args);
 
