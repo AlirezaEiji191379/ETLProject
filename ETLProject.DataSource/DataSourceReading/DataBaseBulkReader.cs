@@ -19,7 +19,6 @@ namespace ETLProject.DataSource.DataSourceReading
             _tableNameProvider = tableNameProvider;
         }
 
-
         public async IAsyncEnumerable<DataTable> ReadDataInBulk(ETLTable etlTable, BulkConfiguration bulkConfiguration)
         {
             using var queryFactory = _queryFactoryProvider.GetQueryFactory(etlTable);
@@ -27,8 +26,10 @@ namespace ETLProject.DataSource.DataSourceReading
             var columnStrings = etlTable.Columns.Select(x => x.Name);
             var query = new Query(tableName).Select(columnStrings);
             var dataReader = await queryFactory.FromQuery(query).PaginateAsync(1,bulkConfiguration.BatchSize);
-            for(var i =0; i < dataReader.Count; i++)
+            for(var i = 0; i < dataReader.TotalPages; i++)
             {
+                if (i != 0)
+                    dataReader = await dataReader.NextAsync();
                 var dataTable = new DataTable();
                 IDictionary<string, object> schemaRow = dataReader.List.First();
                 var columnNames = schemaRow.Keys;
@@ -41,17 +42,8 @@ namespace ETLProject.DataSource.DataSourceReading
                     dataTable.Rows.Add(((IDictionary<string, object>)row).Values.ToArray());
                 });
                 yield return dataTable;
-                dataReader = dataReader.Next();
             }
         }
 
-
-
-
-
-        public void Dispose()
-        {
-
-        }
     }
 }

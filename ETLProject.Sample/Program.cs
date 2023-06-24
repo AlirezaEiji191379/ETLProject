@@ -5,7 +5,7 @@ using ETLProject.DataSource.Abstractions;
 using ETLProject.DataSource.Common;
 using ETLProject.DataSource.Common.DIManager;
 using Microsoft.Extensions.DependencyInjection;
-
+using System.Data;
 
 var serviceCollection = new ServiceCollection();
 
@@ -29,18 +29,18 @@ var etlTable = new ETLTable()
             Type = ColumnType.StringType
         }
     },
-    DataSourceType = DataSourceType.Postgresql,
+    DataSourceType = DataSourceType.MySql,
     DatabaseConnection = new DatabaseConnectionParameters()
     {
         ConnectionName = "x",
-        DataSourceType= DataSourceType.Postgresql,
-        DatabaseName= "TestDB",
+        DataSourceType= DataSourceType.MySql,
+        DatabaseName= "testdb",
         Host= "localhost",
         Id = Guid.NewGuid(),
         Password= "92?VH2WMrx",
-        Port = "5432",
-        Schema = "public",
-        Username = "postgres"
+        Port = "1433",
+        Schema = "testdb",
+        Username = "alirezaeiji151379"
     },
     TableType = TableType.Permanent,
     TableName = "Users"
@@ -49,13 +49,17 @@ var etlTable = new ETLTable()
 
 var bulkConfig = new BulkConfiguration()
 {
-    BatchSize = 2,
+    BatchSize = 3,
 };
 
 var dataBulkReader = provider.GetService<IDataBaseBulkReader>();
 
 await foreach (var dt in dataBulkReader!.ReadDataInBulk(etlTable,bulkConfig))
 {
-    Console.WriteLine("hi");
+    foreach (DataRow row in dt.Rows)
+    {
+        Console.WriteLine(row["Id"] +"   " + row["FullName"] );
+    }
+    Console.WriteLine("-----------------------------");
 }
 

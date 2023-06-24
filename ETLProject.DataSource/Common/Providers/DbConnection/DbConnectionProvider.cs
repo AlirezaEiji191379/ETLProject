@@ -19,7 +19,7 @@ namespace ETLProject.DataSource.Common.Providers.DbConnection
             var connectionFactories = typeof(IAssemblyMarker)
                                             .Assembly
                                             .DefinedTypes
-                                            .Where(type => !type.IsAbstract && !type.IsInterface && !type.IsAssignableTo(typeof(IDbConnectionFactory)))
+                                            .Where(type => !type.IsAbstract && !type.IsInterface && type.IsAssignableTo(typeof(IDbConnectionFactory)))
                                             .Select(Activator.CreateInstance)
                                             .Cast<IDbConnectionFactory>();
             
