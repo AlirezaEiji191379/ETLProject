@@ -27,7 +27,7 @@ namespace ETLProject.DataSource.Common.Providers.Compiler
 
             foreach (var factory in factories)
             {
-                _compilerFactoryByDataSourceType[factory.DataSourceType] = factory;
+                result[factory.DataSourceType] = factory;
             }
             return result;
         }

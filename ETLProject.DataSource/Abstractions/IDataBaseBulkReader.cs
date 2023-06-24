@@ -6,6 +6,6 @@ namespace ETLProject.DataSource.Abstractions
 {
     public interface IDataBaseBulkReader : IDisposable
     {
-        DataTable ReadDataInBulk(ETLTable etlTable, BulkConfiguration bulk);
+        IAsyncEnumerable<DataTable> ReadDataInBulk(ETLTable etlTable, BulkConfiguration bulk);
     }
 }

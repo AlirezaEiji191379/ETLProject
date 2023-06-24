@@ -3,6 +3,7 @@ using System.Data;
 using SqlKata;
 using ETLProject.DataSource.Common;
 using ETLProject.DataSource.Abstractions;
+using SqlKata.Execution;
 
 namespace ETLProject.DataSource.DataSourceReading
 {
@@ -19,16 +20,29 @@ namespace ETLProject.DataSource.DataSourceReading
         }
 
 
-        public DataTable ReadDataInBulk(ETLTable etlTable, BulkConfiguration bulkConfiguration)
+        public async IAsyncEnumerable<DataTable> ReadDataInBulk(ETLTable etlTable, BulkConfiguration bulkConfiguration)
         {
             using var queryFactory = _queryFactoryProvider.GetQueryFactory(etlTable);
             var tableName = _tableNameProvider.GetTableName(etlTable);
-            var columnString = string.Join(",",etlTable.Columns.Select(x => x.Name));
-            var query = new Query(tableName).Select(columnString);
-
-
-
-            return null;
+            var columnStrings = etlTable.Columns.Select(x => x.Name);
+            var query = new Query(tableName).Select(columnStrings);
+            var dataReader = await queryFactory.FromQuery(query).PaginateAsync(1,bulkConfiguration.BatchSize);
+            for(var i =0; i < dataReader.Count; i++)
+            {
+                var dataTable = new DataTable();
+                IDictionary<string, object> schemaRow = dataReader.List.First();
+                var columnNames = schemaRow.Keys;
+                columnNames.ToList().ForEach(columnName =>
+                {
+                    dataTable.Columns.Add(columnName, schemaRow[columnName].GetType());
+                });
+                dataReader.List.ToList().ForEach(row =>
+                {
+                    dataTable.Rows.Add(((IDictionary<string, object>)row).Values.ToArray());
+                });
+                yield return dataTable;
+                dataReader = dataReader.Next();
+            }
         }
 
 

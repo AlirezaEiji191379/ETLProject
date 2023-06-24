@@ -7,30 +7,32 @@ namespace ETLProject.DataSource.Common.Providers.DbConnection
 {
     internal class DbConnectionProvider : IDbConnectionProvider
     {
-        private Dictionary<DataSourceType, IDbConnectionFactory> _connectionStringCreatorsByDatabaseType;
+        private readonly Dictionary<DataSourceType, IDbConnectionFactory> _connectionCreatorsByDatabaseType;
         public DbConnectionProvider()
         {
-            InitDictionary();
+            _connectionCreatorsByDatabaseType = InitDictionary();
         }
 
-        private void InitDictionary()
+        private Dictionary<DataSourceType, IDbConnectionFactory> InitDictionary()
         {
-            var connectionStringFactories = typeof(IAssemblyMarker)
+            var result = new Dictionary<DataSourceType, IDbConnectionFactory>();
+            var connectionFactories = typeof(IAssemblyMarker)
                                             .Assembly
                                             .DefinedTypes
                                             .Where(type => !type.IsAbstract && !type.IsInterface && !type.IsAssignableTo(typeof(IDbConnectionFactory)))
                                             .Select(Activator.CreateInstance)
                                             .Cast<IDbConnectionFactory>();
-            _connectionStringCreatorsByDatabaseType = new Dictionary<DataSourceType, IDbConnectionFactory>();
-            foreach (var factory in connectionStringFactories)
+            
+            foreach (var factory in connectionFactories)
             {
-                _connectionStringCreatorsByDatabaseType[factory.DataSourceType] = factory;
+                result[factory.DataSourceType] = factory;
             }
+            return result;
         }
 
         public IDbConnection GetConnection(DatabaseConnectionParameters databaseConnection)
         {
-            return _connectionStringCreatorsByDatabaseType[databaseConnection.DataSourceType].GetConnection(databaseConnection);
+            return _connectionCreatorsByDatabaseType[databaseConnection.DataSourceType].GetConnection(databaseConnection);
         }
     }
 }
