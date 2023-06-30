@@ -7,6 +7,6 @@ namespace ETLProject.DataSource.Abstractions
     public interface IDataBulkInserter
     {
         DataSourceType DataSourceType { get; }
-        ETLTable InsertBulk(DataTable dataTable,ETLTable etlTable);
+        Task InsertBulk(DataTable dataTable,ETLTable etlTable);
     }
 }
