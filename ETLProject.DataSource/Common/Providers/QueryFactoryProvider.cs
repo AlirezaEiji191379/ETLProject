@@ -18,9 +18,11 @@ namespace ETLProject.DataSource.Common.Providers
 
         public QueryFactory GetQueryFactory(ETLTable etlTable)
         {
-            var connection = _connectionProvider.GetConnection(etlTable.DatabaseConnection);
+
+            if(etlTable.DbConnection == null)
+                etlTable.DbConnection = _connectionProvider.GetConnection(etlTable.DatabaseConnection);
             var compiler = _compilerFactoryProvider.GetCompiler(etlTable.DataSourceType);
-            return new QueryFactory(connection, compiler);
+            return new QueryFactory(etlTable.DbConnection, compiler);
         }
     }
 }

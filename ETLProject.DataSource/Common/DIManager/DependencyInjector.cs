@@ -1,10 +1,12 @@
 ﻿using ETLProject.DataSource.Abstractions;
 using ETLProject.DataSource.ColumnMapping;
 using ETLProject.DataSource.Common.Providers;
+using ETLProject.DataSource.Common.Providers.BulkCopy;
 using ETLProject.DataSource.Common.Providers.ColumnMapper;
 using ETLProject.DataSource.Common.Providers.Compiler;
 using ETLProject.DataSource.Common.Providers.DbConnection;
 using ETLProject.DataSource.Common.Utilities;
+using ETLProject.DataSource.DataSourceInserting;
 using ETLProject.DataSource.DataSourceReading;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -32,6 +34,12 @@ namespace ETLProject.DataSource.Common.DIManager
             services.AddSingleton<IColumnTypeMapper, MySqlColumnMapper>();
             services.AddSingleton<IColumnTypeMapper, PostgresqlColumnMapper>();
             services.AddSingleton<IColumnMapperProvider,ColumnMapperProvider>();
+
+            services.AddSingleton<IDataBulkInserter,SqlServerBulkCopy>();
+            services.AddSingleton<IDataBulkInserter,MySqlBulkCopy>();
+            services.AddSingleton<IDataBulkInserter,PostgresqlBulkCopy>();
+            services.AddSingleton<IDataBulkCopyProvider,DataBulkCopyProvider>();
+
 
         }
 

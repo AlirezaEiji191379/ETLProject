@@ -8,20 +8,14 @@ namespace ETLProject.DataSource.Common.Providers.ColumnMapper
     {
         private readonly Dictionary<DataSourceType, IColumnTypeMapper> _columnMapperByDataSourceType;
 
-        public ColumnMapperProvider()
+        public ColumnMapperProvider(IEnumerable<IColumnTypeMapper> columnTypeMappers)
         {
-            _columnMapperByDataSourceType = InitDictionary();
+            _columnMapperByDataSourceType = InitDictionary(columnTypeMappers);
         }
 
-        private static Dictionary<DataSourceType, IColumnTypeMapper>? InitDictionary()
+        private static Dictionary<DataSourceType, IColumnTypeMapper>? InitDictionary(IEnumerable<IColumnTypeMapper> columnTypeMappers)
         {
             var result = new Dictionary<DataSourceType, IColumnTypeMapper>();
-            var columnTypeMappers = typeof(IAssemblyMarker)
-                                    .Assembly
-                                    .DefinedTypes
-                                    .Where(type => !type.IsAbstract && !type.IsInterface && type.IsAssignableTo(typeof(IColumnTypeMapper)))
-                                    .Select(Activator.CreateInstance)
-                                    .Cast<IColumnTypeMapper>();
             foreach(var type in columnTypeMappers)
             {
                 result[type.DataSourceType] = type;
