@@ -1,9 +1,10 @@
 ﻿using ETLProject.Common.Database;
+using SqlKata.Compilers;
 
 namespace ETLProject.DataSource.Abstractions
 {
     internal interface IQueryCompilerProvider
     {
-        SqlKata.Compilers.Compiler GetCompiler(DataSourceType dataSourceType);
+        Compiler GetCompiler(DataSourceType dataSourceType);
     }
 }

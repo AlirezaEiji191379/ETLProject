@@ -5,6 +5,7 @@
         StringType,
         Int32Type,
         BooleanType,
-        DoubleType
+        DoubleType,
+        LongType
     }
 }

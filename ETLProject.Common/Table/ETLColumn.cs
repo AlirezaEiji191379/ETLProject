@@ -1,4 +1,6 @@
-﻿namespace ETLProject.Common.Table
+﻿using Org.BouncyCastle.Asn1.X509.Qualified;
+
+namespace ETLProject.Common.Table
 {
     public class ETLColumn
     {
@@ -21,5 +23,19 @@
                     throw new NotSupportedException();
             }
         }
+
+        public ColumnType GetColumnTypeFromCSharp(Type type)
+        {
+            if (type == typeof(int))
+                return ColumnType.Int32Type;
+            if (type == typeof(string))
+                return ColumnType.StringType;
+            if(type == typeof(double))
+                return ColumnType.DoubleType;
+            if(type == typeof(bool))
+                return ColumnType.BooleanType;
+            throw new NotSupportedException();
+        }
+
     }
 }

@@ -1,5 +1,7 @@
 ﻿using ETLProject.DataSource.Abstractions;
+using ETLProject.DataSource.ColumnMapping;
 using ETLProject.DataSource.Common.Providers;
+using ETLProject.DataSource.Common.Providers.ColumnMapper;
 using ETLProject.DataSource.Common.Providers.Compiler;
 using ETLProject.DataSource.Common.Providers.DbConnection;
 using ETLProject.DataSource.Common.Utilities;
@@ -25,6 +27,12 @@ namespace ETLProject.DataSource.Common.DIManager
 
             services.AddSingleton<IDbConnectionProvider, DbConnectionProvider>();
             services.AddSingleton<IQueryCompilerProvider, CompilerFactoryProvider>();
+
+            services.AddSingleton<IColumnTypeMapper, SqlServerColumnMapper>();
+            services.AddSingleton<IColumnTypeMapper, MySqlColumnMapper>();
+            services.AddSingleton<IColumnTypeMapper, PostgresqlColumnMapper>();
+            services.AddSingleton<IColumnMapperProvider,ColumnMapperProvider>();
+
         }
 
     }
