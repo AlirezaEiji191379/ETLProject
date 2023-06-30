@@ -11,7 +11,7 @@ namespace ETLProject.DataSource.DataSourceInserting
 
         public ETLTable InsertBulk(DataTable dataTable, ETLTable etlTable)
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }

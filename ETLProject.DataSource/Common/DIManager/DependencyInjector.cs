@@ -8,6 +8,7 @@ using ETLProject.DataSource.Common.Providers.DbConnection;
 using ETLProject.DataSource.Common.Utilities;
 using ETLProject.DataSource.DataSourceInserting;
 using ETLProject.DataSource.DataSourceReading;
+using ETLProject.DataSource.TableFactory;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ETLProject.DataSource.Common.DIManager
@@ -40,6 +41,7 @@ namespace ETLProject.DataSource.Common.DIManager
             services.AddSingleton<IDataBulkInserter,PostgresqlBulkCopy>();
             services.AddSingleton<IDataBulkCopyProvider,DataBulkCopyProvider>();
 
+            services.AddSingleton<IDbTableFactory, DbTempTableCreator>();
 
         }
 
