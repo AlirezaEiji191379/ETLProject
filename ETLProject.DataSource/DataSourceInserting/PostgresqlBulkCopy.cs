@@ -9,7 +9,7 @@ namespace ETLProject.DataSource.DataSourceInserting
     {
         public DataSourceType DataSourceType => DataSourceType.Postgresql;
 
-        public ETLTable InsertBulk(DataTable dataTable, ETLTable etlTable)
+        public Task InsertBulk(DataTable dataTable, ETLTable etlTable)
         {
             throw new NotImplementedException();
         }
