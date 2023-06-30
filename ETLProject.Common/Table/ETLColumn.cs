@@ -1,13 +1,13 @@
 ﻿namespace ETLProject.Common.Table
 {
-    public class Column
+    public class ETLColumn
     {
         public string Name { get; set; }
-        public ColumnType Type { get; set; }
+        public ETLColumnType ETLColumnType { get; set; }
 
         public Type GetCsharpType()
         {
-            switch (this.Type)
+            switch (this.ETLColumnType.Type)
             {
                 case ColumnType.StringType:
                     return typeof(string);

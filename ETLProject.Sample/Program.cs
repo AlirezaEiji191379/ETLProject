@@ -5,6 +5,7 @@ using ETLProject.DataSource.Abstractions;
 using ETLProject.DataSource.Common;
 using ETLProject.DataSource.Common.DIManager;
 using Microsoft.Extensions.DependencyInjection;
+using SqlKata;
 using System.Data;
 
 var serviceCollection = new ServiceCollection();
@@ -16,17 +17,24 @@ var provider = serviceCollection.BuildServiceProvider();
 
 var etlTable = new ETLTable()
 {
-    Columns = new List<Column>()
+    Columns = new List<ETLColumn>()
     {
         new()
         {
             Name= "Id",
-            Type = ColumnType.Int32Type
+            ETLColumnType = new ETLColumnType()
+            {
+                Type = ColumnType.Int32Type,
+            }
         },
         new()
         {
             Name= "FullName",
-            Type = ColumnType.StringType
+            ETLColumnType = new ETLColumnType()
+            {
+                Type = ColumnType.StringType,
+                Length= 100,
+            }
         }
     },
     DataSourceType = DataSourceType.MySql,
@@ -62,4 +70,3 @@ await foreach (var dt in dataBulkReader!.ReadDataInBulk(etlTable,bulkConfig))
     }
     Console.WriteLine("-----------------------------");
 }
-
