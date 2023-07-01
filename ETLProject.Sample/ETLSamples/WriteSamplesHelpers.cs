@@ -83,10 +83,8 @@ internal static class WriteSamplesHelpers
         serviceCollection.AddCommonServices();
         serviceCollection.AddDataSourceQueryServices();
         var provider = serviceCollection.BuildServiceProvider();
-        var dbCreator = provider.GetRequiredService<IDbTableFactory>();
-        var dataInserterProvider = provider.GetRequiredService<IDataBulkCopyProvider>();
-        var dataInserter = dataInserterProvider.GetBulkInserter(DataSourceType.MySql);
-        var dataBulkReader = provider.GetRequiredService<IDataBaseBulkReader>();
+
+        var dataTransfer = provider.GetRequiredService<IDataTransfer>();
 
         var etlTable = new ETLTable()
         {
@@ -148,13 +146,7 @@ internal static class WriteSamplesHelpers
             TableName = ""
         };
 
-        destEtlTable.Columns = etlTable.CloneEtlColumns();
-
-        await dbCreator.CreateTempTable(destEtlTable);
-        await foreach (var dt in dataBulkReader.ReadDataInBulk(etlTable,new BulkConfiguration() { BatchSize = 2}))
-        {
-            await dataInserter.InsertBulk(dt,destEtlTable);
-        }
+        await dataTransfer.TransferData(etlTable,destEtlTable,new BulkConfiguration { BatchSize = 2});
 
     }
 
