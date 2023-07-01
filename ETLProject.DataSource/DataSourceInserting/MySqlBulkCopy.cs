@@ -28,46 +28,35 @@ namespace ETLProject.DataSource.DataSourceInserting
                 if (!File.Exists(filePath))
                     break;
             }
-            ConvertDataTableToCsv(dataTable,filePath);
+            await ConvertDataTableToCsvAsync(dataTable,filePath);
             var columnSet = string.Format($"({string.Join(",", etlTable.Columns.Select(x => x.Name))})");
             //TODO: refator Query generation
-            var queryString = $"LOAD DATA INFILE '{filePath}' INTO TABLE {etlTable.TableName} "+
+            var queryString = $"LOAD DATA INFILE '{filePath.Replace(@"\",@"\\")}' INTO TABLE {etlTable.TableName} "+
                         "FIELDS TERMINATED BY ',' " +
                         "ENCLOSED BY '\"' " +
                         "LINES TERMINATED BY '\n' " +
                         $"{columnSet}";
             var queryFactory = _queryFactoryProvider.GetQueryFactory(etlTable);
             await queryFactory.StatementAsync(queryString);
+            File.Delete(filePath);
         }
 
 
-        private void ConvertDataTableToCsv(DataTable dataTable, string filePath)
+        private async Task ConvertDataTableToCsvAsync(DataTable dataTable, string filePath)
         {
             using (StreamWriter writer = new StreamWriter(filePath))
             {
-                // Write the column headers
-                for (int i = 0; i < dataTable.Columns.Count; i++)
-                {
-                    writer.Write(dataTable.Columns[i].ColumnName);
-                    if (i < dataTable.Columns.Count - 1)
-                    {
-                        writer.Write(",");
-                    }
-                }
-                writer.WriteLine();
-
-                // Write the data rows
                 foreach (DataRow row in dataTable.Rows)
                 {
                     for (int i = 0; i < dataTable.Columns.Count; i++)
                     {
-                        writer.Write(row[i].ToString());
+                        await writer.WriteAsync(row[i].ToString());
                         if (i < dataTable.Columns.Count - 1)
                         {
-                            writer.Write(",");
+                            await writer.WriteAsync(",");
                         }
                     }
-                    writer.WriteLine();
+                    await writer.WriteLineAsync();
                 }
             }
         }

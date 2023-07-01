@@ -3,7 +3,7 @@ using System.Data;
 
 namespace ETLProject.DataSource.Abstractions
 {
-    internal interface IDbTableFactory
+    public interface IDbTableFactory
     {
         Task CreateTempTable(ETLTable etlTable);
     }

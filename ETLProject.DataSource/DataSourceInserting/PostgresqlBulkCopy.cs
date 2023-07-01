@@ -21,22 +21,23 @@ namespace ETLProject.DataSource.DataSourceInserting
                 await writer.StartRowAsync();
                 for(var i = 0;i< etlTable.Columns.Count; i++)
                 {
-                    switch (etlTable.Columns[i].ETLColumnType.Type)
+                    var column = etlTable.Columns[i];
+                    switch (column.ETLColumnType.Type)
                     {
                         case ColumnType.StringType:
-                            await writer.WriteAsync(row[i],NpgsqlTypes.NpgsqlDbType.Varchar).ConfigureAwait(false);
+                            await writer.WriteAsync(row[column.Name],NpgsqlTypes.NpgsqlDbType.Varchar).ConfigureAwait(false);
                             break;
                         case ColumnType.Int32Type:
-                            await writer.WriteAsync(row[i],NpgsqlTypes.NpgsqlDbType.Integer).ConfigureAwait(false);
+                            await writer.WriteAsync(row[column.Name],NpgsqlTypes.NpgsqlDbType.Integer).ConfigureAwait(false);
                             break;
                         case ColumnType.DoubleType:
-                            await writer.WriteAsync(row[i],NpgsqlTypes.NpgsqlDbType.Double).ConfigureAwait(false);
+                            await writer.WriteAsync(row[column.Name],NpgsqlTypes.NpgsqlDbType.Double).ConfigureAwait(false);
                             break;
                         case ColumnType.LongType:
-                            await writer.WriteAsync(row[i],NpgsqlTypes.NpgsqlDbType.Bigint).ConfigureAwait(false);
+                            await writer.WriteAsync(row[column.Name],NpgsqlTypes.NpgsqlDbType.Bigint).ConfigureAwait(false);
                             break;
                         case ColumnType.BooleanType:
-                            await writer.WriteAsync(row[i],NpgsqlTypes.NpgsqlDbType.Boolean).ConfigureAwait(false);
+                            await writer.WriteAsync(row[column.Name],NpgsqlTypes.NpgsqlDbType.Boolean).ConfigureAwait(false);
                             break;
                         default:
                             throw new NotSupportedException();

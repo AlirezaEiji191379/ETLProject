@@ -37,5 +37,19 @@ namespace ETLProject.Common.Table
             throw new NotSupportedException();
         }
 
+        public ETLColumn Clone()
+        {
+            return new ETLColumn()
+            {
+                Name = Name,
+                ETLColumnType = new ETLColumnType()
+                {
+                    Length = ETLColumnType.Length,
+                    Precision = ETLColumnType.Precision,
+                    Type = ETLColumnType.Type
+                }
+            };
+        }
+
     }
 }

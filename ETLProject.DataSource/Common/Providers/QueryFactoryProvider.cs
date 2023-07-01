@@ -1,6 +1,7 @@
 ﻿using ETLProject.Common.Table;
 using ETLProject.DataSource.Abstractions;
 using SqlKata.Execution;
+using System.Data;
 
 namespace ETLProject.DataSource.Common.Providers
 {
@@ -19,8 +20,12 @@ namespace ETLProject.DataSource.Common.Providers
         public QueryFactory GetQueryFactory(ETLTable etlTable)
         {
 
-            if(etlTable.DbConnection == null)
+            if (etlTable.DbConnection == null)
+            {
                 etlTable.DbConnection = _connectionProvider.GetConnection(etlTable.DatabaseConnection);
+            }
+            if(etlTable.DbConnection.State != ConnectionState.Open)
+                etlTable.DbConnection.Open();
             var compiler = _compilerFactoryProvider.GetCompiler(etlTable.DataSourceType);
             return new QueryFactory(etlTable.DbConnection, compiler);
         }

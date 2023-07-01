@@ -12,6 +12,16 @@ namespace ETLProject.Common.Table
         public DatabaseConnectionParameters DatabaseConnection { get; set; }
         public IDbConnection DbConnection { get; set; }
 
+        public List<ETLColumn> CloneEtlColumns()
+        {
+            var result = new List<ETLColumn>();
+            foreach(var column in Columns)
+            {
+                result.Add(column.Clone());
+            }
+            return result;
+        }
+
         public void Dispose()
         {
             DbConnection?.Dispose();
