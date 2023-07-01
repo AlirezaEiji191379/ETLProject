@@ -25,8 +25,8 @@ namespace ETLProject.DataSource.TableFactory
         {
             var columnMapper = _columnMapperProvider.GetColumnTypeMapper(etlTable.DatabaseConnection.DataSourceType);
             etlTable.TableName =  "ETL_" + _randomStringGenerator.GenerateRandomString();
-/*            if(etlTable.DataSourceType == DataSourceType.SQLServer)
-                etlTable.TableName = "#" + etlTable.TableName;*/
+            if (etlTable.DataSourceType == DataSourceType.SQLServer)
+                etlTable.TableName = "#" + etlTable.TableName;
             var tableDefinition = new List<TableColumnDefenitionDto>();
             foreach(var etlColumn in etlTable.Columns)
             {
@@ -41,7 +41,7 @@ namespace ETLProject.DataSource.TableFactory
                     IsUnique=false,
                 });
             }
-            var query = new Query(etlTable.TableName).CreateTable(tableDefinition,SqlKata.Contract.CreateTable.TableType.Permanent);
+            var query = new Query(etlTable.TableName).CreateTable(tableDefinition,SqlKata.Contract.CreateTable.TableType.Temporary);
             var queryFactory = _queryFactoryProvider.GetQueryFactory(etlTable);
             await queryFactory.ExecuteAsync(query);
         }
