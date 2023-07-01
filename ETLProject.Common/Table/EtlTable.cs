@@ -22,9 +22,24 @@ namespace ETLProject.Common.Table
             return result;
         }
 
+
+        private bool disposed = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    DbConnection?.Dispose();
+                }
+                disposed = true;
+            }
+        }
+
         public void Dispose()
         {
-            DbConnection?.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
