@@ -3,20 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETLProject", "ETLProject\ETLProject.csproj", "{CF483E78-D401-4E3C-A961-D929A9C39230}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETLProject", "ETLProject\ETLProject.csproj", "{CF483E78-D401-4E3C-A961-D929A9C39230}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7672D5A5-4EC8-4485-A994-4140A219C36C}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETLProject.DataSource.Access", "ETLProject.DataAccess\ETLProject.DataSource.Access.csproj", "{3103ACC7-55B8-4F61-B82E-DF111A03F436}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETLProject.Pipeline", "ETLProject.Pipeline\ETLProject.Pipeline.csproj", "{89E47583-68FE-488A-850C-C658D9FED59A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETLProject.Pipeline", "ETLProject.Pipeline\ETLProject.Pipeline.csproj", "{89E47583-68FE-488A-850C-C658D9FED59A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETLProject.Common", "ETLProject.Common\ETLProject.Common.csproj", "{DBB11A49-6AB2-4D67-80C5-FA601024CE71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETLProject.DataSource.Query", "ETLProject.DataSource.Query\ETLProject.DataSource.Query.csproj", "{CC82CB69-583D-44BD-B739-00C0EC4B8098}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETLProject.Sample", "ETLProject.Sample\ETLProject.Sample.csproj", "{A50432F5-5113-42E5-9A48-490021BDE7FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETLProject.Common", "ETLProject.Common\ETLProject.Common.csproj", "{DBB11A49-6AB2-4D67-80C5-FA601024CE71}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETLProject.DataSource", "ETLProject.DataSource\ETLProject.DataSource.csproj", "{BC781D7C-A895-4E78-B46F-46E167E49B39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,22 +28,22 @@ Global
 		{CF483E78-D401-4E3C-A961-D929A9C39230}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF483E78-D401-4E3C-A961-D929A9C39230}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF483E78-D401-4E3C-A961-D929A9C39230}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3103ACC7-55B8-4F61-B82E-DF111A03F436}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3103ACC7-55B8-4F61-B82E-DF111A03F436}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3103ACC7-55B8-4F61-B82E-DF111A03F436}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3103ACC7-55B8-4F61-B82E-DF111A03F436}.Release|Any CPU.Build.0 = Release|Any CPU
 		{89E47583-68FE-488A-850C-C658D9FED59A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{89E47583-68FE-488A-850C-C658D9FED59A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89E47583-68FE-488A-850C-C658D9FED59A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89E47583-68FE-488A-850C-C658D9FED59A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CC82CB69-583D-44BD-B739-00C0EC4B8098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CC82CB69-583D-44BD-B739-00C0EC4B8098}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CC82CB69-583D-44BD-B739-00C0EC4B8098}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CC82CB69-583D-44BD-B739-00C0EC4B8098}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DBB11A49-6AB2-4D67-80C5-FA601024CE71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DBB11A49-6AB2-4D67-80C5-FA601024CE71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBB11A49-6AB2-4D67-80C5-FA601024CE71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBB11A49-6AB2-4D67-80C5-FA601024CE71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A50432F5-5113-42E5-9A48-490021BDE7FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A50432F5-5113-42E5-9A48-490021BDE7FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A50432F5-5113-42E5-9A48-490021BDE7FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A50432F5-5113-42E5-9A48-490021BDE7FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC781D7C-A895-4E78-B46F-46E167E49B39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC781D7C-A895-4E78-B46F-46E167E49B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC781D7C-A895-4E78-B46F-46E167E49B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC781D7C-A895-4E78-B46F-46E167E49B39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
