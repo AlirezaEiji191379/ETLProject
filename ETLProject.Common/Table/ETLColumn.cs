@@ -4,8 +4,13 @@ namespace ETLProject.Common.Table
 {
     public class ETLColumn
     {
+        public ETLColumn()
+        {
+            EtlColumnParameters = new EtlColumnParameters();
+        }
         public string Name { get; set; }
         public ETLColumnType ETLColumnType { get; set; }
+        public EtlColumnParameters EtlColumnParameters { get; set; }
 
         public Type GetCsharpType()
         {

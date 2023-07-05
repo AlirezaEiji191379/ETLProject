@@ -17,15 +17,26 @@ namespace ETLProject.DataSource.DbTransfer
             _dataBulkReader = dataBulkReader;
         }
 
-        public async Task TransferData(ETLTable sourceTable, ETLTable destinationTable, BulkConfiguration bulkConfiguration)
+        public async Task TransferDataBetweenTwoDifferentConnections(ETLTable sourceTable, ETLTable destinationTable, BulkConfiguration bulkConfiguration)
         {
             destinationTable.Columns = sourceTable.CloneEtlColumns();
             var dataInserter = _dataBulkCopyProvider.GetBulkInserter(destinationTable.DataSourceType);
-            await _dbTableCreator.CreateTempTable(destinationTable);
+            await _dbTableCreator.CreateTable(destinationTable);
             await foreach (var dt in _dataBulkReader.ReadDataInBulk(sourceTable, new BulkConfiguration() { BatchSize = 2 }))
             {
                 await dataInserter.InsertBulk(dt, destinationTable);
             }
         }
+
+        public async Task TransferDataInSingleConnection(ETLTable sourceTable,string newTableName,TableType newTableType = TableType.Temp)
+        {
+            if (sourceTable.DataSourceType != DataSourceType.SQLServer)
+            {
+                await _dbTableCreator.CreateTableAs(sourceTable, newTableName, newTableType);
+                return;
+            }
+            await _dbTableCreator.SelectInto(sourceTable,newTableName);
+        }
+
     }
 }

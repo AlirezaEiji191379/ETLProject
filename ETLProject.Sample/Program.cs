@@ -9,4 +9,5 @@ using Microsoft.Extensions.DependencyInjection;
 using SqlKata;
 using System.Data;
 
-await WriteSamplesHelpers.ExtractAndLoad();
+//await WriteSamplesHelpers.ExtractAndLoad();
+await WriteSamplesHelpers.ExtractAndLoadInConnection();

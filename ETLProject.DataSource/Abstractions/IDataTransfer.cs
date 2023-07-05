@@ -5,6 +5,7 @@ namespace ETLProject.DataSource.Abstractions
 {
     public interface IDataTransfer
     {
-        Task TransferData(ETLTable sourceTable,ETLTable destinationTable,BulkConfiguration bulkConfiguration);
+        Task TransferDataBetweenTwoDifferentConnections(ETLTable sourceTable, ETLTable destinationTable, BulkConfiguration bulkConfiguration);
+        Task TransferDataInSingleConnection(ETLTable sourceTable,string newTableName,TableType tableType = TableType.Temp);
     }
 }

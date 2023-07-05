@@ -56,7 +56,7 @@ internal static class WriteSamplesHelpers
                 Username = "sa"
             },
         };
-        await dbTableCreator.CreateTempTable(etlTable);
+        await dbTableCreator.CreateTable(etlTable);
         var dataInserterProvider = provider.GetRequiredService<IDataBulkCopyProvider>();
         var dataInserter = dataInserterProvider.GetBulkInserter(DataSourceType.SQLServer);
         using var dataTable = new DataTable();
@@ -128,27 +128,78 @@ internal static class WriteSamplesHelpers
 
         var destEtlTable = new ETLTable()
         {
-            TableType = TableType.Temp,
+            TableType = TableType.Permanent,
             DatabaseConnection = new DatabaseConnectionParameters()
             {
                 ConnectionName = "x",
-                DataSourceType = DataSourceType.MySql,
+                DataSourceType = DataSourceType.SQLServer,
+                DatabaseName = "TestDB",
+                //Host = "localhost",
+                Host = "LAPTOP-FN08220K\\ALIREZALOCAL",
+                Id = Guid.NewGuid(),
+                Password = "92?VH2WMrx",
+                Port = "1433",
+                Schema = "dbo",
+                Username = "sa"
+            },
+            DataSourceType = DataSourceType.SQLServer,
+            TableName = "SampleUsers2",
+        };
+
+        await dataTransfer.TransferDataBetweenTwoDifferentConnections(etlTable,destEtlTable,new BulkConfiguration { BatchSize = 2});
+
+    }
+
+    internal static async Task ExtractAndLoadInConnection()
+    {
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddCommonServices();
+        serviceCollection.AddDataSourceQueryServices();
+        var provider = serviceCollection.BuildServiceProvider();
+
+        var dataTransfer = provider.GetRequiredService<IDataTransfer>();
+
+        var etlTable = new ETLTable()
+        {
+            TableType = TableType.Permanent,
+            TableName = "Users",
+            DataSourceType = DataSourceType.Postgresql,
+            DatabaseConnection = new DatabaseConnectionParameters()
+            {
+                ConnectionName = "x",
+                DataSourceType = DataSourceType.Postgresql,
                 DatabaseName = "TestDB",
                 Host = "localhost",
                 //Host = "LAPTOP-FN08220K\\ALIREZALOCAL",
                 Id = Guid.NewGuid(),
                 Password = "92?VH2WMrx",
-                Port = "3306",
-                Schema = "testdb",
-                Username = "alirezaeiji151379"
+                Port = "5432",
+                Schema = "public",
+                Username = "postgres"
             },
-            DataSourceType = DataSourceType.MySql,
-            TableName = ""
+            Columns = new List<ETLColumn>
+            {
+                new()
+                {
+                    Name = "Id",
+                    ETLColumnType = new ETLColumnType()
+                    {
+                        Type = ColumnType.Int32Type
+                    }
+                },
+                new()
+                {
+                    Name = "FullName",
+                    ETLColumnType = new ETLColumnType()
+                    {
+                        Type = ColumnType.StringType,
+                        Length= 100
+                    }
+                }
+            }
         };
 
-        await dataTransfer.TransferData(etlTable,destEtlTable,new BulkConfiguration { BatchSize = 2});
+        await dataTransfer.TransferDataInSingleConnection(etlTable,"userse2",TableType.Permanent);
 
     }
-
-
 }

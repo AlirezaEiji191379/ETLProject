@@ -41,7 +41,7 @@ namespace ETLProject.DataSource.Common.DIManager
             services.AddSingleton<IDataBulkInserter,PostgresqlBulkCopy>();
             services.AddSingleton<IDataBulkCopyProvider,DataBulkCopyProvider>();
 
-            services.AddSingleton<IDbTableFactory, DbTempTableCreator>();
+            services.AddSingleton<IDbTableFactory, DbTableFactory>();
             services.AddSingleton<IDataTransfer,DataTransfer>();
 
             services.AddKataServices();
