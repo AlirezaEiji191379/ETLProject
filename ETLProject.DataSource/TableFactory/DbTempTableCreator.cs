@@ -27,10 +27,10 @@ namespace ETLProject.DataSource.TableFactory
             etlTable.TableName =  "ETL_" + _randomStringGenerator.GenerateRandomString();
             if (etlTable.DataSourceType == DataSourceType.SQLServer)
                 etlTable.TableName = "#" + etlTable.TableName;
-            var tableDefinition = new List<TableColumnDefenitionDto>();
+            var tableDefinition = new List<TableColumnDefinitionDto>();
             foreach(var etlColumn in etlTable.Columns)
             {
-                tableDefinition.Add(new TableColumnDefenitionDto()
+                tableDefinition.Add(new TableColumnDefinitionDto()
                 {
                     ColumnName = etlColumn.Name,
                     ColumnDbType = columnMapper.AdaptType(etlColumn),

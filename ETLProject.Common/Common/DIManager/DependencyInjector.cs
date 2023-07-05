@@ -8,6 +8,7 @@ namespace ETLProject.Common.Common.DIManager
         public static void AddCommonServices(this IServiceCollection services)
         {
             services.AddSingleton<IRandomStringGenerator,RandomStringGenerator>();
+            services.AddSingleton<IDataSourceTypeAdapter,DataSourceTypeAdapter>();
         }
 
     }
