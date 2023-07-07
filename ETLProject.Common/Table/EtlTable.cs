@@ -12,10 +12,19 @@ namespace ETLProject.Common.Table
         public List<ETLColumn> Columns { get; set; }
         public string TableName { get; set; }
         public string AliasName { get; set; }
-        public string TableFullName => DatabaseConnection.Schema + "." + TableName;
+        public string TableFullName
+        {
+            get
+            {
+                var tableFullNameBuilder = new StringBuilder(DatabaseConnection.Schema).Append(".").Append(TableName);
+                if (AliasName == null)
+                    return tableFullNameBuilder.ToString();
+                return tableFullNameBuilder.Append(" as ").Append(AliasName).ToString();
+            }
+        }
         public DatabaseConnectionParameters DatabaseConnection { get; set; }
         public IDbConnection DbConnection { get; set; }
-        
+
 
         public string GetColumnFullNameById(Guid etlColumnId)
         {
@@ -28,7 +37,7 @@ namespace ETLProject.Common.Table
         public List<ETLColumn> CloneEtlColumns()
         {
             var result = new List<ETLColumn>();
-            foreach(var column in Columns)
+            foreach (var column in Columns)
             {
                 result.Add(column.Clone());
             }
