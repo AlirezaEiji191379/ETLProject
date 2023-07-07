@@ -1,5 +1,6 @@
 ﻿using ETLProject.Common.Database;
 using System.Data;
+using System.Text;
 
 namespace ETLProject.Common.Table
 {
@@ -16,6 +17,13 @@ namespace ETLProject.Common.Table
         public IDbConnection DbConnection { get; set; }
         
 
+        public string GetColumnFullNameById(Guid etlColumnId)
+        {
+            var column = Columns.Where(column => column.EtlColumnId == etlColumnId).First();
+            if (AliasName == null)
+                return column.Name;
+            return new StringBuilder(AliasName).Append(".").Append(column.Name).ToString();
+        }
 
         public List<ETLColumn> CloneEtlColumns()
         {

@@ -6,8 +6,10 @@ namespace ETLProject.Common.Table
     {
         public ETLColumn()
         {
+            EtlColumnId = Guid.NewGuid();
             EtlColumnParameters = new EtlColumnParameters();
         }
+        public Guid EtlColumnId { get; set; }
         public string Name { get; set; }
         public ETLColumnType ETLColumnType { get; set; }
         public EtlColumnParameters EtlColumnParameters { get; set; }
