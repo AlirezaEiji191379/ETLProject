@@ -42,6 +42,11 @@ namespace ETLProject.DataSource.ColumnMapping
                     {
                         PostgresqlDbType = PostgresqlDbType.Bigint,
                     };
+                case ColumnType.Guid:
+                    return new PostgresqlDBColumn()
+                    {
+                        PostgresqlDbType = PostgresqlDbType.Uuid
+                    };
                 default:
                     throw new NotImplementedException();
             }

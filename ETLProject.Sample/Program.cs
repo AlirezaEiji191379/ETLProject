@@ -8,6 +8,8 @@ using ETLProject.Sample.ETLSamples;
 using Microsoft.Extensions.DependencyInjection;
 using SqlKata;
 using System.Data;
+using System.Data.SqlClient;
 
 //await WriteSamplesHelpers.ExtractAndLoad();
 await WriteSamplesHelpers.ExtractAndLoadInConnection();
+

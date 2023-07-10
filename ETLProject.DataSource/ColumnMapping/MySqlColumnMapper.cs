@@ -42,6 +42,12 @@ namespace ETLProject.DataSource.ColumnMapping
                     {
                         MySqlDbType = MySqlDbType.BigInt,
                     };
+                case ColumnType.Guid:
+                    return new MySqlDBColumn()
+                    {
+                        MySqlDbType = MySqlDbType.Char,
+                        Length = 16
+                    };
                 default:
                     throw new NotImplementedException();
             }

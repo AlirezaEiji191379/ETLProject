@@ -26,6 +26,8 @@ namespace ETLProject.Common.Table
                     return typeof(bool);
                 case ColumnType.DoubleType:
                     return typeof(double);
+                case ColumnType.Guid:
+                    return typeof(Guid);
                 default:
                     throw new NotSupportedException();
             }
@@ -41,6 +43,8 @@ namespace ETLProject.Common.Table
                 return ColumnType.DoubleType;
             if(type == typeof(bool))
                 return ColumnType.BooleanType;
+            if (type == typeof(Guid))
+                return ColumnType.Guid;
             throw new NotSupportedException();
         }
 
