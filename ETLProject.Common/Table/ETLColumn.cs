@@ -6,8 +6,10 @@ namespace ETLProject.Common.Table
     {
         public ETLColumn()
         {
+            EtlColumnId = Guid.NewGuid();
             EtlColumnParameters = new EtlColumnParameters();
         }
+        public Guid EtlColumnId { get; set; }
         public string Name { get; set; }
         public ETLColumnType ETLColumnType { get; set; }
         public EtlColumnParameters EtlColumnParameters { get; set; }
@@ -24,6 +26,8 @@ namespace ETLProject.Common.Table
                     return typeof(bool);
                 case ColumnType.DoubleType:
                     return typeof(double);
+                case ColumnType.Guid:
+                    return typeof(Guid);
                 default:
                     throw new NotSupportedException();
             }
@@ -39,6 +43,8 @@ namespace ETLProject.Common.Table
                 return ColumnType.DoubleType;
             if(type == typeof(bool))
                 return ColumnType.BooleanType;
+            if (type == typeof(Guid))
+                return ColumnType.Guid;
             throw new NotSupportedException();
         }
 

@@ -199,7 +199,5 @@ internal static class WriteSamplesHelpers
             }
         };
 
-        await dataTransfer.TransferDataInSingleConnection(etlTable,"userse2",TableType.Permanent);
-
-    }
+        await dataTransfer.TransferDataInSingleConnection(etlTable,"userse27",TableType.Permanent); }
 }

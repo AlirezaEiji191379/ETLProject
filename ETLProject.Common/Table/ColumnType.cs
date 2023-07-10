@@ -6,6 +6,7 @@
         Int32Type,
         BooleanType,
         DoubleType,
-        LongType
+        LongType,
+        Guid
     }
 }

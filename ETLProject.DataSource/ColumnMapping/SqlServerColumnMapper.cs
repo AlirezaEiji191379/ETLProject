@@ -42,6 +42,11 @@ namespace ETLProject.DataSource.ColumnMapping
                     {
                         SqlServerDbType = SqlServerDbType.BigInt,
                     };
+                case ColumnType.Guid:
+                    return new SqlServerDBColumn()
+                    {
+                        SqlServerDbType = SqlServerDbType.UniqueIdentifier
+                    };
                 default:
                     throw new NotImplementedException();
             }
