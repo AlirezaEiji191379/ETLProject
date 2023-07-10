@@ -6,9 +6,10 @@ namespace ETLProject.DataSource.QueryBusiness.Limit;
 
 public class LimitQueryMaker : ILimitQueryMaker
 {
-    public void AddLimitQuery(ETLTable etlTable, LimitContract limitContract)
+    public ETLTable AddLimitQuery(ETLTable etlTable, LimitContract limitContract)
     {
         var query = etlTable.Query;
         query.Limit(limitContract.Top);
+        return etlTable;
     }
 }

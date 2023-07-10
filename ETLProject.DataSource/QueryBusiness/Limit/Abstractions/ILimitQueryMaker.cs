@@ -5,5 +5,5 @@ namespace ETLProject.DataSource.QueryBusiness.Limit.Abstractions;
 
 public interface ILimitQueryMaker
 {
-    void AddLimitQuery(ETLTable etlTable,LimitContract limitContract);
+    ETLTable AddLimitQuery(ETLTable etlTable,LimitContract limitContract);
 }
