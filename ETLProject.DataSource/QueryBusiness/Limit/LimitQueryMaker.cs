@@ -4,7 +4,7 @@ using ETLProject.DataSource.QueryBusiness.Limit.Abstractions;
 
 namespace ETLProject.DataSource.QueryBusiness.Limit;
 
-public class LimitQueryMaker : ILimitQueryMaker
+internal class LimitQueryMaker : ILimitQueryMaker
 {
     public ETLTable AddLimitQuery(ETLTable etlTable, LimitContract limitContract)
     {

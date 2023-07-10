@@ -8,6 +8,8 @@ using ETLProject.DataSource.Common.Utilities;
 using ETLProject.DataSource.DataSourceInserting;
 using ETLProject.DataSource.DataSourceReading;
 using ETLProject.DataSource.DbTransfer;
+using ETLProject.DataSource.QueryBusiness.Limit;
+using ETLProject.DataSource.QueryBusiness.Limit.Abstractions;
 using ETLProject.DataSource.TableFactory;
 using Microsoft.Extensions.DependencyInjection;
 using SqlKata;
@@ -43,6 +45,7 @@ namespace ETLProject.DataSource.Common.DIManager
 
             services.AddSingleton<IDbTableFactory, DbTableFactory>();
             services.AddSingleton<IDataTransfer,DataTransfer>();
+            services.AddSingleton<ILimitQueryMaker,LimitQueryMaker>();
 
             services.AddKataServices();
 
