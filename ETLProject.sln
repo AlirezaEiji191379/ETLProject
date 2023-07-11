@@ -16,9 +16,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETLProject.Common", "ETLPro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETLProject.Sample", "ETLProject.Sample\ETLProject.Sample.csproj", "{A50432F5-5113-42E5-9A48-490021BDE7FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETLProject.DataSource", "ETLProject.DataSource\ETLProject.DataSource.csproj", "{BC781D7C-A895-4E78-B46F-46E167E49B39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETLProject.DataSource", "ETLProject.DataSource\ETLProject.DataSource.csproj", "{BC781D7C-A895-4E78-B46F-46E167E49B39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETLProject.Contract", "ETLProject.Contract\ETLProject.Contract.csproj", "{4C351F86-B8A0-4AF0-B184-9B5B37AB8B33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETLProject.Contract", "ETLProject.Contract\ETLProject.Contract.csproj", "{4C351F86-B8A0-4AF0-B184-9B5B37AB8B33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,8 +34,8 @@ Global
 		{89E47583-68FE-488A-850C-C658D9FED59A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89E47583-68FE-488A-850C-C658D9FED59A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89E47583-68FE-488A-850C-C658D9FED59A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DBB11A49-6AB2-4D67-80C5-FA601024CE71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DBB11A49-6AB2-4D67-80C5-FA601024CE71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBB11A49-6AB2-4D67-80C5-FA601024CE71}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{DBB11A49-6AB2-4D67-80C5-FA601024CE71}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{DBB11A49-6AB2-4D67-80C5-FA601024CE71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBB11A49-6AB2-4D67-80C5-FA601024CE71}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A50432F5-5113-42E5-9A48-490021BDE7FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -46,8 +46,8 @@ Global
 		{BC781D7C-A895-4E78-B46F-46E167E49B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC781D7C-A895-4E78-B46F-46E167E49B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC781D7C-A895-4E78-B46F-46E167E49B39}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C351F86-B8A0-4AF0-B184-9B5B37AB8B33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C351F86-B8A0-4AF0-B184-9B5B37AB8B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C351F86-B8A0-4AF0-B184-9B5B37AB8B33}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{4C351F86-B8A0-4AF0-B184-9B5B37AB8B33}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{4C351F86-B8A0-4AF0-B184-9B5B37AB8B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C351F86-B8A0-4AF0-B184-9B5B37AB8B33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
