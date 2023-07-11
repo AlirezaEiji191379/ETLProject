@@ -1,8 +1,8 @@
 ﻿using ETLProject.Common.Table;
 using ETLProject.Contract.Limit;
-using ETLProject.DataSource.QueryBusiness.Limit.Abstractions;
+using ETLProject.DataSource.QueryBusiness.LimitBusiness.Abstractions;
 
-namespace ETLProject.DataSource.QueryBusiness.Limit;
+namespace ETLProject.DataSource.QueryBusiness.LimitBusiness;
 
 internal class LimitQueryMaker : ILimitQueryMaker
 {

@@ -3,7 +3,7 @@ using ETLProject.Common.Database;
 using ETLProject.Common.Table;
 using ETLProject.Contract.Limit;
 using ETLProject.DataSource.Common.DIManager;
-using ETLProject.DataSource.QueryBusiness.Limit.Abstractions;
+using ETLProject.DataSource.QueryBusiness.LimitBusiness.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using SqlKata;
 using SqlKata.Compilers.Abstractions;

@@ -6,9 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-   <!--<ProjectReference Include="..\ETLProject.Common\ETLProject.Common.csproj" /> -->
-   <!-- <ProjectReference Include="..\ETLProject.Contract\ETLProject.Contract.csproj" /> -->
-  </ItemGroup>
-
 </Project>
