@@ -1,3 +1,3 @@
 ﻿using ETLProject.Sample.ETLSamples;
 
-LimitSample.CheckLimit();
+DistinctSample.Sample();
