@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace ETLProject.DataSource.QueryBusiness.SortBusiness.Validator;
 
-public class OrderColumnDtoValidator : AbstractValidator<OrderColumnDto>
+internal class OrderColumnDtoValidator : AbstractValidator<OrderColumnDto>
 {
     public OrderColumnDtoValidator()
     {

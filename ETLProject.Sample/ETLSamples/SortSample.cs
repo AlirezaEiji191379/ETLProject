@@ -69,13 +69,11 @@ public class SortSample
                 new ()
                 {
                     Name = "Id",
-                    ColumnType = ColumnType.StringType,
                     SortType = SortType.Descending
                 },
                 new ()
                 {
                     Name = "FullName",
-                    ColumnType = ColumnType.StringType,
                     SortType = SortType.Ascending
                 }
             }

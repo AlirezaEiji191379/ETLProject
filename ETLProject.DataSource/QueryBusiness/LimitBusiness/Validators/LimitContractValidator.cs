@@ -4,7 +4,7 @@ using Humanizer.DateTimeHumanizeStrategy;
 
 namespace ETLProject.DataSource.QueryBusiness.LimitBusiness.Validators;
 
-public class LimitContractValidator : AbstractValidator<LimitContract>
+internal class LimitContractValidator : AbstractValidator<LimitContract>
 {
     public LimitContractValidator()
     {

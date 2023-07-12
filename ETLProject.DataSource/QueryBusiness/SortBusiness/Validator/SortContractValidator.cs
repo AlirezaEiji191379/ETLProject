@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace ETLProject.DataSource.QueryBusiness.SortBusiness.Validator;
 
-public class SortContractValidator : AbstractValidator<SortContract>
+internal class SortContractValidator : AbstractValidator<SortContract>
 {
     public SortContractValidator()
     {
