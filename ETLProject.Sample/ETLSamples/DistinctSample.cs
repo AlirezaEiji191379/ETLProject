@@ -1,18 +1,16 @@
 ﻿using ETLProject.Common.Common.DIManager;
 using ETLProject.Common.Database;
 using ETLProject.Common.Table;
-using ETLProject.Contract.Limit;
 using ETLProject.DataSource.Common.DIManager;
-using ETLProject.DataSource.QueryBusiness.LimitBusiness.Abstractions;
+using ETLProject.DataSource.QueryBusiness.DistinctBusiness.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
-using SqlKata;
 using SqlKata.Compilers.Abstractions;
 
 namespace ETLProject.Sample.ETLSamples;
 
-public class LimitSample
+public static class DistinctSample
 {
-    public static void CheckLimit()
+    public static void Sample()
     {
         var serviceCollection = new ServiceCollection();
 
@@ -22,6 +20,7 @@ public class LimitSample
         var provider = serviceCollection.BuildServiceProvider();
         var etlTable = new ETLTable()
         {
+            AliasName = "t",
             Columns = new List<ETLColumn>()
             {
                 new()
@@ -59,14 +58,9 @@ public class LimitSample
             TableName = "Users"
         };
 
-        /*var query = new Query("Users").Select("Id", "FullName");
-        etlTable.Query = query;*/
-
-        var limiter = provider.GetService<ILimitQueryBusiness>();
-        var compiler = provider.GetService<ICompilerProvider>().CreateCompiler(SqlKata.Compilers.Enums.DataSource.SqlServer);
-        limiter.AddLimitQuery(etlTable,new LimitContract(){Top = 4});
-        Console.WriteLine(compiler.Compile(etlTable.Query).ToString());
-
+        var distinctBusiness = provider.GetRequiredService < IDistinctQueryBusiness>();
+        var compiler = provider.GetRequiredService<ICompilerProvider>().CreateCompiler(SqlKata.Compilers.Enums.DataSource.SqlServer);
+        Console.WriteLine(compiler.Compile(distinctBusiness.DistinctTable(etlTable).Query));
 
     }
 }
