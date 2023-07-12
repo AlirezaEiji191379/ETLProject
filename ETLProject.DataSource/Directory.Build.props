@@ -8,6 +8,7 @@
 	  <PackageReference Include="SqlKata.Execution" Version="2.4.0" />
 	  <PackageReference Include="ETLProject.Common" Version="1.0.0" />
 	  <PackageReference Include="ETLProject.Contract" Version="1.0.0" />
+	  <PackageReference Include="FluentValidation" Version="11.6.0" />
   </ItemGroup>
 
 </Project>

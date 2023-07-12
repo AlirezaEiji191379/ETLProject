@@ -5,6 +5,6 @@ namespace ETLProject.DataSource.QueryBusiness.SortBusiness.Abstractions
 {
     public interface ITableSorter
     {
-        ETLTable SortTable(ETLTable inpuTable,SortContract sortContract);
+        ETLTable SortTable(ETLTable inputTable,SortContract sortContract);
     }
 }

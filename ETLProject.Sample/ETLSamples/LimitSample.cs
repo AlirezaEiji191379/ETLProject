@@ -62,7 +62,7 @@ public class LimitSample
         /*var query = new Query("Users").Select("Id", "FullName");
         etlTable.Query = query;*/
 
-        var limiter = provider.GetService<ILimitQueryMaker>();
+        var limiter = provider.GetService<ILimitQueryBusiness>();
         var compiler = provider.GetService<ICompilerProvider>().CreateCompiler(SqlKata.Compilers.Enums.DataSource.SqlServer);
         limiter.AddLimitQuery(etlTable,new LimitContract(){Top = 4});
         Console.WriteLine(compiler.Compile(etlTable.Query).ToString());
