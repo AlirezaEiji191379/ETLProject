@@ -1,4 +1,4 @@
 ﻿using ETLProject.Sample.ETLSamples;
 
-LimitSample.CheckLimit();
+SortSample.Sample();
 
