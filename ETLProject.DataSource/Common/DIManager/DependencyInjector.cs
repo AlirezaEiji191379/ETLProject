@@ -10,6 +10,8 @@ using ETLProject.DataSource.Common.Utilities;
 using ETLProject.DataSource.DataSourceInserting;
 using ETLProject.DataSource.DataSourceReading;
 using ETLProject.DataSource.DbTransfer;
+using ETLProject.DataSource.QueryBusiness.DbReaderBusiness;
+using ETLProject.DataSource.QueryBusiness.DbReaderBusiness.Abstractions;
 using ETLProject.DataSource.QueryBusiness.DistinctBusiness;
 using ETLProject.DataSource.QueryBusiness.DistinctBusiness.Abstractions;
 using ETLProject.DataSource.QueryBusiness.LimitBusiness;
@@ -53,6 +55,7 @@ namespace ETLProject.DataSource.Common.DIManager
             services.AddSingleton<IValidator<LimitContract>, LimitContractValidator>();
             services.AddSingleton<IValidator<SortContract>, SortContractValidator>();
             services.AddSingleton<IDistinctQueryBusiness, DistinctQueryBusiness>();
+            services.AddSingleton<IDbTableReader, DbTableReader>();
             services.AddKataServices();
         }
     }
