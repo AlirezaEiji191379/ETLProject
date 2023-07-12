@@ -1,0 +1,7 @@
+﻿<Project>
+    <ItemGroup>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.7" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9"/>
+        <PackageReference Include="ETLProject.Common" Version="1.0.0"/>
+    </ItemGroup>
+</Project>
