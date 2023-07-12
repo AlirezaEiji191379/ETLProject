@@ -8,4 +8,5 @@ public class DbReaderContract
     public List<DbColumnDto> SelectedColumns { get; set; }
     public DataSourceType DataSourceType { get; set; }
     public DatabaseConnectionParameters DatabaseConnectionParameters { get; set; }
+    public string Schema { get; set; }
 }

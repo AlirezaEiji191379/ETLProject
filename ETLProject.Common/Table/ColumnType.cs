@@ -7,6 +7,7 @@
         BooleanType,
         DoubleType,
         LongType,
-        Guid
+        Guid,
+        DateTime
     }
 }

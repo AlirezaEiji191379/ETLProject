@@ -27,7 +27,6 @@ public static class DbTableReaderSample
             DataSourceType = DataSourceType.SQLServer,
             DatabaseConnectionParameters = new DatabaseConnectionParameters()
             {
-                Schema = "dbo"
             },
             SelectedColumns = new List<DbColumnDto>()
             {

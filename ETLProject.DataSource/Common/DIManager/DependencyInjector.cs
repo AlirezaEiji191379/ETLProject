@@ -56,6 +56,7 @@ namespace ETLProject.DataSource.Common.DIManager
             services.AddSingleton<IValidator<SortContract>, SortContractValidator>();
             services.AddSingleton<IDistinctQueryBusiness, DistinctQueryBusiness>();
             services.AddSingleton<IDbTableReader, DbTableReader>();
+            services.AddSingleton<IEtlColumnTypeMapper, EtlColumnTypeMapper>();
             services.AddKataServices();
         }
     }

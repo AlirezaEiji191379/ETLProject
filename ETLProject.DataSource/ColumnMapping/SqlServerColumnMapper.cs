@@ -10,22 +10,22 @@ namespace ETLProject.DataSource.ColumnMapping
     {
         public DataSourceType DataSourceType => DataSourceType.SQLServer;
 
-        public BaseDBColumn AdaptType(ETLColumn etlColumn)
+        public BaseDBColumn AdaptType(ETLColumnType etlColumnType)
         {
-            switch (etlColumn.ETLColumnType.Type)
+            switch (etlColumnType.Type)
             {
                 case ColumnType.StringType:
                     return new SqlServerDBColumn()
                     {
                         SqlServerDbType = SqlServerDbType.Varchar,
-                        Length = etlColumn.ETLColumnType.Length ?? 200 
+                        Length = etlColumnType.Length ?? 200 
                     };
                 case ColumnType.DoubleType:
                     return new SqlServerDBColumn()
                     {
                         SqlServerDbType= SqlServerDbType.Decimal,
-                        Length = etlColumn.ETLColumnType.Length ?? 30,
-                        Precision = etlColumn.ETLColumnType.Precision ?? 10,
+                        Length = etlColumnType.Length ?? 30,
+                        Precision = etlColumnType.Precision ?? 10,
                     };
                 case ColumnType.BooleanType:
                     return new SqlServerDBColumn()
@@ -46,6 +46,11 @@ namespace ETLProject.DataSource.ColumnMapping
                     return new SqlServerDBColumn()
                     {
                         SqlServerDbType = SqlServerDbType.UniqueIdentifier
+                    };
+                case ColumnType.DateTime:
+                    return new SqlServerDBColumn()
+                    {
+                        SqlServerDbType = SqlServerDbType.DateTime
                     };
                 default:
                     throw new NotImplementedException();

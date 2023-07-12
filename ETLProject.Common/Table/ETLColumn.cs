@@ -28,6 +28,8 @@ namespace ETLProject.Common.Table
                     return typeof(double);
                 case ColumnType.Guid:
                     return typeof(Guid);
+                case ColumnType.DateTime:
+                    return typeof(DateTime);
                 default:
                     throw new NotSupportedException();
             }
@@ -45,6 +47,8 @@ namespace ETLProject.Common.Table
                 return ColumnType.BooleanType;
             if (type == typeof(Guid))
                 return ColumnType.Guid;
+            if (type == typeof(DateTime))
+                return ColumnType.DateTime;
             throw new NotSupportedException();
         }
 

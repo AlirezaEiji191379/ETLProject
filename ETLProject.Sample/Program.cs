@@ -1,3 +1,1 @@
-﻿using ETLProject.Sample.ETLSamples;
-
-DbTableReaderSample.Sample();
+﻿Console.WriteLine("reza");

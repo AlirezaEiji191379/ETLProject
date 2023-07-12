@@ -8,10 +8,10 @@ namespace ETLProject.DataSource.Common.Utilities
     {
         public string GetTableName(ETLTable etlTable)
         {
-            if (etlTable.DatabaseConnection.Schema == null)
+            if (etlTable.TableSchema == null)
                 return etlTable.TableName;
 
-            return new StringBuilder(etlTable.DatabaseConnection.Schema).Append("." + etlTable.TableName).ToString();
+            return new StringBuilder(etlTable.TableSchema).Append("." + etlTable.TableName).ToString();
         }
     }
 }

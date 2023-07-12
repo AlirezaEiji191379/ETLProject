@@ -52,9 +52,9 @@ internal static class WriteSamplesHelpers
                 Id = Guid.NewGuid(),
                 Password = "92?VH2WMrx",
                 Port = "1433",
-                Schema = "dbo",
                 Username = "sa"
             },
+            TableSchema = "dbo"
         };
         await dbTableCreator.CreateTable(etlTable);
         var dataInserterProvider = provider.GetRequiredService<IDataBulkCopyProvider>();
@@ -101,9 +101,9 @@ internal static class WriteSamplesHelpers
                 Id = Guid.NewGuid(),
                 Password = "92?VH2WMrx",
                 Port = "5432",
-                Schema = "public",
                 Username = "postgres"
             },
+            TableSchema = "public",
             Columns = new List<ETLColumn>
             {
                 new()
@@ -139,9 +139,9 @@ internal static class WriteSamplesHelpers
                 Id = Guid.NewGuid(),
                 Password = "92?VH2WMrx",
                 Port = "1433",
-                Schema = "dbo",
                 Username = "sa"
             },
+            TableSchema = "dbo",
             DataSourceType = DataSourceType.SQLServer,
             TableName = "SampleUsers2",
         };
@@ -174,7 +174,6 @@ internal static class WriteSamplesHelpers
                 Id = Guid.NewGuid(),
                 Password = "92?VH2WMrx",
                 Port = "5432",
-                Schema = "public",
                 Username = "postgres"
             },
             Columns = new List<ETLColumn>
@@ -196,7 +195,8 @@ internal static class WriteSamplesHelpers
                         Length= 100
                     }
                 }
-            }
+            },
+            TableSchema = "public"
         };
 
         await dataTransfer.TransferDataInSingleConnection(etlTable,"userse27",TableType.Permanent); }

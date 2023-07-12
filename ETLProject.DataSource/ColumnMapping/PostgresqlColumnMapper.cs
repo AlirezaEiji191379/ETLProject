@@ -10,22 +10,22 @@ namespace ETLProject.DataSource.ColumnMapping
     {
         public DataSourceType DataSourceType => DataSourceType.Postgresql;
 
-        public BaseDBColumn AdaptType(ETLColumn etlColumn)
+        public BaseDBColumn AdaptType(ETLColumnType etlColumnType)
         {
-            switch (etlColumn.ETLColumnType.Type)
+            switch (etlColumnType.Type)
             {
                 case ColumnType.StringType:
                     return new PostgresqlDBColumn()
                     {
                         PostgresqlDbType = PostgresqlDbType.Character_varying,
-                        Length = etlColumn.ETLColumnType.Length ?? 200
+                        Length = etlColumnType.Length ?? 200
                     };
                 case ColumnType.DoubleType:
                     return new PostgresqlDBColumn()
                     {
                         PostgresqlDbType = PostgresqlDbType.Numeric,
-                        Length = etlColumn.ETLColumnType.Length ?? 30,
-                        Precision = etlColumn.ETLColumnType.Precision ?? 10,
+                        Length = etlColumnType.Length ?? 30,
+                        Precision = etlColumnType.Precision ?? 10,
                     };
                 case ColumnType.BooleanType:
                     return new PostgresqlDBColumn()
@@ -46,6 +46,11 @@ namespace ETLProject.DataSource.ColumnMapping
                     return new PostgresqlDBColumn()
                     {
                         PostgresqlDbType = PostgresqlDbType.Uuid
+                    };
+                case ColumnType.DateTime:
+                    return new PostgresqlDBColumn()
+                    {
+                        PostgresqlDbType = PostgresqlDbType.Timestamp_without_time_zone
                     };
                 default:
                     throw new NotImplementedException();

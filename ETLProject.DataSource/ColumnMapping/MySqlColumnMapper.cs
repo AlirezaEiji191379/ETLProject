@@ -10,22 +10,22 @@ namespace ETLProject.DataSource.ColumnMapping
     {
         public DataSourceType DataSourceType => DataSourceType.MySql;
 
-        public BaseDBColumn AdaptType(ETLColumn etlColumn)
+        public BaseDBColumn AdaptType(ETLColumnType etlColumnType)
         {
-            switch (etlColumn.ETLColumnType.Type)
+            switch (etlColumnType.Type)
             {
                 case ColumnType.StringType:
                     return new MySqlDBColumn()
                     {
                         MySqlDbType = MySqlDbType.Varchar,
-                        Length = etlColumn.ETLColumnType.Length ?? 200
+                        Length = etlColumnType.Length ?? 200
                     };
                 case ColumnType.DoubleType:
                     return new MySqlDBColumn()
                     {
                         MySqlDbType = MySqlDbType.Double,
-                        Length = etlColumn.ETLColumnType.Length ?? 30,
-                        Precision = etlColumn.ETLColumnType.Precision ?? 10,
+                        Length = etlColumnType.Length ?? 30,
+                        Precision = etlColumnType.Precision ?? 10,
                     };
                 case ColumnType.BooleanType:
                     return new MySqlDBColumn()
@@ -47,6 +47,11 @@ namespace ETLProject.DataSource.ColumnMapping
                     {
                         MySqlDbType = MySqlDbType.Char,
                         Length = 16
+                    };
+                case ColumnType.DateTime:
+                    return new MySqlDBColumn()
+                    {
+                        MySqlDbType = MySqlDbType.DateTime
                     };
                 default:
                     throw new NotImplementedException();

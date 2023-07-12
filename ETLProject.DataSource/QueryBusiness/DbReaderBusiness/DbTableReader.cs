@@ -23,6 +23,7 @@ public class DbTableReader : IDbTableReader
             AliasName = _randomStringGenerator.GenerateRandomString(8),
             DataSourceType = dbReaderContract.DataSourceType,
             DatabaseConnection = dbReaderContract.DatabaseConnectionParameters,
+            TableSchema = dbReaderContract.Schema,
             Columns = dbReaderContract.SelectedColumns.Select(selectedColumn => new ETLColumn()
             {
                 Name = selectedColumn.Name,

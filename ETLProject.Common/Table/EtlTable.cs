@@ -14,11 +14,12 @@ namespace ETLProject.Common.Table
         public List<ETLColumn> Columns { get; set; }
         public string TableName { get; set; }
         public string AliasName { get; set; }
+        public string TableSchema { get; set; }
         public string TableFullName
         {
             get
             {
-                var tableFullNameBuilder = new StringBuilder(DatabaseConnection.Schema).Append(".").Append(TableName);
+                var tableFullNameBuilder = new StringBuilder(TableSchema).Append(".").Append(TableName);
                 if (AliasName == null)
                     return tableFullNameBuilder.ToString();
                 return tableFullNameBuilder.Append(" as ").Append(AliasName).ToString();
