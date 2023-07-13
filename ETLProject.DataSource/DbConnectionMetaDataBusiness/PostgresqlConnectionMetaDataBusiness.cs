@@ -60,19 +60,19 @@ internal class PostgresqlConnectionMetaDataBusiness : IDbConnectionMetaDataBusin
             .Where("table_name", "=", tableName);
         var dapperRowsResult = await queryFactory.GetAsync(query);
         return (from IDictionary<string, object> dapperRow in dapperRowsResult
-            let lengthString = dapperRow["character_maximum_length"].ToString()
-            let scaleString = dapperRow["numeric_scale"].ToString()
-            let collation = dapperRow["collation_name"].ToString()
-            let dbDataType = dapperRow["data_type"].ToString()
+            let lengthString = dapperRow["character_maximum_length"]
+            let scaleString = dapperRow["numeric_scale"]
+            let collation = dapperRow["collation_name"]
+            let dbDataType = dapperRow["data_type"]
             let postgresqlDbColumn = new PostgresqlDBColumn()
-                { PostgresqlDbType = PostgresqlEnumTypeMapper.PostgreSqlDataTypes[dbDataType] }
+                { PostgresqlDbType = PostgresqlEnumTypeMapper.PostgreSqlDataTypes[dbDataType.ToString()] }
             select new DbTableColumnInformation()
             {
-                Collation = collation,
-                Length = lengthString == null ? null : int.Parse(lengthString),
-                Precision = scaleString == null ? null : int.Parse(scaleString),
+                Collation = collation?.ToString(),
+                Length = lengthString == null ? null : int.Parse(lengthString.ToString()),
+                Precision = scaleString == null ? null : int.Parse(scaleString.ToString()),
                 ColumnName = dapperRow["column_name"].ToString()!,
-                DatabaseType = dbDataType,
+                DatabaseType = dbDataType.ToString(),
                 SystemType = _etlColumnTypeMapper.AdaptPostgresqlType(postgresqlDbColumn).Type.ToString()
             }).ToList();
     }
