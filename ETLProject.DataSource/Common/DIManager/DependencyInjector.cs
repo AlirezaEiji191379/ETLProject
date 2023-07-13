@@ -6,9 +6,12 @@ using ETLProject.DataSource.Common.Providers;
 using ETLProject.DataSource.Common.Providers.BulkCopy;
 using ETLProject.DataSource.Common.Providers.ColumnMapper;
 using ETLProject.DataSource.Common.Providers.DbConnection;
+using ETLProject.DataSource.Common.Providers.DbConnectionMetaDataProvider;
 using ETLProject.DataSource.Common.Utilities;
 using ETLProject.DataSource.DataSourceInserting;
 using ETLProject.DataSource.DataSourceReading;
+using ETLProject.DataSource.DbConnectionMetaDataBusiness;
+using ETLProject.DataSource.DbConnectionMetaDataBusiness.Abstractions;
 using ETLProject.DataSource.DbTransfer;
 using ETLProject.DataSource.QueryBusiness.DbReaderBusiness;
 using ETLProject.DataSource.QueryBusiness.DbReaderBusiness.Abstractions;
@@ -57,6 +60,12 @@ namespace ETLProject.DataSource.Common.DIManager
             services.AddSingleton<IDistinctQueryBusiness, DistinctQueryBusiness>();
             services.AddSingleton<IDbTableReader, DbTableReader>();
             services.AddSingleton<IEtlColumnTypeMapper, EtlColumnTypeMapper>();
+            
+            services.AddSingleton<IDbConnectionMetaDataBusiness,SqlServerDbConnectionMetaDataBusiness>();
+            services.AddSingleton<IDbConnectionMetaDataBusiness,MySqlDbConnectionMetaDataBusiness>();
+            services.AddSingleton<IDbConnectionMetaDataBusiness,PostgresqlConnectionMetaDataBusiness>();
+            services.AddSingleton<IDbConnectionMetaDataBusinessProvider,DbConnectionMetaDataBusinessProvider>();
+            
             services.AddKataServices();
         }
     }
