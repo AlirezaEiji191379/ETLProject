@@ -70,6 +70,37 @@ public class ConnectionController : ControllerBase
         var result = await _mediator.Send(getAllConnectionsQuery);
         return StatusCode(result.StatusCode,new {Message = result.Message});
     }
+
+    [HttpGet]
+    [Route("Connection/{connectionId}")]
+    public async Task<IActionResult> GetConnection(Guid connectionId)
+    {
+        var getConnectionByIdQuery = new GetConnectionByIdQuery()
+        {
+            ConnectionId = connectionId
+        };
+        var result = await _mediator.Send(getConnectionByIdQuery);
+        return StatusCode(result.StatusCode,new {Message = result.Message});
+    }
     
+    [HttpDelete]
+    [Route("Connection/{connectionId}")]
+    public async Task<IActionResult> DeleteConnection(Guid connectionId)
+    {
+        var deleteConnectionCommand = new DeleteConnectionCommand()
+        {
+            ConnectionId = connectionId
+        };
+        var result = await _mediator.Send(deleteConnectionCommand);
+        return StatusCode(result.StatusCode,new {Message = result.Message});
+    }
+    
+    [HttpPut]
+    [Route("Connection")]
+    public async Task<IActionResult> UpdateConnection([FromBody] UpdateConnectionCommand updateConnectionCommand)
+    {
+        var result = await _mediator.Send(updateConnectionCommand);
+        return StatusCode(result.StatusCode,new {Message = result.Message});
+    }
     
 }

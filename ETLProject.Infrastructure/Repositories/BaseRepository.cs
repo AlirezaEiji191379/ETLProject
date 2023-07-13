@@ -5,47 +5,53 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ETLProject.Infrastructure.Repositories;
 
-public class BaseRepository<T>: IDataRepository<T> where T : class
+public abstract class BaseRepository<T>: IDataRepository<T> where T : class
 {
-    private readonly EtlDbContext _dbContext;
+    protected readonly EtlDbContext DbContext;
 
     public BaseRepository(EtlDbContext dbContext)
     {
-        _dbContext = dbContext;
+        DbContext = dbContext;
     }
-    
+
+    public abstract void Attach(T entity);
+
     public Task Create(T entity)
     {
-        return _dbContext.Set<T>().AddAsync(entity).AsTask();
+        return DbContext.Set<T>().AddAsync(entity).AsTask();
     }
 
     public void Update(T entity)
     {
-        _dbContext.Set<T>().Update(entity);
+        DbContext.Set<T>().Update(entity);
     }
 
     public void Delete(T entity)
     {
-        _dbContext.Set<T>().Remove(entity);
+        DbContext.Set<T>().Remove(entity);
     }
 
     public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges = false)
     {
         return trackChanges
-            ? _dbContext.Set<T>().Where(expression)
-            : _dbContext.Set<T>().Where(expression).AsNoTracking();
+            ? DbContext.Set<T>().Where(expression)
+            : DbContext.Set<T>().Where(expression).AsNoTracking();
     }
 
     public IQueryable<T> GetAll(bool trackChanges = false)
     {
         return trackChanges
-            ? _dbContext.Set<T>()
-            : _dbContext.Set<T>().AsNoTracking();
+            ? DbContext.Set<T>()
+            : DbContext.Set<T>().AsNoTracking();
     }
 
     public Task SaveChangesAsync()
     {
-        return _dbContext.SaveChangesAsync();
+        return DbContext.SaveChangesAsync();
     }
-    
+
+    public Task<bool> Any(Expression<Func<T, bool>> expression)
+    {
+        return DbContext.Set<T>().AnyAsync(expression);
+    }
 }
