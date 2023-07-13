@@ -14,6 +14,19 @@ public class EtlConnectionRepository : BaseRepository<EtlConnection>
     public override void Attach(EtlConnection entity)
     {
         DbContext.Attach(entity);
-        DbContext.Entry(entity).State = EntityState.Modified;
+        if (entity.Username != null)
+            DbContext.Entry(entity).Property(x => x.Username).IsModified = true;
+
+        if (entity.Password != null)
+            DbContext.Entry(entity).Property(x => x.Password).IsModified = true;
+
+        if (entity.Host != null)
+            DbContext.Entry(entity).Property(x => x.Host).IsModified = true;
+        
+        if (entity.Port != null)
+            DbContext.Entry(entity).Property(x => x.Port).IsModified = true;
+        
+        if (entity.ConnectionName != null)
+            DbContext.Entry(entity).Property(x => x.ConnectionName).IsModified = true;
     }
 }

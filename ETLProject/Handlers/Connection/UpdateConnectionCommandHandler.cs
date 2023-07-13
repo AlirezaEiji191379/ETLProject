@@ -43,6 +43,7 @@ public class UpdateConnectionCommandHandler : IRequestHandler<UpdateConnectionCo
             
             if (request.Password != null)
                 etlConnection.Password = request.Password;
+            
             _etlConnectionRepository.Attach(etlConnection);
             await _etlConnectionRepository.SaveChangesAsync();
 
@@ -57,7 +58,7 @@ public class UpdateConnectionCommandHandler : IRequestHandler<UpdateConnectionCo
             return new ResponseDto()
             {
                 StatusCode = 400,
-                Message = e.Message
+                Message = e.InnerException?.Message
             };
         }
     }
