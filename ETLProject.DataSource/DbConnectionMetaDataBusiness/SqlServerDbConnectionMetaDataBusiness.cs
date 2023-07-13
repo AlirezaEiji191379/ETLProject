@@ -37,7 +37,7 @@ internal class SqlServerDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusi
     public async Task<List<DbTableAttributes>> GetDatabaseTables(ConnectionDto connectionDto, string databaseName)
     {
         var queryFactory = GetQueryFactory(connectionDto, databaseName);
-        var query = new Query($"{databaseName}.INFORMATION_SCHEMA.TABLES").Select("TABLE_NAME", "TABLE_SCHEMA")
+        var query = new Query().FromRaw($"[{databaseName}].[INFORMATION_SCHEMA].[TABLES]").Select("TABLE_NAME", "TABLE_SCHEMA")
             .Where("TABLE_TYPE", "=", "BASE TABLE");
         var dapperRowsResult = await queryFactory.GetAsync(query);
         return (from IDictionary<string, object> dapperRow in dapperRowsResult
@@ -61,16 +61,16 @@ internal class SqlServerDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusi
             .Where("TABLE_NAME", "=", tableName);
         var dapperRowsResult = await queryFactory.GetAsync(query);
         return (from IDictionary<string, object> dapperRow in dapperRowsResult
-            let lengthString = dapperRow["CHARACTER_MAXIMUM_LENGTH"].ToString()
-            let scaleString = dapperRow["NUMERIC_SCALE"].ToString()
-            let collation = dapperRow["COLLATION_NAME"].ToString()
+            let lengthString = dapperRow["CHARACTER_MAXIMUM_LENGTH"] 
+            let scaleString = dapperRow["NUMERIC_SCALE"]
+            let collation = dapperRow["COLLATION_NAME"]
             let dbDataType = dapperRow["DATA_TYPE"].ToString()
-            let sqlDbColumn = new SqlServerDBColumn() { SqlServerDbType = Enum.Parse<SqlServerDbType>(dbDataType) }
+            let sqlDbColumn = new SqlServerDBColumn() { SqlServerDbType = Enum.Parse<SqlServerDbType>(dbDataType,true) }
             select new DbTableColumnInformation()
             {
-                Collation = collation,
-                Length = lengthString == null ? null : int.Parse(lengthString),
-                Precision = scaleString == null ? null : int.Parse(scaleString),
+                Collation = collation?.ToString(),
+                Length = lengthString == null ? null : int.Parse(lengthString.ToString()),
+                Precision = scaleString == null ? null : int.Parse(scaleString.ToString()),
                 ColumnName = dapperRow["COLUMN_NAME"].ToString()!,
                 DatabaseType = dbDataType,
                 SystemType = _etlColumnTypeMapper.AdaptSqlServerType(sqlDbColumn).Type.ToString()
