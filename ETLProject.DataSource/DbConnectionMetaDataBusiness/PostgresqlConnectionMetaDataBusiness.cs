@@ -14,12 +14,14 @@ internal class PostgresqlConnectionMetaDataBusiness : IDbConnectionMetaDataBusin
 {
     private readonly IQueryFactoryProvider _queryFactoryProvider;
     private readonly IEtlColumnTypeMapper _etlColumnTypeMapper;
+    private readonly IDbConnectionProvider _dbConnectionProvider;
 
     public PostgresqlConnectionMetaDataBusiness(IQueryFactoryProvider queryFactoryProvider,
-        IEtlColumnTypeMapper etlColumnTypeMapper)
+        IEtlColumnTypeMapper etlColumnTypeMapper, IDbConnectionProvider dbConnectionProvider)
     {
         _queryFactoryProvider = queryFactoryProvider;
         _etlColumnTypeMapper = etlColumnTypeMapper;
+        _dbConnectionProvider = dbConnectionProvider;
     }
 
     public DataSourceType DataSourceType { get; } = DataSourceType.Postgresql;
@@ -75,6 +77,21 @@ internal class PostgresqlConnectionMetaDataBusiness : IDbConnectionMetaDataBusin
                 DatabaseType = dbDataType.ToString(),
                 SystemType = _etlColumnTypeMapper.AdaptPostgresqlType(postgresqlDbColumn).Type.ToString()
             }).ToList();
+    }
+
+    public void TestConnection(ConnectionDto connectionDto)
+    {
+        var connectionParameter = new DatabaseConnectionParameters()
+        {
+            DataSourceType = this.DataSourceType,
+            Host = connectionDto.Host,
+            Password = connectionDto.Password,
+            Username = connectionDto.Username,
+            Port = connectionDto.Port,
+        };
+        using var connection = _dbConnectionProvider.GetConnection(connectionParameter);
+        connection.Open();
+        connection.Close();
     }
 
     private QueryFactory GetQueryFactory(ConnectionDto connectionDto, string databaseName)

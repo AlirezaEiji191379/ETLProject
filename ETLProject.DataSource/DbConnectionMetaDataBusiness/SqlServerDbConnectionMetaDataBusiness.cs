@@ -14,13 +14,14 @@ internal class SqlServerDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusi
 {
     private readonly IQueryFactoryProvider _queryFactoryProvider;
     private readonly IEtlColumnTypeMapper _etlColumnTypeMapper;
-
+    private readonly IDbConnectionProvider _dbConnectionProvider;
 
     public SqlServerDbConnectionMetaDataBusiness(IQueryFactoryProvider queryFactoryProvider,
-        IEtlColumnTypeMapper etlColumnTypeMapper)
+        IEtlColumnTypeMapper etlColumnTypeMapper, IDbConnectionProvider dbConnectionProvider)
     {
         _queryFactoryProvider = queryFactoryProvider;
         _etlColumnTypeMapper = etlColumnTypeMapper;
+        _dbConnectionProvider = dbConnectionProvider;
     }
 
     public DataSourceType DataSourceType { get; } = DataSourceType.SQLServer;
@@ -76,6 +77,22 @@ internal class SqlServerDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusi
                 SystemType = _etlColumnTypeMapper.AdaptSqlServerType(sqlDbColumn).Type.ToString()
             }).ToList();
     }
+
+    public void TestConnection(ConnectionDto connectionDto)
+    {
+        var connectionParameter = new DatabaseConnectionParameters()
+        {
+            DataSourceType = this.DataSourceType,
+            Host = connectionDto.Host,
+            Password = connectionDto.Password,
+            Username = connectionDto.Username,
+            Port = connectionDto.Port,
+        };
+        using var connection = _dbConnectionProvider.GetConnection(connectionParameter);
+        connection.Open();
+        connection.Close();
+    }
+
     private QueryFactory GetQueryFactory(ConnectionDto connectionDto, string databaseName)
     {
         var connectionParameter = new DatabaseConnectionParameters()
