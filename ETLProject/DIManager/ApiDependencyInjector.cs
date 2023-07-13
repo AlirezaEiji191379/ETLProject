@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using ETLProject.Common.Common.DIManager;
 using ETLProject.Contract.DbConnectionContracts.Commands;
+using ETLProject.Contract.DbConnectionContracts.Queries;
 using ETLProject.DataSource.Common.DIManager;
 using ETLProject.Infrastructure;
 using ETLProject.Validators;
@@ -20,6 +21,10 @@ public static class ApiDependencyInjector
         services.AddSwaggerGen();
 
         services.AddSingleton<IValidator<DbConnectionInsertCommand>,DbConnectionInsertCommandValidator>();
+        services.AddSingleton<IValidator<GetDatabasesQuery>,GetDataBasesQueryValidator>();
+        services.AddSingleton<IValidator<GetDatabaseTablesQuery>,GetDataBaseTablesQueryValidator>();
+        services.AddSingleton<IValidator<GetTableColumnInfosQuery>,GetTableColumnInfoQueryValidator>();
+        
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
     }
