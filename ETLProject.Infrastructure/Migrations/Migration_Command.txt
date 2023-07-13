@@ -1,0 +1,3 @@
+﻿dotnet ef migrations add "init_etl_connection_table" -p ETLProject.Infrastructure -o Migrations --startup-project ETLProject
+dotnet ef migrations remove -p ETLProject.Infrastructure  --startup-project ETLProject
+dotnet ef database update -p ETLProject.Infrastructure --startup-project ETLProject

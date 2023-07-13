@@ -28,7 +28,7 @@ namespace ETLProject.DataSource.TableFactory
             var tableDefinition = etlTable.Columns.Select(etlColumn => new TableColumnDefinitionDto
             {
                 ColumnName = etlColumn.Name,
-                ColumnDbType = columnMapper.AdaptType(etlColumn),
+                ColumnDbType = columnMapper.AdaptType(etlColumn.ETLColumnType),
                 IsAutoIncrement = etlColumn.EtlColumnParameters.IsAutoIncrement,
                 IsIdentity = etlColumn.EtlColumnParameters.IsIdentity,
                 IsPrimaryKey = etlColumn.EtlColumnParameters.IsPrimaryKey,

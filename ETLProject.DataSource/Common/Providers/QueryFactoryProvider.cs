@@ -5,6 +5,7 @@ using SqlKata.Compilers;
 using SqlKata.Compilers.Abstractions;
 using SqlKata.Execution;
 using System.Data;
+using ETLProject.Common.Database;
 
 namespace ETLProject.DataSource.Common.Providers
 {
@@ -30,16 +31,24 @@ namespace ETLProject.DataSource.Common.Providers
             {
                 etlTable.DbConnection = _connectionProvider.GetConnection(etlTable.DatabaseConnection);
             }
+
             if (etlTable.DbConnection.State != ConnectionState.Open)
                 etlTable.DbConnection.Open();
 
-            var compiler = CreateCompiler(etlTable);
+            var compiler = CreateCompiler(etlTable.DataSourceType);
             return new QueryFactory(etlTable.DbConnection, compiler);
         }
 
-        private Compiler CreateCompiler(ETLTable etlTable)
+        public QueryFactory GetQueryFactoryByConnection(DatabaseConnectionParameters databaseConnectionParameters)
         {
-            var dataSource = _dataSourceTypeAdapter.CreateDataSourceFromDataSourceType(etlTable.DataSourceType);
+            var connection = _connectionProvider.GetConnection(databaseConnectionParameters);
+            var compiler = CreateCompiler(databaseConnectionParameters.DataSourceType);
+            return new QueryFactory(connection,compiler);
+        }
+
+        private Compiler CreateCompiler(DataSourceType dataSourceType)
+        {
+            var dataSource = _dataSourceTypeAdapter.CreateDataSourceFromDataSourceType(dataSourceType);
             var compiler = _compilerProvider.CreateCompiler(dataSource);
             return compiler;
         }

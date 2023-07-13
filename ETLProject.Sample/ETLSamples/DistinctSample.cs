@@ -51,11 +51,11 @@ public static class DistinctSample
                 Id = Guid.NewGuid(),
                 Password = "92?VH2WMrx",
                 Port = "1433",
-                Schema = "testdb",
                 Username = "alirezaeiji151379"
             },
             TableType = TableType.Permanent,
-            TableName = "Users"
+            TableName = "Users",
+            TableSchema = "testdb"
         };
 
         var distinctBusiness = provider.GetRequiredService < IDistinctQueryBusiness>();

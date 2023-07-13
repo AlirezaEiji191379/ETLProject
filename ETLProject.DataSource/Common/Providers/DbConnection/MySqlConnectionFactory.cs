@@ -8,9 +8,12 @@ namespace ETLProject.DataSource.Common.Providers.DbConnection
     internal class MySqlConnectionFactory : IDbConnectionFactory
     {
         public DataSourceType DataSourceType { get; } = DataSourceType.MySql;
+
         public IDbConnection GetConnection(DatabaseConnectionParameters databaseConnection)
         {
-            var connectionString = $"Server={databaseConnection.Host};Database={databaseConnection.DatabaseName};Uid={databaseConnection.Username};Pwd={databaseConnection.Password};";
+            var connectionString = databaseConnection.DatabaseName != null
+                ? $"Server={databaseConnection.Host};Database={databaseConnection.DatabaseName};Uid={databaseConnection.Username};Pwd={databaseConnection.Password};"
+                : $"Server={databaseConnection.Host};Uid={databaseConnection.Username};Pwd={databaseConnection.Password};";
             return new MySqlConnection(connectionString);
         }
     }

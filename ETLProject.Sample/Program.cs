@@ -1,3 +1,4 @@
-﻿using ETLProject.Sample.ETLSamples;
+﻿
+Console.WriteLine();
 
-DistinctSample.Sample();
+

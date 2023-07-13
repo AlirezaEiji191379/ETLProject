@@ -8,11 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-  </ItemGroup>
-
-  <ItemGroup>
     <!--<ProjectReference Include="..\ETLProject.Common\ETLProject.Common.csproj" /> -->
     <ProjectReference Include="..\ETLProject.DataSource\ETLProject.DataSource.csproj" />
     <ProjectReference Include="..\ETLProject.Pipeline\ETLProject.Pipeline.csproj" />

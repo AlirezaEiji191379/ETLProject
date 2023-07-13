@@ -7,6 +7,6 @@ namespace ETLProject.DataSource.Abstractions
     public interface IColumnTypeMapper
     {
         DataSourceType DataSourceType { get; }
-        BaseDBColumn AdaptType(ETLColumn etlColumn);
+        BaseDBColumn AdaptType(ETLColumnType etlColumnType);
     }
 }

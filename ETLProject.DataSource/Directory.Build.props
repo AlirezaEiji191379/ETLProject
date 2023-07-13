@@ -4,10 +4,10 @@
 	  <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
 	  <PackageReference Include="Npgsql" Version="7.0.4" />
 	  <PackageReference Include="MySql.Data" Version="8.0.33" />
-	  <PackageReference Include="SqlKata.Extension" Version="1.0.0" />
-	  <PackageReference Include="SqlKata.Execution" Version="2.4.0" />
-	  <PackageReference Include="ETLProject.Common" Version="1.0.0" />
-	  <PackageReference Include="ETLProject.Contract" Version="1.0.0" />
+	  <PackageReference Include="SqlKata.Extension" Version="1.0.1" />
+	  <PackageReference Include="SqlKata.Execution.Extension" Version="1.0.1" />
+	  <PackageReference Include="ETLProject.Common" Version="1.0.1" />
+	  <PackageReference Include="ETLProject.Contract" Version="1.0.1" />
 	  <PackageReference Include="FluentValidation" Version="11.6.0" />
   </ItemGroup>
 
