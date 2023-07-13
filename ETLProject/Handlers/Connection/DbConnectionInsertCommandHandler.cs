@@ -35,10 +35,11 @@ public class DbConnectionInsertCommandHandler : IRequestHandler<DbConnectionInse
                 Id = Guid.NewGuid()
             };
             await _etlConnectionRepository.Create(etlConnection);
+            await _etlConnectionRepository.SaveChangesAsync();
             return new ResponseDto()
             {
                 StatusCode = 200,
-                Message = "Connection is Created Successfully!"
+                Message = etlConnection.Id.ToString()
             };
         }
         catch (Exception exception)
