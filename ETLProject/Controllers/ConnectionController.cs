@@ -61,5 +61,15 @@ public class ConnectionController : ControllerBase
         var result = await _mediator.Send(getTableColumnInfosQuery);
         return StatusCode(result.StatusCode,new {Message = result.Message});
     }
+
+    [HttpGet]
+    [Route("Connections")]
+    public async Task<IActionResult> GetAllConnections()
+    {
+        var getAllConnectionsQuery = new GetDatabaseConnectionsQuery() { };
+        var result = await _mediator.Send(getAllConnectionsQuery);
+        return StatusCode(result.StatusCode,new {Message = result.Message});
+    }
+    
     
 }

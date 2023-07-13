@@ -24,6 +24,9 @@ public static class ApiDependencyInjector
         services.AddSingleton<IValidator<GetDatabasesQuery>,GetDataBasesQueryValidator>();
         services.AddSingleton<IValidator<GetDatabaseTablesQuery>,GetDataBaseTablesQueryValidator>();
         services.AddSingleton<IValidator<GetTableColumnInfosQuery>,GetTableColumnInfoQueryValidator>();
+        services.AddSingleton<IValidator<GetConnectionByIdQuery>,GetConnectionByIdQueryValidator>();
+        services.AddSingleton<IValidator<DeleteConnectionCommand>,DeleteConnectionCommandValidator>();
+        services.AddSingleton<IValidator<UpdateConnectionCommand>,UpdateConnectionCommandValidator>();
         
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
