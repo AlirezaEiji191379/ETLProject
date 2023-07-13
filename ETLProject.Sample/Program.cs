@@ -18,14 +18,14 @@ var dbConnectionMetaDataProvider = provider.GetRequiredService<IDbConnectionMeta
 
 var sqlServerMetaDataBusiness = dbConnectionMetaDataProvider.GetMetaDataBusiness(DataSourceType.SQLServer);
 
-var result = await sqlServerMetaDataBusiness.GetDatabases(new ConnectionDto()
+var result = await sqlServerMetaDataBusiness.GetDatabaseTables(new ConnectionDto()
 {
     DataSourceType = DataSourceType.SQLServer,
     Host = "192.168.30.5",
     Password = "!@#123qwe",
     Port = "1433",
     Username = "sa"
-});
+},"STAR_21.0.0.0_Main_sajad");
 
 Console.WriteLine();
 
