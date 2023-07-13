@@ -34,14 +34,14 @@ internal class MySqlDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusiness
     public async Task<List<DbTableAttributes>> GetDatabaseTables(ConnectionDto connectionDto, string databaseName)
     {
         var queryFactory = GetQueryFactory(connectionDto, databaseName);
-        var query = new Query($"information_schema.tables").Select("table_name", "table_schema")
-            .Where("table_type", "=", "BASE TABLE").Where("table_catalog", "=", databaseName);
+        var query = new Query($"information_schema.tables").Select("TABLE_NAME", "TABLE_SCHEMA")
+            .Where("TABLE_TYPE", "=", "BASE TABLE").Where("TABLE_SCHEMA", "=", databaseName);
         var dapperRowsResult = await queryFactory.GetAsync(query);
         return (from IDictionary<string, object> dapperRow in dapperRowsResult
             select new DbTableAttributes()
             {
-                TableName = dapperRow["table_name"].ToString()!,
-                TableSchema = dapperRow["table_schema"].ToString()!,
+                TableName = dapperRow["TABLE_NAME"].ToString()!,
+                TableSchema = dapperRow["TABLE_SCHEMA"].ToString()!,
                 DatabaseName = databaseName
             }).ToList();
     }
@@ -54,21 +54,22 @@ internal class MySqlDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusiness
                 "character_maximum_length",
                 "numeric_scale",
                 "collation_name")
+            .Where("table_schema","=",databaseName)
             .Where("table_name", "=", tableName);
         var dapperRowsResult = await queryFactory.GetAsync(query);
         return (from IDictionary<string, object> dapperRow in dapperRowsResult
-            let lengthString = dapperRow["character_maximum_length"].ToString()
-            let scaleString = dapperRow["numeric_scale"].ToString()
-            let collation = dapperRow["collation_name"].ToString()
-            let dbDataType = dapperRow["data_type"].ToString()
-            let mysqlDbColumn = new MySqlDBColumn() { MySqlDbType = Enum.Parse<MySqlDbType>(dbDataType) }
+            let lengthString = dapperRow["character_maximum_length"]
+            let scaleString = dapperRow["numeric_scale"]
+            let collation = dapperRow["collation_name"]
+            let dbDataType = dapperRow["data_type"]
+            let mysqlDbColumn = new MySqlDBColumn() { MySqlDbType = Enum.Parse<MySqlDbType>(dbDataType.ToString(),true) }
             select new DbTableColumnInformation()
             {
-                Collation = collation,
-                Length = lengthString == null ? null : int.Parse(lengthString),
-                Precision = scaleString == null ? null : int.Parse(scaleString),
+                Collation = collation?.ToString(),
+                Length = lengthString == null ? null : int.Parse(lengthString.ToString()),
+                Precision = scaleString == null ? null : int.Parse(scaleString.ToString()),
                 ColumnName = dapperRow["column_name"].ToString()!,
-                DatabaseType = dbDataType,
+                DatabaseType = dbDataType.ToString(),
                 SystemType = _etlColumnTypeMapper.AdaptMySqlType(mysqlDbColumn).Type.ToString()
             }).ToList();
     }

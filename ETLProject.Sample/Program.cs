@@ -16,16 +16,16 @@ var provider = serviceCollection.BuildServiceProvider();
 var dbConnectionMetaDataProvider = provider.GetRequiredService<IDbConnectionMetaDataBusinessProvider>();
 
 
-var sqlServerMetaDataBusiness = dbConnectionMetaDataProvider.GetMetaDataBusiness(DataSourceType.Postgresql);
+var sqlServerMetaDataBusiness = dbConnectionMetaDataProvider.GetMetaDataBusiness(DataSourceType.MySql);
 
 var result = await sqlServerMetaDataBusiness.GetTableColumns(new ConnectionDto()
 {
-    DataSourceType = DataSourceType.Postgresql,
-    Host = "192.168.30.202",
-    Password = "!@#123qwe",
-    Port = "5432",
-    Username = "postgres"
-},"Star_24.0.0.0_AccessManagement_Ammii","BlockedUserLoginHistories");
+    DataSourceType = DataSourceType.MySql,
+    Host = "localhost",
+    Password = "92?VH2WMrx",
+    Port = "3306",
+    Username = "alirezaeiji"
+},"kheft","user");
 
 Console.WriteLine();
 
