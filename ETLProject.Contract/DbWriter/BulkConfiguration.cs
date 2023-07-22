@@ -1,4 +1,4 @@
-﻿namespace ETLProject.DataSource.Common
+﻿namespace ETLProject.Contract.DbWriter
 {
     public class BulkConfiguration
     {

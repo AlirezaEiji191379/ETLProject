@@ -6,6 +6,7 @@ using ETLProject.DataSource.Common;
 using ETLProject.DataSource.Common.DIManager;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data;
+using ETLProject.Contract.DbWriter;
 
 internal static class WriteSamplesHelpers
 {

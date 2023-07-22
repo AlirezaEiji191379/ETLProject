@@ -13,6 +13,8 @@ using ETLProject.DataSource.DataSourceReading;
 using ETLProject.DataSource.DbConnectionMetaDataBusiness;
 using ETLProject.DataSource.DbConnectionMetaDataBusiness.Abstractions;
 using ETLProject.DataSource.DbTransfer;
+using ETLProject.DataSource.QueryBusiness.DbAddBusiness;
+using ETLProject.DataSource.QueryBusiness.DbAddBusiness.Abstractions;
 using ETLProject.DataSource.QueryBusiness.DbReaderBusiness;
 using ETLProject.DataSource.QueryBusiness.DbReaderBusiness.Abstractions;
 using ETLProject.DataSource.QueryBusiness.DistinctBusiness;
@@ -60,6 +62,7 @@ namespace ETLProject.DataSource.Common.DIManager
             services.AddSingleton<IDistinctQueryBusiness, DistinctQueryBusiness>();
             services.AddSingleton<IDbTableReader, DbTableReader>();
             services.AddSingleton<IEtlColumnTypeMapper, EtlColumnTypeMapper>();
+            services.AddSingleton<IDbAddBusiness,DbAddBusiness>();
             
             services.AddSingleton<IDbConnectionMetaDataBusiness,SqlServerDbConnectionMetaDataBusiness>();
             services.AddSingleton<IDbConnectionMetaDataBusiness,MySqlDbConnectionMetaDataBusiness>();

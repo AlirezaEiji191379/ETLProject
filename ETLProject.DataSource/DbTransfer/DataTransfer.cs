@@ -1,5 +1,6 @@
 ﻿using ETLProject.Common.Database;
 using ETLProject.Common.Table;
+using ETLProject.Contract.DbWriter;
 using ETLProject.DataSource.Abstractions;
 using ETLProject.DataSource.Common;
 

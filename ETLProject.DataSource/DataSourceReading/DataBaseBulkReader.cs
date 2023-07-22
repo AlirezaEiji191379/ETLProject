@@ -1,5 +1,6 @@
 ﻿using ETLProject.Common.Table;
 using System.Data;
+using ETLProject.Contract.DbWriter;
 using SqlKata;
 using ETLProject.DataSource.Common;
 using ETLProject.DataSource.Abstractions;
