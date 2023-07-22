@@ -2,7 +2,7 @@
 
 namespace ETLProject.Contract.DbConnectionContracts.Queries;
 
-public class GetDatabasesQuery : IRequest<ResponseDto>
+public class GetDatabasesByConnectionIdQuery : IRequest<ResponseDto>
 {
     public Guid ConnectionId { get; set; }
 }

@@ -32,6 +32,7 @@ public class DbConnectionInsertCommandHandler : IRequestHandler<DbConnectionInse
                 Port = request.ConnectionDto.Port,
                 ConnectionName = request.ConnectionDto.ConnectionName,
                 DataSourceType = request.ConnectionDto.DataSourceType,
+                DatabaseName = request.ConnectionDto.DatabaseName,
                 Id = Guid.NewGuid()
             };
             await _etlConnectionRepository.Create(etlConnection);

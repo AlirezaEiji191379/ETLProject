@@ -62,12 +62,14 @@ namespace ETLProject.DataSource.Common.DIManager
             services.AddSingleton<IDistinctQueryBusiness, DistinctQueryBusiness>();
             services.AddSingleton<IDbTableReader, DbTableReader>();
             services.AddSingleton<IEtlColumnTypeMapper, EtlColumnTypeMapper>();
-            services.AddSingleton<IDbAddBusiness,DbAddBusiness>();
+            services.AddSingleton<IDataTransferDecisionMaker, DataTransferDecisionMaker>();
             
             services.AddSingleton<IDbConnectionMetaDataBusiness,SqlServerDbConnectionMetaDataBusiness>();
             services.AddSingleton<IDbConnectionMetaDataBusiness,MySqlDbConnectionMetaDataBusiness>();
             services.AddSingleton<IDbConnectionMetaDataBusiness,PostgresqlConnectionMetaDataBusiness>();
             services.AddSingleton<IDbConnectionMetaDataBusinessProvider,DbConnectionMetaDataBusinessProvider>();
+            
+            services.AddScoped<IDbAddBusiness,DbAddBusiness>();
             
             services.AddKataServices();
         }

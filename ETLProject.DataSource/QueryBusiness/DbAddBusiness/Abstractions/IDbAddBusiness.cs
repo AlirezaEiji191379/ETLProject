@@ -5,5 +5,5 @@ namespace ETLProject.DataSource.QueryBusiness.DbAddBusiness.Abstractions;
 
 public interface IDbAddBusiness
 {
-    void AddToTable(ETLTable inputTable, DbWriterParameter dbWriterParameter);
+    Task WriteToTable(ETLTable inputTable, DbWriterParameter dbWriterParameter);
 }

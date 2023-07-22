@@ -11,13 +11,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ETLProject.Handlers.Connection;
 
-public class GetDatabasesQueryHandler : IRequestHandler<GetDatabasesQuery, ResponseDto>
+public class GetDatabasesByConnectionIdQueryHandler : IRequestHandler<GetDatabasesByConnectionIdQuery, ResponseDto>
 {
-    private readonly IValidator<GetDatabasesQuery> _validator;
+    private readonly IValidator<GetDatabasesByConnectionIdQuery> _validator;
     private readonly IDataRepository<EtlConnection> _etlConnectionRepository;
     private readonly IDbConnectionMetaDataBusinessProvider _connectionMetaDataBusinessProvider;
 
-    public GetDatabasesQueryHandler(IValidator<GetDatabasesQuery> validator,
+    public GetDatabasesByConnectionIdQueryHandler(IValidator<GetDatabasesByConnectionIdQuery> validator,
         IDataRepository<EtlConnection> etlConnectionRepository, IDbConnectionMetaDataBusinessProvider connectionMetaDataBusinessProvider)
     {
         _validator = validator;
@@ -25,7 +25,7 @@ public class GetDatabasesQueryHandler : IRequestHandler<GetDatabasesQuery, Respo
         _connectionMetaDataBusinessProvider = connectionMetaDataBusinessProvider;
     }
 
-    public async Task<ResponseDto> Handle(GetDatabasesQuery request, CancellationToken cancellationToken)
+    public async Task<ResponseDto> Handle(GetDatabasesByConnectionIdQuery request, CancellationToken cancellationToken)
     {
         try
         {

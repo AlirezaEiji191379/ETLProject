@@ -11,6 +11,5 @@ public class ConnectionDtoValidator : AbstractValidator<ConnectionDto>
         RuleFor(x => x.Port).NotEmpty();
         RuleFor(x => x.Username).NotEmpty();
         RuleFor(x => x.Password).NotEmpty();
-        RuleFor(x => x.ConnectionName).NotEmpty();
     }
 }

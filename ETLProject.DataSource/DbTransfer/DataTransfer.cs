@@ -2,7 +2,6 @@
 using ETLProject.Common.Table;
 using ETLProject.Contract.DbWriter;
 using ETLProject.DataSource.Abstractions;
-using ETLProject.DataSource.Common;
 
 namespace ETLProject.DataSource.DbTransfer
 {
@@ -23,7 +22,7 @@ namespace ETLProject.DataSource.DbTransfer
             destinationTable.Columns = sourceTable.CloneEtlColumns();
             var dataInserter = _dataBulkCopyProvider.GetBulkInserter(destinationTable.DataSourceType);
             await _dbTableCreator.CreateTable(destinationTable);
-            await foreach (var dt in _dataBulkReader.ReadDataInBulk(sourceTable, new BulkConfiguration() { BatchSize = 2 }))
+            await foreach (var dt in _dataBulkReader.ReadDataInBulk(sourceTable, bulkConfiguration))
             {
                 await dataInserter.InsertBulk(dt, destinationTable);
             }
