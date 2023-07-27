@@ -28,7 +28,7 @@ internal class MySqlDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusiness
 
     public async Task<List<string>> GetDatabases(ConnectionDto connectionDto)
     {
-        var queryFactory = GetQueryFactory(connectionDto, null);
+        var queryFactory = GetQueryFactory(connectionDto);
         var query = new Query("information_schema.schemata").Select("schema_name");
         var dapperRowsResult = await queryFactory.GetAsync(query);
         return (from IDictionary<string, object> dapperRow in dapperRowsResult
@@ -36,31 +36,31 @@ internal class MySqlDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusiness
             .ToList();
     }
 
-    public async Task<List<DbTableAttributes>> GetDatabaseTables(ConnectionDto connectionDto, string databaseName)
+    public async Task<List<DbTableAttributes>> GetDatabaseTables(ConnectionDto connectionDto)
     {
-        var queryFactory = GetQueryFactory(connectionDto, databaseName);
+        var queryFactory = GetQueryFactory(connectionDto);
         var query = new Query($"information_schema.tables").Select("TABLE_NAME", "TABLE_SCHEMA")
-            .Where("TABLE_TYPE", "=", "BASE TABLE").Where("TABLE_SCHEMA", "=", databaseName);
+            .Where("TABLE_TYPE", "=", "BASE TABLE").Where("TABLE_SCHEMA", "=", connectionDto.DatabaseName);
         var dapperRowsResult = await queryFactory.GetAsync(query);
         return (from IDictionary<string, object> dapperRow in dapperRowsResult
             select new DbTableAttributes()
             {
                 TableName = dapperRow["TABLE_NAME"].ToString()!,
                 TableSchema = dapperRow["TABLE_SCHEMA"].ToString()!,
-                DatabaseName = databaseName
+                DatabaseName = connectionDto.DatabaseName
             }).ToList();
     }
 
-    public async Task<List<DbTableColumnInformation>> GetTableColumns(ConnectionDto connectionDto, string databaseName,
+    public async Task<List<DbTableColumnInformation>> GetTableColumns(ConnectionDto connectionDto,
         string tableName)
     {
-        var queryFactory = GetQueryFactory(connectionDto, databaseName);
+        var queryFactory = GetQueryFactory(connectionDto);
         var query = new Query("information_schema.columns").Select("column_name",
                 "data_type",
                 "character_maximum_length",
                 "numeric_scale",
                 "collation_name")
-            .Where("table_schema", "=", databaseName)
+            .Where("table_schema", "=", connectionDto.DatabaseName)
             .Where("table_name", "=", tableName);
         var dapperRowsResult = await queryFactory.GetAsync(query);
         return (from IDictionary<string, object> dapperRow in dapperRowsResult
@@ -97,7 +97,7 @@ internal class MySqlDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusiness
     }
 
 
-    private QueryFactory GetQueryFactory(ConnectionDto connectionDto, string databaseName)
+    private QueryFactory GetQueryFactory(ConnectionDto connectionDto)
     {
         var connectionParameter = new DatabaseConnectionParameters()
         {
@@ -106,7 +106,7 @@ internal class MySqlDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusiness
             Password = connectionDto.Password,
             Username = connectionDto.Username,
             Port = connectionDto.Port,
-            DatabaseName = databaseName
+            DatabaseName = connectionDto.DatabaseName
         };
         return _queryFactoryProvider.GetQueryFactoryByConnection(connectionParameter);
     }

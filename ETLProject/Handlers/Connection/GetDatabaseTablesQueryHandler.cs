@@ -38,10 +38,11 @@ public class GetDatabaseTablesQueryHandler : IRequestHandler<GetDatabaseTablesQu
                 Password = etlConnection.Password,
                 Port = etlConnection.Port,
                 Username = etlConnection.Username,
-                ConnectionName = etlConnection.ConnectionName
+                ConnectionName = etlConnection.ConnectionName,
+                DatabaseName = request.DatabaseName
             };
             var result =  await _connectionMetaDataBusinessProvider.GetMetaDataBusiness(etlConnection.DataSourceType)
-                .GetDatabaseTables(connectionDto,request.DatabaseName);
+                .GetDatabaseTables(connectionDto);
             return new ResponseDto()
             {
                 Message = result,

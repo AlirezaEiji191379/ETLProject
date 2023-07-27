@@ -39,10 +39,11 @@ public class GetTableColumnInfoQueryHandler : IRequestHandler<GetTableColumnInfo
                 Password = etlConnection.Password,
                 Port = etlConnection.Port,
                 Username = etlConnection.Username,
-                ConnectionName = etlConnection.ConnectionName
+                ConnectionName = etlConnection.ConnectionName,
+                DatabaseName = request.DatabaseName,
             };
             var result =  await _connectionMetaDataBusinessProvider.GetMetaDataBusiness(etlConnection.DataSourceType)
-                .GetTableColumns(connectionDto,request.DatabaseName,request.TableName);
+                .GetTableColumns(connectionDto,request.TableName);
             return new ResponseDto()
             {
                 Message = result,

@@ -28,32 +28,32 @@ internal class PostgresqlConnectionMetaDataBusiness : IDbConnectionMetaDataBusin
 
     public async Task<List<string>> GetDatabases(ConnectionDto connectionDto)
     {
-        var queryFactory = GetQueryFactory(connectionDto, null);
+        var queryFactory = GetQueryFactory(connectionDto);
         var query = new Query("pg_database").Select("datname");
         var dapperRowsResult = await queryFactory.GetAsync(query);
         return (from IDictionary<string, object> dapperRow in dapperRowsResult select dapperRow["datname"].ToString())
             .ToList();
     }
 
-    public async Task<List<DbTableAttributes>> GetDatabaseTables(ConnectionDto connectionDto, string databaseName)
+    public async Task<List<DbTableAttributes>> GetDatabaseTables(ConnectionDto connectionDto)
     {
-        var queryFactory = GetQueryFactory(connectionDto, databaseName);
+        var queryFactory = GetQueryFactory(connectionDto);
         var query = new Query($"information_schema.tables").Select("table_name", "table_schema")
-            .Where("table_type", "=", "BASE TABLE").Where("table_catalog", "=", databaseName);
+            .Where("table_type", "=", "BASE TABLE").Where("table_catalog", "=", connectionDto.DatabaseName);
         var dapperRowsResult = await queryFactory.GetAsync(query);
         return (from IDictionary<string, object> dapperRow in dapperRowsResult
             select new DbTableAttributes()
             {
                 TableName = dapperRow["table_name"].ToString()!,
                 TableSchema = dapperRow["table_schema"].ToString()!,
-                DatabaseName = databaseName
+                DatabaseName = connectionDto.DatabaseName
             }).ToList();
     }
 
-    public async Task<List<DbTableColumnInformation>> GetTableColumns(ConnectionDto connectionDto, string databaseName,
+    public async Task<List<DbTableColumnInformation>> GetTableColumns(ConnectionDto connectionDto,
         string tableName)
     {
-        var queryFactory = GetQueryFactory(connectionDto, databaseName);
+        var queryFactory = GetQueryFactory(connectionDto);
         var query = new Query("information_schema.columns").Select("column_name",
                 "data_type",
                 "character_maximum_length",
@@ -94,7 +94,7 @@ internal class PostgresqlConnectionMetaDataBusiness : IDbConnectionMetaDataBusin
         connection.Close();
     }
 
-    private QueryFactory GetQueryFactory(ConnectionDto connectionDto, string databaseName)
+    private QueryFactory GetQueryFactory(ConnectionDto connectionDto)
     {
         var connectionParameter = new DatabaseConnectionParameters()
         {
@@ -103,7 +103,7 @@ internal class PostgresqlConnectionMetaDataBusiness : IDbConnectionMetaDataBusin
             Password = connectionDto.Password,
             Username = connectionDto.Username,
             Port = connectionDto.Port,
-            DatabaseName = databaseName
+            DatabaseName = connectionDto.DatabaseName
         };
         return _queryFactoryProvider.GetQueryFactoryByConnection(connectionParameter);
     }

@@ -28,17 +28,17 @@ internal class SqlServerDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusi
 
     public async Task<List<string>> GetDatabases(ConnectionDto connectionDto)
     {
-        var queryFactory = GetQueryFactory(connectionDto, null);
+        var queryFactory = GetQueryFactory(connectionDto);
         var query = new Query("sys.databases").Select("name");
         var dapperRowsResult = await queryFactory.GetAsync(query);
         return (from IDictionary<string, object> dapperRow in dapperRowsResult select dapperRow["name"].ToString())
             .ToList();
     }
 
-    public async Task<List<DbTableAttributes>> GetDatabaseTables(ConnectionDto connectionDto, string databaseName)
+    public async Task<List<DbTableAttributes>> GetDatabaseTables(ConnectionDto connectionDto)
     {
-        var queryFactory = GetQueryFactory(connectionDto, databaseName);
-        var query = new Query().FromRaw($"[{databaseName}].[INFORMATION_SCHEMA].[TABLES]").Select("TABLE_NAME", "TABLE_SCHEMA")
+        var queryFactory = GetQueryFactory(connectionDto);
+        var query = new Query().FromRaw($"[{connectionDto.DatabaseName}].[INFORMATION_SCHEMA].[TABLES]").Select("TABLE_NAME", "TABLE_SCHEMA")
             .Where("TABLE_TYPE", "=", "BASE TABLE");
         var dapperRowsResult = await queryFactory.GetAsync(query);
         return (from IDictionary<string, object> dapperRow in dapperRowsResult
@@ -46,14 +46,14 @@ internal class SqlServerDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusi
             {
                 TableName = dapperRow["TABLE_NAME"].ToString()!,
                 TableSchema = dapperRow["TABLE_SCHEMA"].ToString()!,
-                DatabaseName = databaseName
+                DatabaseName = connectionDto.DatabaseName
             }).ToList();
     }
 
-    public async Task<List<DbTableColumnInformation>> GetTableColumns(ConnectionDto connectionDto, string databaseName,
+    public async Task<List<DbTableColumnInformation>> GetTableColumns(ConnectionDto connectionDto,
         string tableName)
     {
-        var queryFactory = GetQueryFactory(connectionDto, databaseName);
+        var queryFactory = GetQueryFactory(connectionDto);
         var query = new Query("INFORMATION_SCHEMA.COLUMNS").Select("COLUMN_NAME",
                 "DATA_TYPE",
                 "CHARACTER_MAXIMUM_LENGTH",
@@ -93,7 +93,7 @@ internal class SqlServerDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusi
         connection.Close();
     }
 
-    private QueryFactory GetQueryFactory(ConnectionDto connectionDto, string databaseName)
+    private QueryFactory GetQueryFactory(ConnectionDto connectionDto)
     {
         var connectionParameter = new DatabaseConnectionParameters()
         {
@@ -102,7 +102,7 @@ internal class SqlServerDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusi
             Password = connectionDto.Password,
             Username = connectionDto.Username,
             Port = connectionDto.Port,
-            DatabaseName = databaseName
+            DatabaseName = connectionDto.DatabaseName
         };
         return _queryFactoryProvider.GetQueryFactoryByConnection(connectionParameter);
     }
