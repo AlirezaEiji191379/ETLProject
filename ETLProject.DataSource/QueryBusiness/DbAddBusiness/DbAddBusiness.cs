@@ -2,9 +2,11 @@ using ETLProject.Common.Abstractions;
 using ETLProject.Common.Database;
 using ETLProject.Common.Table;
 using ETLProject.Contract.DbWriter;
+using ETLProject.Contract.DbWriter.Enums;
 using ETLProject.DataSource.Abstractions;
 using ETLProject.DataSource.Common.Exceptions;
 using ETLProject.DataSource.DbTransfer;
+using ETLProject.DataSource.DbTransfer.Configs;
 using ETLProject.DataSource.QueryBusiness.DbAddBusiness.Abstractions;
 using ETLProject.Infrastructure.Entities;
 using ETLProject.Infrastructure.Repositories.Abstractions;
@@ -14,69 +16,61 @@ namespace ETLProject.DataSource.QueryBusiness.DbAddBusiness;
 
 internal class DbAddBusiness : IDbAddBusiness
 {
-    private readonly IDataTransfer _dataTransfer;
     private readonly IDataRepository<EtlConnection> _connectionRepository;
-    private readonly IDataTransferDecisionMaker _dataTransferDecisionMaker;
+    private readonly IDataTransferStrategyProvider _dataTransferStrategyProvider;
     private readonly IRandomStringGenerator _stringGenerator;
+    private readonly IDatabaseConnectionParameterAdapter _databaseConnectionParameterAdapter;
 
-    public DbAddBusiness(IDataTransfer dataTransfer,
-        IDataRepository<EtlConnection> connectionRepository,
-        IDataTransferDecisionMaker dataTransferDecisionMaker,
-        IRandomStringGenerator stringGenerator)
+    public DbAddBusiness(IDataRepository<EtlConnection> connectionRepository,
+        IDataTransferStrategyProvider dataTransferStrategyProvider,
+        IRandomStringGenerator stringGenerator,
+        IDatabaseConnectionParameterAdapter databaseConnectionParameterAdapter)
     {
-        _dataTransfer = dataTransfer;
         _connectionRepository = connectionRepository;
-        _dataTransferDecisionMaker = dataTransferDecisionMaker;
+        _dataTransferStrategyProvider = dataTransferStrategyProvider;
         _stringGenerator = stringGenerator;
+        _databaseConnectionParameterAdapter = databaseConnectionParameterAdapter;
     }
 
     public async Task WriteToTable(ETLTable inputTable, DbWriterParameter dbWriterParameter)
     {
-        if (dbWriterParameter.TableType == TableType.Permanent && string.IsNullOrEmpty(dbWriterParameter.NewTableName))
+        var dataTransferParameter = new DataTransferParameter();
+        dataTransferParameter.DataTransferAction = dbWriterParameter.DbTransferAction == DbTransferAction.Insert
+            ? DataTransferAction.Insert
+            : DataTransferAction.CreateInsert;
+        dataTransferParameter.BulkConfiguration = dbWriterParameter.BulkConfiguration;
+        
+        DatabaseConnectionParameters destinationConnection;
+        if (!dbWriterParameter.UseInputConnection)
         {
-            throw new ArgumentNullException(nameof(dbWriterParameter.NewTableName));
-        }
-
-        var destinationConnection = await _connectionRepository
-            .FindByCondition(x => x.Id == dbWriterParameter.DestinationConnectionId)
-            .FirstOrDefaultAsync();
-
-        if (destinationConnection == null)
-        {
-            throw new ConnectionNotFoundException(dbWriterParameter.DestinationConnectionId.ToString());
-        }
-
-        var decision = _dataTransferDecisionMaker.MakeDecision(destinationConnection, inputTable.DatabaseConnection);
-        if (decision == DataTransferDecision.BetweenTwoConnections)
-        {
-            var destinationEtlTable = new ETLTable()
-            {
-                DataSourceType = destinationConnection.DataSourceType,
-                TableType = dbWriterParameter.TableType,
-                TableName = SetTableName(dbWriterParameter, destinationConnection),
-                DatabaseConnection = new DatabaseConnectionParameters()
-                {
-                    DataSourceType = destinationConnection.DataSourceType,
-                    DatabaseName = destinationConnection.DatabaseName,
-                    Password = destinationConnection.Password,
-                    Username = destinationConnection.Username,
-                    Host = destinationConnection.Host,
-                    Port = destinationConnection.Port
-                }
-            };
-            await _dataTransfer.TransferDataBetweenTwoDifferentConnections(inputTable, destinationEtlTable, dbWriterParameter.BulkConfiguration);
+            var etlConnection = await _connectionRepository
+                .FindByCondition(x => x.Id == dbWriterParameter.DestinationConnectionId)
+                .FirstOrDefaultAsync();
+            destinationConnection = _databaseConnectionParameterAdapter.CreateDatabaseConnectionParameters(etlConnection);
         }
         else
         {
-            var tableName = SetTableName(dbWriterParameter, destinationConnection);
-            await _dataTransfer.TransferDataInSingleConnection(inputTable, tableName, dbWriterParameter.TableType);
+            destinationConnection = inputTable.DatabaseConnection;
         }
+
+        if (destinationConnection == null)
+        {
+            throw new ConnectionNotFoundException();
+        }
+
+        dataTransferParameter.DestinationTable = new ETLTable()
+        {
+            TableName = dbWriterParameter.DestinationTableName,
+            DatabaseConnection = destinationConnection,
+            TableType = TableType.Permanent,
+            DataSourceType = destinationConnection.DataSourceType,
+            TableSchema = dbWriterParameter.DestinationTableSchema,
+        };
+        dataTransferParameter.SourceTable = inputTable;
+        var dataTransferStrategy = _dataTransferStrategyProvider.GetDataTransferStrategy(dataTransferParameter);
+        await dataTransferStrategy.TransferData(dataTransferParameter);
     }
 
-    private string SetTableName(DbWriterParameter dbWriterParameter, EtlConnection destinationConnection)
-    {
-        return dbWriterParameter.TableType == TableType.Temp ? GenerateTempTableName(destinationConnection.DataSourceType) : dbWriterParameter.NewTableName;
-    }
 
     private string GenerateTempTableName(DataSourceType dataSourceType)
     {

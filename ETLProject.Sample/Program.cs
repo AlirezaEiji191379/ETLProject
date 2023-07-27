@@ -1,14 +1,10 @@
 ﻿
-using ETLProject.Sample.ETLSamples;
+using SqlKata;
+using SqlKata.Compilers;
 
-Console.WriteLine();
-try
-{
-    await DbAddSamples.AddSample();
-}
-catch (Exception e)
-{
-    Console.WriteLine(e);
-    throw;
-}
+var query = new Query("Users").Select("id","fullname");
+var insertQuery = new Query("Samples").AsInsert(new List<string>(){},query);
 
+var compiler = new SqlServerCompiler();
+
+Console.WriteLine(compiler.Compile(insertQuery));

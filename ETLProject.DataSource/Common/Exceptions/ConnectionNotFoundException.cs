@@ -2,8 +2,8 @@
 
 public class ConnectionNotFoundException : Exception
 {
-    public ConnectionNotFoundException(string connectionId) : base(
-        $"connection with id {connectionId} does not exist in database")
+    public ConnectionNotFoundException() : base(
+        $"connection does not exist in database")
     {
     }
 }
