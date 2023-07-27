@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace ETLProject.Validators;
 
-public class GetDataBasesQueryValidator : AbstractValidator<GetDatabasesQuery>
+public class GetDataBasesQueryValidator : AbstractValidator<GetDatabasesByConnectionIdQuery>
 {
     public GetDataBasesQueryValidator()
     {

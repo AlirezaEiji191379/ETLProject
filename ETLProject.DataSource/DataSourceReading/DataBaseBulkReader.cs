@@ -1,5 +1,6 @@
 ﻿using ETLProject.Common.Table;
 using System.Data;
+using ETLProject.Contract.DbWriter;
 using SqlKata;
 using ETLProject.DataSource.Common;
 using ETLProject.DataSource.Abstractions;
@@ -22,9 +23,7 @@ namespace ETLProject.DataSource.DataSourceReading
         public async IAsyncEnumerable<DataTable> ReadDataInBulk(ETLTable etlTable, BulkConfiguration bulkConfiguration)
         {
             using var queryFactory = _queryFactoryProvider.GetQueryFactory(etlTable);
-            var tableName = _tableNameProvider.GetTableName(etlTable);
-            var columnStrings = etlTable.Columns.Select(x => x.Name);
-            var query = new Query(tableName).Select(columnStrings);
+            var query = etlTable.Query;
             var dataReader = await queryFactory.FromQuery(query).PaginateAsync(1,bulkConfiguration.BatchSize);
             for(var i = 0; i < dataReader.TotalPages; i++)
             {

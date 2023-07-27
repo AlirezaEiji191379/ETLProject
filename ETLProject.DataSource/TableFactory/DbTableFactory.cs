@@ -1,4 +1,5 @@
 ﻿using ETLProject.Common.Abstractions;
+using ETLProject.Common.Database;
 using ETLProject.Common.Table;
 using ETLProject.DataSource.Abstractions;
 using SqlKata;
@@ -22,9 +23,9 @@ namespace ETLProject.DataSource.TableFactory
 
         public async Task CreateTable(ETLTable etlTable)
         {
-            SetTableName(etlTable);
+            //SetTableName(etlTable);
             SqlKata.Contract.CreateTable.TableType tableType = GetTableType(etlTable.TableType);
-            var columnMapper = _columnMapperProvider.GetColumnTypeMapper(etlTable.DatabaseConnection.DataSourceType);
+            var columnMapper = _columnMapperProvider.GetColumnTypeMapper(etlTable.DataSourceType);
             var tableDefinition = etlTable.Columns.Select(etlColumn => new TableColumnDefinitionDto
             {
                 ColumnName = etlColumn.Name,
@@ -62,15 +63,7 @@ namespace ETLProject.DataSource.TableFactory
             var queryFactory = _queryFactoryProvider.GetQueryFactory(etlTable);
             await queryFactory.ExecuteAsync(query);
         }
-
-        private void SetTableName(ETLTable etlTable)
-        {
-            if (etlTable.TableType == ETLProject.Common.Table.TableType.Permanent && string.IsNullOrEmpty(etlTable.TableName))
-                throw new Exception();
-
-            if (etlTable.TableType != ETLProject.Common.Table.TableType.Permanent)
-                etlTable.TableName = "ETL_" + _randomStringGenerator.GenerateRandomString();
-        }
+        
         private static SqlKata.Contract.CreateTable.TableType GetTableType(ETLProject.Common.Table.TableType tableType)
         {
             return tableType == ETLProject.Common.Table.TableType.Temp ?

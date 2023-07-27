@@ -8,6 +8,7 @@ public class ConnectionDto
     public string Port { get; init; }
     public string Username { get; init; }
     public string Password { get; init; }
-    public string ConnectionName { get; set; }
+    public string? ConnectionName { get; set; }
+    public string? DatabaseName { get; set; }
     public DataSourceType DataSourceType { get; init; }
 }

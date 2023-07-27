@@ -2,6 +2,7 @@
 using ETLProject.Contract.Sort;
 using ETLProject.DataSource.Abstractions;
 using ETLProject.DataSource.ColumnMapping;
+using ETLProject.DataSource.Common.Adapters;
 using ETLProject.DataSource.Common.Providers;
 using ETLProject.DataSource.Common.Providers.BulkCopy;
 using ETLProject.DataSource.Common.Providers.ColumnMapper;
@@ -13,6 +14,9 @@ using ETLProject.DataSource.DataSourceReading;
 using ETLProject.DataSource.DbConnectionMetaDataBusiness;
 using ETLProject.DataSource.DbConnectionMetaDataBusiness.Abstractions;
 using ETLProject.DataSource.DbTransfer;
+using ETLProject.DataSource.DbTransfer.Strategies;
+using ETLProject.DataSource.QueryBusiness.DbAddBusiness;
+using ETLProject.DataSource.QueryBusiness.DbAddBusiness.Abstractions;
 using ETLProject.DataSource.QueryBusiness.DbReaderBusiness;
 using ETLProject.DataSource.QueryBusiness.DbReaderBusiness.Abstractions;
 using ETLProject.DataSource.QueryBusiness.DistinctBusiness;
@@ -52,7 +56,6 @@ namespace ETLProject.DataSource.Common.DIManager
             services.AddSingleton<IDataBulkInserter, PostgresqlBulkCopy>();
             services.AddSingleton<IDataBulkCopyProvider, DataBulkCopyProvider>();
             services.AddSingleton<IDbTableFactory, DbTableFactory>();
-            services.AddSingleton<IDataTransfer, DataTransfer>();
             services.AddSingleton<ILimitQueryBusiness, LimitQueryBusiness>();
             services.AddSingleton<ITableSorter, TableSorter>();
             services.AddSingleton<IValidator<LimitContract>, LimitContractValidator>();
@@ -61,10 +64,19 @@ namespace ETLProject.DataSource.Common.DIManager
             services.AddSingleton<IDbTableReader, DbTableReader>();
             services.AddSingleton<IEtlColumnTypeMapper, EtlColumnTypeMapper>();
             
+            services.AddSingleton<IDataTransferStrategy,AmongOneServerInsert>();
+            services.AddSingleton<IDataTransferStrategy,AmongOneServerCreateInsert>();
+            services.AddSingleton<IDataTransferStrategy,BetweenTwoServerInsert>();
+            services.AddSingleton<IDataTransferStrategy,BetweenTwoServersCreateInsert>();
+            services.AddSingleton<IDataTransferStrategyProvider,DataTransferStrategyProvider>();
+            
             services.AddSingleton<IDbConnectionMetaDataBusiness,SqlServerDbConnectionMetaDataBusiness>();
             services.AddSingleton<IDbConnectionMetaDataBusiness,MySqlDbConnectionMetaDataBusiness>();
             services.AddSingleton<IDbConnectionMetaDataBusiness,PostgresqlConnectionMetaDataBusiness>();
             services.AddSingleton<IDbConnectionMetaDataBusinessProvider,DbConnectionMetaDataBusinessProvider>();
+            services.AddSingleton<IDatabaseConnectionParameterAdapter,DatabaseConnectionParameterAdapter>();
+            
+            services.AddScoped<IDbAddBusiness,DbAddBusiness>();
             
             services.AddKataServices();
         }

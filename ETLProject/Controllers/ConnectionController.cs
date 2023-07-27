@@ -23,11 +23,19 @@ public class ConnectionController : ControllerBase
         return StatusCode(result.StatusCode, new {Message = result.Message});
     }
 
+    [HttpPost]
+    [Route("DatabasesByConnectionDto")]
+    public async Task<IActionResult> GetConnectionDatabasesbyConnectionDto([FromBody] GetDatabasesByConnectionDtoQuery getDatabasesByConnectionDtoQuery)
+    {
+        var result = await _mediator.Send(getDatabasesByConnectionDtoQuery);
+        return StatusCode(result.StatusCode,new {Message = result.Message});
+    }
+
     [HttpGet]
     [Route("Databases")]
     public async Task<IActionResult> GetConnectionDatabases([FromQuery]Guid connectionId)
     {
-        var getDatabasesQuery = new GetDatabasesQuery()
+        var getDatabasesQuery = new GetDatabasesByConnectionIdQuery()
         {
             ConnectionId = connectionId
         };

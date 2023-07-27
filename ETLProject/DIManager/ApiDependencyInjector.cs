@@ -21,12 +21,13 @@ public static class ApiDependencyInjector
         services.AddSwaggerGen();
 
         services.AddSingleton<IValidator<DbConnectionInsertCommand>,DbConnectionInsertCommandValidator>();
-        services.AddSingleton<IValidator<GetDatabasesQuery>,GetDataBasesQueryValidator>();
+        services.AddSingleton<IValidator<GetDatabasesByConnectionIdQuery>,GetDataBasesQueryValidator>();
         services.AddSingleton<IValidator<GetDatabaseTablesQuery>,GetDataBaseTablesQueryValidator>();
         services.AddSingleton<IValidator<GetTableColumnInfosQuery>,GetTableColumnInfoQueryValidator>();
         services.AddSingleton<IValidator<GetConnectionByIdQuery>,GetConnectionByIdQueryValidator>();
         services.AddSingleton<IValidator<DeleteConnectionCommand>,DeleteConnectionCommandValidator>();
         services.AddSingleton<IValidator<UpdateConnectionCommand>,UpdateConnectionCommandValidator>();
+        services.AddSingleton<IValidator<GetDatabasesByConnectionDtoQuery>,GetDatabasesByConnectionDtoQueryValidator>();
         
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
