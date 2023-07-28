@@ -15,6 +15,8 @@ using ETLProject.DataSource.DbConnectionMetaDataBusiness;
 using ETLProject.DataSource.DbConnectionMetaDataBusiness.Abstractions;
 using ETLProject.DataSource.DbTransfer;
 using ETLProject.DataSource.DbTransfer.Strategies;
+using ETLProject.DataSource.QueryBusiness.AggregateBusiness;
+using ETLProject.DataSource.QueryBusiness.AggregateBusiness.Abstractions;
 using ETLProject.DataSource.QueryBusiness.DbAddBusiness;
 using ETLProject.DataSource.QueryBusiness.DbAddBusiness.Abstractions;
 using ETLProject.DataSource.QueryBusiness.DbReaderBusiness;
@@ -81,6 +83,7 @@ namespace ETLProject.DataSource.Common.DIManager
 
             services.AddSingleton<IConditionBuilder, ConditionBuilder>();
             services.AddSingleton<IWhereQueryBusiness, WhereQueryBusiness>();
+            services.AddSingleton<IAggregateQueryBusiness,AggregateQueryBusiness>();
             
             services.AddScoped<IDbAddBusiness,DbAddBusiness>();
             
