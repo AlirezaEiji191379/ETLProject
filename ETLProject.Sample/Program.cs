@@ -1,13 +1,13 @@
-﻿
-using ETLProject.Common.Common.DIManager;
-using ETLProject.Common.Database;
+﻿using ETLProject.Common.Common.DIManager;
 using ETLProject.Common.Table;
-using ETLProject.Contract.DbWriter;
-using ETLProject.Contract.DbWriter.Enums;
+using ETLProject.Contract.Where.Conditions;
+using ETLProject.Contract.Where.Enums;
 using ETLProject.DataSource.Common.DIManager;
-using ETLProject.DataSource.QueryBusiness.DbAddBusiness.Abstractions;
+using ETLProject.DataSource.QueryBusiness.WhereQueryBusiness.Abstractions;
 using ETLProject.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
+using SqlKata;
+using SqlKata.Compilers;
 
 var serviceCollection = new ServiceCollection();
 
@@ -17,59 +17,56 @@ serviceCollection.AddInfrastructureServices();
 
 var provider = serviceCollection.BuildServiceProvider();
 
-var dbWriter = provider.GetService<IDbAddBusiness>();
+var conditionBuilder = provider.GetService<IWhereQueryBusiness>();
 
-var inputTable = new ETLTable()
-{
-    TableName = "Users",
-    TableSchema = "public",
-    TableType = TableType.Permanent,
-    DataSourceType = DataSourceType.Postgresql,
-    AliasName = "t",
-    DatabaseConnection = new DatabaseConnectionParameters()
+var query = new Query("Users").Select("Id", "FullName", "Age");
+
+var refinedQuery = conditionBuilder.AddWhereCondition(new ETLTable()
     {
-        DataSourceType = DataSourceType.Postgresql,
-        Host = "localhost",
-        Port = "5432",
-        Username = "postgres",
-        Password = "92?VH2WMrx",
-        DatabaseName = "TestDB",
-        Id = Guid.NewGuid()
-    },
-    Columns = new List<ETLColumn>()
+        Query = new Query("Users").Select("Id", "FullName", "Age"),
+        AliasName = "t"
+    }
+    ,
+    new LogicalCondition()
     {
-        new()
+        LogicalOperator = LogicalOperator.Or,
+        ChildConditions = new List<Condition>()
         {
-            Name = "Id",
-            ETLColumnType = new ETLColumnType()
+            new FieldCondition()
             {
-                Type = ColumnType.Int32Type
-            }
-        },
-        new()
-        {
-            Name = "FullName",
-            ETLColumnType = new ETLColumnType()
+                ColumnName = "Age",
+                ConditionType = ConditionType.GreaterThan,
+                Value = 18
+            },
+            new FieldCondition()
             {
-                Type = ColumnType.StringType,
-                Length = 200
+                ColumnName = "Id",
+                ConditionType = ConditionType.Equals,
+                Value = 12
+            },
+            new LogicalCondition()
+            {
+                LogicalOperator = LogicalOperator.And,
+                ChildConditions = new List<Condition>()
+                {
+                    new FieldCondition()
+                    {
+                        ColumnName = "FullName",
+                        ConditionType = ConditionType.Equals,
+                        Value = "reza"
+                    },
+                    new FieldCondition()
+                    {
+                        ColumnName = "Id",
+                        ConditionType = ConditionType.GreaterThan,
+                        Value = 14
+                    }
+                }
             }
         }
-    }
-};
+    });
 
-var dbWriterParameter = new DbWriterParameter()
-{
-    DestinationTableSchema = "testdb",
-    DbTransferAction = DbTransferAction.Insert,
-    UseInputConnection = false,
-    DestinationConnectionId = Guid.Parse("d8d9bd70-6184-4150-a2a8-5c873602735e"),
-    DestinationTableName = "postgresuser",
-    BulkConfiguration = new BulkConfiguration()
-    {
-        BatchSize = 100
-    }
-};
 
-await dbWriter.WriteToTable(inputTable,dbWriterParameter);
+var compiler = new SqlServerCompiler();
 
+Console.WriteLine(compiler.Compile(refinedQuery.Query));

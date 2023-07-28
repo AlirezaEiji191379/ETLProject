@@ -6,6 +6,6 @@ public enum ConditionType
     NotEquals,
     GreaterThan,
     LowerThan,
-    Between,
-    In
+    LowerThanOrEqual,
+    GreaterThanOrEqual
 }

@@ -6,8 +6,17 @@ namespace ETLProject.DataSource.QueryBusiness.WhereQueryBusiness;
 
 internal class WhereQueryBusiness : IWhereQueryBusiness
 {
+    private readonly IConditionBuilder _conditionBuilder;
+
+    public WhereQueryBusiness(IConditionBuilder conditionBuilder)
+    {
+        _conditionBuilder = conditionBuilder;
+    }
+
     public ETLTable AddWhereCondition(ETLTable inputTable, Condition condition)
     {
-        return null;
+        var whereClause = _conditionBuilder.BuildCondition(condition,inputTable.AliasName);
+        inputTable.Query.Where(whereClause);
+        return inputTable;
     }
 }
