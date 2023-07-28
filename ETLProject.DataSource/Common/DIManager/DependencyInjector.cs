@@ -27,10 +27,13 @@ using ETLProject.DataSource.QueryBusiness.LimitBusiness.Validators;
 using ETLProject.DataSource.QueryBusiness.SortBusiness;
 using ETLProject.DataSource.QueryBusiness.SortBusiness.Abstractions;
 using ETLProject.DataSource.QueryBusiness.SortBusiness.Validator;
+using ETLProject.DataSource.QueryBusiness.WhereQueryBusiness;
+using ETLProject.DataSource.QueryBusiness.WhereQueryBusiness.Abstractions;
 using ETLProject.DataSource.TableFactory;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using SqlKata;
+using IConditionBuilder = ETLProject.DataSource.QueryBusiness.WhereQueryBusiness.Abstractions.IConditionBuilder;
 
 namespace ETLProject.DataSource.Common.DIManager
 {
@@ -75,6 +78,9 @@ namespace ETLProject.DataSource.Common.DIManager
             services.AddSingleton<IDbConnectionMetaDataBusiness,PostgresqlConnectionMetaDataBusiness>();
             services.AddSingleton<IDbConnectionMetaDataBusinessProvider,DbConnectionMetaDataBusinessProvider>();
             services.AddSingleton<IDatabaseConnectionParameterAdapter,DatabaseConnectionParameterAdapter>();
+
+            services.AddSingleton<IConditionBuilder, ConditionBuilder>();
+            services.AddSingleton<IWhereQueryBusiness, WhereQueryBusiness>();
             
             services.AddScoped<IDbAddBusiness,DbAddBusiness>();
             
