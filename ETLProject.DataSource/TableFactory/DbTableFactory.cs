@@ -12,9 +12,10 @@ namespace ETLProject.DataSource.TableFactory
         private readonly IRandomStringGenerator _randomStringGenerator;
         private readonly IColumnMapperProvider _columnMapperProvider;
         private readonly IQueryFactoryProvider _queryFactoryProvider;
+
         public DbTableFactory(IRandomStringGenerator randomStringGenerator,
             IQueryFactoryProvider queryFactoryProvider,
-            IColumnMapperProvider columnMapperProvider) 
+            IColumnMapperProvider columnMapperProvider)
         {
             _randomStringGenerator = randomStringGenerator;
             _columnMapperProvider = columnMapperProvider;
@@ -42,20 +43,20 @@ namespace ETLProject.DataSource.TableFactory
         }
 
 
-        public async Task CreateTableAs(ETLTable etlTable,string newTableName, ETLProject.Common.Table.TableType newTableType)
+        public async Task CreateTableAs(ETLTable etlTable, string newTableName,
+            ETLProject.Common.Table.TableType newTableType)
         {
             SqlKata.Contract.CreateTable.TableType tableType = GetTableType(newTableType);
-            var etlTableColumnNameList = etlTable.Columns.Select(column => column.Name).ToList();
-            var innerSelectQuery = new Query(etlTable.TableFullName).Select(etlTableColumnNameList);
-            var query = new Query(newTableName).CreateTableAs(innerSelectQuery,tableType);
-            await ExecuteDDLQuery(etlTable,query);
+            var query = new Query(newTableName).CreateTableAs(etlTable.Query, tableType);
+            await ExecuteDDLQuery(etlTable, query);
         }
 
-        public async Task SelectInto(ETLTable etlTable,string newTableName)
+        public async Task SelectInto(ETLTable etlTable, string newTableName)
         {
             var etlTableColumnNameList = etlTable.Columns.Select(column => column.Name).ToList();
-            var selectIntoQuery = new Query(etlTable.TableFullName).Select(etlTableColumnNameList).Into(newTableName);
-            await ExecuteDDLQuery(etlTable,selectIntoQuery);
+            var selectIntoQuery = new Query().From(etlTable.Query, _randomStringGenerator.GenerateRandomString(10))
+                .Select(etlTableColumnNameList).Into(newTableName);
+            await ExecuteDDLQuery(etlTable, selectIntoQuery);
         }
 
         private async Task ExecuteDDLQuery(ETLTable etlTable, Query query)
@@ -63,12 +64,12 @@ namespace ETLProject.DataSource.TableFactory
             var queryFactory = _queryFactoryProvider.GetQueryFactory(etlTable);
             await queryFactory.ExecuteAsync(query);
         }
-        
+
         private static SqlKata.Contract.CreateTable.TableType GetTableType(ETLProject.Common.Table.TableType tableType)
         {
-            return tableType == ETLProject.Common.Table.TableType.Temp ?
-                SqlKata.Contract.CreateTable.TableType.Temporary : SqlKata.Contract.CreateTable.TableType.Permanent;
+            return tableType == ETLProject.Common.Table.TableType.Temp
+                ? SqlKata.Contract.CreateTable.TableType.Temporary
+                : SqlKata.Contract.CreateTable.TableType.Permanent;
         }
-
     }
 }
