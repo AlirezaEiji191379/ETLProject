@@ -23,6 +23,10 @@ using ETLProject.DataSource.QueryBusiness.DbReaderBusiness;
 using ETLProject.DataSource.QueryBusiness.DbReaderBusiness.Abstractions;
 using ETLProject.DataSource.QueryBusiness.DistinctBusiness;
 using ETLProject.DataSource.QueryBusiness.DistinctBusiness.Abstractions;
+using ETLProject.DataSource.QueryBusiness.JoinBusiness;
+using ETLProject.DataSource.QueryBusiness.JoinBusiness.Abstractions;
+using ETLProject.DataSource.QueryBusiness.JoinBusiness.QueryMaker;
+using ETLProject.DataSource.QueryBusiness.JoinBusiness.Validation;
 using ETLProject.DataSource.QueryBusiness.LimitBusiness;
 using ETLProject.DataSource.QueryBusiness.LimitBusiness.Abstractions;
 using ETLProject.DataSource.QueryBusiness.LimitBusiness.Validators;
@@ -84,7 +88,9 @@ namespace ETLProject.DataSource.Common.DIManager
             services.AddSingleton<IConditionBuilder, ConditionBuilder>();
             services.AddSingleton<IWhereQueryBusiness, WhereQueryBusiness>();
             services.AddSingleton<IAggregateQueryBusiness,AggregateQueryBusiness>();
-            
+            services.AddSingleton<IJoinValidator,JoinValidator>();
+            services.AddSingleton<IJoinQueryMaker,JoinQueryMaker>();
+            services.AddSingleton<IJoinQueryBusiness,JoinQueryBusiness>();
             services.AddScoped<IDbAddBusiness,DbAddBusiness>();
             
             services.AddKataServices();

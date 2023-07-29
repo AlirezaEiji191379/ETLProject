@@ -3,10 +3,14 @@ using ETLProject.Common.Database;
 using ETLProject.Common.Table;
 using ETLProject.Contract.Aggregate;
 using ETLProject.Contract.Aggregate.Enums;
+using ETLProject.Contract.DbWriter;
+using ETLProject.Contract.Join;
+using ETLProject.Contract.Join.Enums;
 using ETLProject.Contract.Where.Conditions;
 using ETLProject.Contract.Where.Enums;
 using ETLProject.DataSource.Common.DIManager;
 using ETLProject.DataSource.QueryBusiness.AggregateBusiness.Abstractions;
+using ETLProject.DataSource.QueryBusiness.JoinBusiness.Abstractions;
 using ETLProject.DataSource.QueryBusiness.WhereQueryBusiness.Abstractions;
 using ETLProject.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,9 +24,9 @@ serviceCollection.AddDataSourceQueryServices();
 serviceCollection.AddInfrastructureServices();
 
 var provider = serviceCollection.BuildServiceProvider();
+var joinBusiness = provider.GetService<IJoinQueryBusiness>();
 
-var aggBusiness = provider.GetRequiredService<IAggregateQueryBusiness>();
-var inputTable = new ETLTable()
+var leftTable = new ETLTable()
 {
     Columns = new List<ETLColumn>()
     {
@@ -37,6 +41,15 @@ var inputTable = new ETLTable()
         new()
         {
             Name = "fullname",
+            ETLColumnType = new ETLColumnType()
+            {
+                Type = ColumnType.StringType,
+                Length = 200
+            }
+        },
+        new()
+        {
+            Name = "city",
             ETLColumnType = new ETLColumnType()
             {
                 Type = ColumnType.StringType,
@@ -59,26 +72,64 @@ var inputTable = new ETLTable()
         Password = "92?VH2WMrx"
     }
 };
-
-var aggregateParam = new AggregationParameter()
+var rightTable = new ETLTable()
 {
-    GroupByColumns = new List<string>()
-    {
-        "fullname"
-    },
-    AggregateColumns = new List<AggregateColumns>()
+    Columns = new List<ETLColumn>()
     {
         new()
         {
-            AliasName = "x",
-            AggregateType = AggregateType.Max,
-            ColumnName = "id"
+            Name = "Id",
+            ETLColumnType = new ETLColumnType()
+            {
+                Type = ColumnType.Int32Type
+            }
+        },
+        new()
+        {
+            Name = "FullName",
+            ETLColumnType = new ETLColumnType()
+            {
+                Type = ColumnType.StringType,
+                Length = 200
+            }
         }
+    },
+    TableName = "PostgresUser",
+    TableSchema = "dbo",
+    AliasName = "x",
+    TableType = TableType.Permanent,
+    DataSourceType = DataSourceType.SQLServer,
+    DatabaseConnection = new DatabaseConnectionParameters()
+    {
+        DataSourceType = DataSourceType.SQLServer,
+        Host = "localhost",
+        Port = "1433",
+        DatabaseName = "testDb",
+        Username = "sa",
+        Password = "92?VH2WMrx"
     }
 };
 
-var result = aggBusiness.AddAggregation(inputTable, aggregateParam);
+var joinParam = new JoinParameter()
+{
+    JoinType = JoinType.Inner,
+    UseLeftTableConnection = true,
+    BulkConfiguration = new BulkConfiguration(){BatchSize = 100},
+    LeftTableJoinColumnName = "id",
+    RigthTableJoinColumnName = "Id",
+    LeftTableSelectedColumnNames = new List<string>()
+    {
+        "id",
+        "city"
+    },
+    RigthTableSelectedColumnNames = new List<string>()
+    {
+        "FullName"
+    }
+};
+
+var etlTable = await joinBusiness.JoinTables(leftTable,rightTable,joinParam);
 
 var compiler = new SqlServerCompiler();
 
-Console.WriteLine(compiler.Compile(result.Query));
+Console.WriteLine(compiler.Compile(etlTable.Query));

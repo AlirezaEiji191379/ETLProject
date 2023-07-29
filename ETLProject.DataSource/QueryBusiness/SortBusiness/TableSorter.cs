@@ -1,7 +1,7 @@
 ﻿using ETLProject.Common.Table;
 using ETLProject.Contract.Sort;
+using ETLProject.DataSource.Common.Exceptions;
 using ETLProject.DataSource.QueryBusiness.SortBusiness.Abstractions;
-using ETLProject.DataSource.QueryBusiness.SortBusiness.Exceptions;
 using FluentValidation;
 
 namespace ETLProject.DataSource.QueryBusiness.SortBusiness
