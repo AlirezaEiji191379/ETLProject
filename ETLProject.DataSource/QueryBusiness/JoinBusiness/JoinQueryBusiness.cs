@@ -50,8 +50,8 @@ internal class JoinQueryBusiness : IJoinQueryBusiness
         resultTable.TableName = _randomStringGenerator.GenerateRandomString(10);
         resultTable.AliasName = _randomStringGenerator.GenerateRandomString(8);
         resultTable.TableType = TableType.Temp;
-        resultTable.DatabaseConnection = otherTable.DatabaseConnection;
-        resultTable.DbConnection = otherTable.DbConnection;
+        resultTable.DatabaseConnection = transferredTable.DatabaseConnection;
+        resultTable.DbConnection = transferredTable.DbConnection;
         resultTable.DataSourceType = otherTable.DataSourceType;
         _joinQueryMaker.AddJoinQueryToResultTable(leftTable, rightTable, resultTable, joinParameter);
         return resultTable;
@@ -104,6 +104,7 @@ internal class JoinQueryBusiness : IJoinQueryBusiness
         resultTable.DatabaseConnection = otherTable.DatabaseConnection;
         resultTable.Columns = tableToTransfer.Columns.Select(x => x.Clone()).ToList();
         resultTable.DataSourceType = otherTable.DataSourceType;
+        //
         resultTable.TableType = TableType.Temp;
     }
     private string GenerateRandomTempTableName(ETLTable otherTable)

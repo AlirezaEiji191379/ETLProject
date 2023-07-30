@@ -8,6 +8,7 @@ using ETLProject.Contract.Join;
 using ETLProject.Contract.Join.Enums;
 using ETLProject.Contract.Where.Conditions;
 using ETLProject.Contract.Where.Enums;
+using ETLProject.DataSource.Abstractions;
 using ETLProject.DataSource.Common.DIManager;
 using ETLProject.DataSource.QueryBusiness.AggregateBusiness.Abstractions;
 using ETLProject.DataSource.QueryBusiness.JoinBusiness.Abstractions;
@@ -25,6 +26,7 @@ serviceCollection.AddInfrastructureServices();
 
 var provider = serviceCollection.BuildServiceProvider();
 var joinBusiness = provider.GetService<IJoinQueryBusiness>();
+var bulkReader = provider.GetService<IDataBaseBulkReader>();
 
 var leftTable = new ETLTable()
 {
@@ -65,11 +67,11 @@ var leftTable = new ETLTable()
     DatabaseConnection = new DatabaseConnectionParameters()
     {
         DataSourceType = DataSourceType.SQLServer,
-        Host = "localhost",
+        Host = "192.168.30.5",
         Port = "1433",
-        DatabaseName = "testDb",
+        DatabaseName = "DemoTest",
         Username = "sa",
-        Password = "92?VH2WMrx"
+        Password = "!@#123qwe"
     }
 };
 var rightTable = new ETLTable()
@@ -78,7 +80,7 @@ var rightTable = new ETLTable()
     {
         new()
         {
-            Name = "Id",
+            Name = "id",
             ETLColumnType = new ETLColumnType()
             {
                 Type = ColumnType.Int32Type
@@ -86,7 +88,7 @@ var rightTable = new ETLTable()
         },
         new()
         {
-            Name = "FullName",
+            Name = "fullname",
             ETLColumnType = new ETLColumnType()
             {
                 Type = ColumnType.StringType,
@@ -94,18 +96,18 @@ var rightTable = new ETLTable()
             }
         }
     },
-    TableName = "PostgresUser",
-    TableSchema = "dbo",
+    TableName = "users",
+    TableSchema = "public",
     AliasName = "x",
     TableType = TableType.Permanent,
-    DataSourceType = DataSourceType.SQLServer,
+    DataSourceType = DataSourceType.Postgresql,
     DatabaseConnection = new DatabaseConnectionParameters()
     {
-        DataSourceType = DataSourceType.SQLServer,
+        DataSourceType = DataSourceType.Postgresql,
         Host = "localhost",
-        Port = "1433",
-        DatabaseName = "testDb",
-        Username = "sa",
+        Port = "5432",
+        DatabaseName = "TestDB",
+        Username = "postgres",
         Password = "92?VH2WMrx"
     }
 };
@@ -116,7 +118,7 @@ var joinParam = new JoinParameter()
     UseLeftTableConnection = true,
     BulkConfiguration = new BulkConfiguration(){BatchSize = 100},
     LeftTableJoinColumnName = "id",
-    RigthTableJoinColumnName = "Id",
+    RigthTableJoinColumnName = "id",
     LeftTableSelectedColumns = new List<JoinColumnParameter>()
     {
         new ()
@@ -135,7 +137,7 @@ var joinParam = new JoinParameter()
     {
         new()
         {
-            ColumnName = "FullName",
+            ColumnName = "fullname",
             OutputTitle = "FullNameOfRight"
         }
     }
@@ -146,3 +148,9 @@ var etlTable = await joinBusiness.JoinTables(leftTable,rightTable,joinParam);
 var compiler = new SqlServerCompiler();
 
 Console.WriteLine(compiler.Compile(etlTable.Query));
+
+await foreach (var table in bulkReader.ReadDataInBulk(etlTable, new BulkConfiguration() { BatchSize = 100 }))
+{
+    Console.WriteLine();
+}
+
