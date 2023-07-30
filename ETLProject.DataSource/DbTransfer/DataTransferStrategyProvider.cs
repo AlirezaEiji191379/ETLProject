@@ -24,7 +24,7 @@ internal class DataTransferStrategyProvider : IDataTransferStrategyProvider
     }
 
 
-    private DataTransferType GetDataTransferType(DatabaseConnectionParameters source,
+    public DataTransferType GetDataTransferType(DatabaseConnectionParameters source,
         DatabaseConnectionParameters destination)
     {
         var areConnectionsEqual = source.DataSourceType == destination.DataSourceType &&

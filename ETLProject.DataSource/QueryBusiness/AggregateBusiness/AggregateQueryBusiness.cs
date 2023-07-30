@@ -3,6 +3,7 @@ using ETLProject.Common.Abstractions;
 using ETLProject.Common.Table;
 using ETLProject.Contract.Aggregate;
 using ETLProject.Contract.Aggregate.Enums;
+using ETLProject.DataSource.Common.Exceptions;
 using ETLProject.DataSource.QueryBusiness.AggregateBusiness.Abstractions;
 using ETLProject.DataSource.QueryBusiness.AggregateBusiness.Exceptions;
 using Microsoft.Extensions.Primitives;

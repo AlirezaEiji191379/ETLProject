@@ -1,4 +1,4 @@
-﻿namespace ETLProject.DataSource.QueryBusiness.AggregateBusiness.Exceptions;
+﻿namespace ETLProject.DataSource.Common.Exceptions;
 
 public class ColumnDoesNotExistException : Exception
 {
