@@ -23,35 +23,22 @@ internal class JoinQueryMaker : IJoinQueryMaker
         var leftAlias = _randomStringGenerator.GenerateRandomString(8);
         var rightAlias = _randomStringGenerator.GenerateRandomString(8);
 
-        var selectColumns = leftTable
-            .Columns
-            .Where(x => joinParameter.LeftTableSelectedColumnNames.Contains(x.Name))
-            .Select(x => PrepareColumnFullName(leftAlias, x.Name))
+        var joinSelectColumns = joinParameter
+            .LeftTableSelectedColumns
+            .Select(leftTableSelectedColumn => PrepareColumnFullName(leftAlias, leftTableSelectedColumn.ColumnName, leftTableSelectedColumn.OutputTitle))
             .ToList();
-        var rightSelectColumns = rightTable
-            .Columns
-            .Where(x => joinParameter.RigthTableSelectedColumnNames.Contains(x.Name))
-            .Select(x => PrepareColumnFullName(rightAlias, x.Name));
-
-        selectColumns.AddRange(rightSelectColumns);
         
-        var firstJoinFullColumnName = leftTable
-            .Columns
-            .Where(x => x.Name == joinParameter.LeftTableJoinColumnName)
-            .Select(x => PrepareColumnFullName(leftAlias, x.Name))
-            .First();
+        joinSelectColumns.AddRange(joinParameter.RigthTableSelectedColumns.Select(x => PrepareColumnFullName(rightAlias,x.ColumnName,x.OutputTitle))); 
+        
+        var firstJoinFullColumnName = PrepareColumnFullName(leftAlias,joinParameter.LeftTableJoinColumnName,string.Empty);
+        var secondJoinFullColumnName = PrepareColumnFullName(rightAlias,joinParameter.RigthTableJoinColumnName,string.Empty);
 
-        var secondJoinFullColumnName = rightTable
-            .Columns
-            .Where(x => x.Name == joinParameter.RigthTableJoinColumnName)
-            .Select(x => PrepareColumnFullName(rightAlias, x.Name))
-            .First();
 
         var resultTableSelectColumns =
             resultTable.Columns.Select(x => resultTable.GetColumnFullNameById(x.EtlColumnId));
         
         var joinQuery = ApplyJoin(rightTable, leftTable,joinParameter, leftAlias, rightAlias, firstJoinFullColumnName, secondJoinFullColumnName);
-        joinQuery.Select(selectColumns);
+        joinQuery.Select(joinSelectColumns);
         resultTable.Query = new Query().From(joinQuery, resultTable.AliasName).Select(resultTableSelectColumns);
     }
 
@@ -84,10 +71,15 @@ internal class JoinQueryMaker : IJoinQueryMaker
     }
 
 
-    private string PrepareColumnFullName(string aliasName, string columnName)
+    private string PrepareColumnFullName(string tableAliasName, string columnName, string columnAliasName)
     {
-        if (aliasName == null) throw new ArgumentNullException(nameof(aliasName));
+        if (tableAliasName == null) throw new ArgumentNullException(nameof(tableAliasName));
         if (columnName == null) throw new ArgumentNullException(nameof(columnName));
-        return new StringBuilder(aliasName).Append('.').Append(columnName).ToString();
+        var result = new StringBuilder(tableAliasName).Append('.').Append(columnName);
+        if (!string.IsNullOrEmpty(columnAliasName))
+        {
+            return result.Append(" as ").Append(columnAliasName).ToString();
+        }
+        return result.ToString();
     }
 }

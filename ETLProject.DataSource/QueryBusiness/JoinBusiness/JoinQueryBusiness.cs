@@ -60,12 +60,18 @@ internal class JoinQueryBusiness : IJoinQueryBusiness
         JoinParameter joinParameter, ETLTable resultTable)
     {
         resultTable.Columns = new List<ETLColumn>();
-        var leftColumns = leftTable.Columns.Where(x => joinParameter.LeftTableSelectedColumnNames.Contains(x.Name))
-            .Select(x => x.Clone());
-        var rightColumns = rightTable.Columns.Where(x => joinParameter.RigthTableSelectedColumnNames.Contains(x.Name))
-            .Select(x => x.Clone());
-        resultTable.Columns.AddRange(leftColumns);
-        resultTable.Columns.AddRange(rightColumns);
+        foreach (var leftTableSelectedColumn in joinParameter.LeftTableSelectedColumns)
+        {
+            var clonedColumn = leftTable.Columns.First(x => x.Name == leftTableSelectedColumn.ColumnName).Clone();
+            clonedColumn.Name = leftTableSelectedColumn.OutputTitle;
+            resultTable.Columns.Add(clonedColumn);
+        }
+        foreach (var rightTableSelectedColumn in joinParameter.RigthTableSelectedColumns)
+        {
+            var clonedColumn = rightTable.Columns.First(x => x.Name == rightTableSelectedColumn.ColumnName).Clone();
+            clonedColumn.Name = rightTableSelectedColumn.OutputTitle;
+            resultTable.Columns.Add(clonedColumn);
+        }
     }
     private async Task<ETLTable> TransferTable(ETLTable tableToTransfer, ETLTable otherTable,
         BulkConfiguration bulkConfiguration)

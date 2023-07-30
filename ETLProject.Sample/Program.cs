@@ -117,14 +117,27 @@ var joinParam = new JoinParameter()
     BulkConfiguration = new BulkConfiguration(){BatchSize = 100},
     LeftTableJoinColumnName = "id",
     RigthTableJoinColumnName = "Id",
-    LeftTableSelectedColumnNames = new List<string>()
+    LeftTableSelectedColumns = new List<JoinColumnParameter>()
     {
-        "id",
-        "city"
+        new ()
+        {
+            ColumnName = "id",
+            OutputTitle = "IdOfCityTable"
+        },
+        new()
+        {
+            ColumnName = "city",
+            OutputTitle = "city"
+        }
+
     },
-    RigthTableSelectedColumnNames = new List<string>()
+    RigthTableSelectedColumns = new List<JoinColumnParameter>()
     {
-        "FullName"
+        new()
+        {
+            ColumnName = "FullName",
+            OutputTitle = "FullNameOfRight"
+        }
     }
 };
 

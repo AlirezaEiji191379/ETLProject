@@ -9,7 +9,7 @@ public class JoinParameter
     public bool UseLeftTableConnection { get; set; }
     public string LeftTableJoinColumnName { get; set; }
     public string RigthTableJoinColumnName { get; set; }
-    public List<string> LeftTableSelectedColumnNames { get; set; }
-    public List<string> RigthTableSelectedColumnNames { get; set; }
+    public List<JoinColumnParameter> LeftTableSelectedColumns { get; set; }
+    public List<JoinColumnParameter> RigthTableSelectedColumns { get; set; }
     public BulkConfiguration? BulkConfiguration { get; set; }
 }
