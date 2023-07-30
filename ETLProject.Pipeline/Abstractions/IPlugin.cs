@@ -4,19 +4,15 @@ using ETLProject.Common.Table;
 
 namespace ETLProject.Pipeline.Abstractions;
 
-public abstract class Plugin
+public interface IPlugin
 {
+    Guid PipeLineId { get; init; }
     Guid PluginId { get; init; }
     PluginType PluginType { get; }
     string PluginTitle { get; init; }
     IPluginConfig PluginConfig { get; init; }
-    int InputPlugins { get; }
-    int? OutputPlugins { get; }
-    public abstract void AddInputPlugin(Guid pluginId);
-    public abstract void AddOutputPlugin(Guid pluginId);
-
-    public virtual void AddResultETLTableToNextPlugins(Guid currentPluginId, ETLTable etlTable)
-    {
-        
-    }
+    public void AddInputPlugin(Guid pluginId);
+    public void AddOutputPlugin(Guid pluginId);
+    public void AddResultETLTableToNextPlugins(Guid pluginId, ETLTable etlTable);
+    public Task Run();
 }
