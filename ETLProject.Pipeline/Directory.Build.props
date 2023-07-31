@@ -1,6 +1,6 @@
 ﻿<Project>
     <ItemGroup>
-        <PackageReference Include="ETLProject.Contract" Version="1.0.1"/>
-        <PackageReference Include="ETLProject.Common" Version="1.0.1"/>
+        <PackageReference Include="ETLProject.Contract" Version="1.0.2"/>
+        <PackageReference Include="ETLProject.Common" Version="1.0.2"/>
     </ItemGroup>
 </Project>

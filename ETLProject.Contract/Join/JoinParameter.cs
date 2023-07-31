@@ -1,9 +1,10 @@
-﻿using ETLProject.Contract.DbWriter;
+﻿using ETLProject.Common.PipeLine.Abstractions;
+using ETLProject.Contract.DbWriter;
 using ETLProject.Contract.Join.Enums;
 
 namespace ETLProject.Contract.Join;
 
-public class JoinParameter
+public class JoinParameter : IPluginConfig
 {
     public JoinType JoinType { get; set; }
     public bool UseLeftTableConnection { get; set; }

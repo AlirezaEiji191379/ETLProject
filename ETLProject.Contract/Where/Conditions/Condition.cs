@@ -1,5 +1,7 @@
-﻿namespace ETLProject.Contract.Where.Conditions;
+﻿using ETLProject.Common.PipeLine.Abstractions;
 
-public abstract class Condition
+namespace ETLProject.Contract.Where.Conditions;
+
+public abstract class Condition : IPluginConfig
 {
 }
