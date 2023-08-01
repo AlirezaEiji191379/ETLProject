@@ -48,4 +48,14 @@ public class DbReaderPlugin : IPlugin
     {
         return;
     }
+
+    public List<ETLTable> GetInputTables()
+    {
+        return new List<ETLTable>();
+    }
+
+    public void AddOutputSchema()
+    {
+        
+    }
 }

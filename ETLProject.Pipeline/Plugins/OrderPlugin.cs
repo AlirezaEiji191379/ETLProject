@@ -66,4 +66,17 @@ public class OrderPlugin : IPlugin
             }
         }
     }
+
+    public List<ETLTable> GetInputTables()
+    {
+        return new List<ETLTable>()
+        {
+            _inputTable
+        };
+    }
+
+    public void AddOutputSchema()
+    {
+        throw new NotImplementedException();
+    }
 }

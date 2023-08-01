@@ -12,7 +12,9 @@ public interface IPlugin
     string PluginTitle { get; init; }
     PluginRunState PluginRunState { get; set; }
     IPluginConfig PluginConfig { get; init; }
-    public void AddInputPlugin(Guid pluginId);
-    public void AddOutputPlugin(Guid pluginId);
-    public void AddInputTable(ETLTable inputSchema);
+    void AddInputPlugin(Guid pluginId);
+    void AddOutputPlugin(Guid pluginId);
+    void AddInputTable(ETLTable inputSchema);
+    List<ETLTable> GetInputTables();
+    void AddOutputSchema();
 }

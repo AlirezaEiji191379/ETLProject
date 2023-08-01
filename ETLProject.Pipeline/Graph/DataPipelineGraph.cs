@@ -40,9 +40,24 @@ public class DataPipelineGraph
 
         _adjacencyList[destination].Add(source);
     }
-    
-    
-    private IPlugin GetNode(Guid nodeId)
+
+    public List<IPlugin> GetNextPlugins(Guid nodeId)
+    {
+        var result = new List<IPlugin>();
+        foreach (var key in _adjacencyList.Keys)
+        {
+            if (_adjacencyList.ContainsKey(GetNode(nodeId)))
+            {
+                result.Add(GetNode(nodeId));
+            }
+        }
+
+        return result;
+    }
+
+
+
+    public IPlugin GetNode(Guid nodeId)
     {
         return _adjacencyList.Keys.First(node => node.PluginId == nodeId);
     }
