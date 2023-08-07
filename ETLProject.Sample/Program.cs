@@ -14,6 +14,18 @@ using ETLProject.Pipeline.Execution;
 using ETLProject.Pipeline.Graph;
 using ETLProject.Pipeline.Plugins;
 using Microsoft.Extensions.DependencyInjection;
+using Npgsql;
+using SqlKata;
+using SqlKata.Compilers;
+using SqlKata.Execution;
+
+/*using var connection = new NpgsqlConnection("Host=localhost;Port=5432;Database=TestDB;Username=postgres;Password=92?VH2WMrx");
+await connection.OpenAsync();
+var query = new Query("Users").OrderBy("FullName").Limit(3);
+var compiler = new PostgresCompiler();
+Console.WriteLine(compiler.Compile(query).ToString());
+var table = await new QueryFactory(connection,compiler).FromQuery(query).GetAsync();
+Console.WriteLine(compiler.Compile(query).ToString());*/
 
 var serviceCollection = new ServiceCollection();
 serviceCollection.AddCommonServices();

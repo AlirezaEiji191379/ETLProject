@@ -24,9 +24,20 @@ namespace ETLProject.DataSource.DataSourceReading
         {
             using var queryFactory = _queryFactoryProvider.GetQueryFactory(etlTable);
             var query = etlTable.Query;
-            var dataReader = await queryFactory.FromQuery(query).PaginateAsync(1,bulkConfiguration.BatchSize);
+            var batchSize = bulkConfiguration.BatchSize;
+            var limitClause = query.GetOneComponent<LimitClause>("limit");
+            var hasLimit = query.GetOneComponent<LimitClause>("limit") != null;
+            if (hasLimit)
+            {
+                batchSize = limitClause.Limit;
+            }
+            var dataReader = await queryFactory.FromQuery(query).PaginateAsync(1,batchSize);
             for(var i = 0; i < dataReader.TotalPages; i++)
             {
+                if (i == 1 && hasLimit)
+                {
+                    break;
+                }
                 if (i != 0)
                     dataReader = await dataReader.NextAsync();
                 var dataTable = new DataTable();
