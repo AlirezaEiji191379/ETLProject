@@ -39,7 +39,7 @@ var provider = serviceCollection.BuildServiceProvider();
 var node1 = new DbReaderPlugin("Reader1",new DbReaderContract()
 {
     Schema = "public",
-    TableName = "Users",
+    TableName = "usertest",
     DataSourceType = DataSourceType.Postgresql,
     SelectedColumns = new List<DbColumnDto>()
     {
@@ -76,7 +76,7 @@ var node1 = new DbReaderPlugin("Reader1",new DbReaderContract()
     }
 });*/
 
-var node2 = new AggPlugin("Agg1", new AggregationParameter()
+/*var node2 = new AggPlugin("Agg1", new AggregationParameter()
 {
     GroupByColumns = new List<string>()
     {
@@ -91,7 +91,12 @@ var node2 = new AggPlugin("Agg1", new AggregationParameter()
             AliasName = "id_sum"
         }
     }
-});
+});*/
+
+var node2 = new DistinctPlugin("Distinct1")
+{
+
+};
 
 var node3 = new WherePlugin("Where1",new FieldCondition()
 {

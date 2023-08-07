@@ -5,9 +5,10 @@ namespace ETLProject.Pipeline.Graph;
 public class DataPipelineGraph
 {
     private Dictionary<IPlugin, List<IPlugin>> _adjacencyList;
-    
+    public Guid PipelineId { get; init; }
     public DataPipelineGraph()
     {
+        PipelineId = Guid.NewGuid();
         _adjacencyList = new Dictionary<IPlugin, List<IPlugin>>();
     }
 
