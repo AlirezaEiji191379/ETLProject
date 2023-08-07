@@ -49,7 +49,7 @@ internal class AggregateQueryBusiness : IAggregateQueryBusiness
                  let aggStringType = aggregateColumn.AggregateType.ToString().ToLower()
                  select new StringBuilder(aggStringType)
                      .Append(
-                         $"({aggregateColumn.ColumnName}) as {_columnNameByColumnAliasName[aggregateColumn.ColumnName]}")
+                         $"([{resultTable.AliasName}].[{aggregateColumn.ColumnName}]) as [{_columnNameByColumnAliasName[aggregateColumn.ColumnName]}]")
                      .ToString())
         {
             resultTable.Query.SelectRaw(aggregateSelect);

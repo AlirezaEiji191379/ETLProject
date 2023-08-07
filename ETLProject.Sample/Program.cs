@@ -2,11 +2,15 @@
 using ETLProject.Common.Common.DIManager;
 using ETLProject.Common.Database;
 using ETLProject.Common.Table;
+using ETLProject.Contract.Aggregate;
+using ETLProject.Contract.Aggregate.Enums;
 using ETLProject.Contract.DBReader;
 using ETLProject.Contract.DbWriter;
 using ETLProject.Contract.DbWriter.Enums;
 using ETLProject.Contract.Limit;
 using ETLProject.Contract.Sort;
+using ETLProject.Contract.Where.Conditions;
+using ETLProject.Contract.Where.Enums;
 using ETLProject.DataSource.Common.DIManager;
 using ETLProject.Infrastructure;
 using ETLProject.Pipeline;
@@ -60,7 +64,7 @@ var node1 = new DbReaderPlugin("Reader1",new DbReaderContract()
         DatabaseName = "TestDB"
     }
 });
-var node2 = new OrderPlugin("Order1",new SortContract()
+/*var node2 = new OrderPlugin("Order1",new SortContract()
 {
     Columns = new List<OrderColumnDto>()
     {
@@ -70,11 +74,30 @@ var node2 = new OrderPlugin("Order1",new SortContract()
             SortType = SortType.Ascending
         }
     }
+});*/
+
+var node2 = new AggPlugin("Agg1", new AggregationParameter()
+{
+    GroupByColumns = new List<string>()
+    {
+        "FullName"
+    },
+    AggregateColumns = new List<AggregateColumns>()
+    {
+        new ()
+        {
+            AggregateType = AggregateType.Max,
+            ColumnName = "Id",
+            AliasName = "id_sum"
+        }
+    }
 });
 
-var node3 = new LimitPlugin("Limit1", new LimitContract()
+var node3 = new WherePlugin("Where1",new FieldCondition()
 {
-    Top = 3
+    ColumnName = "Id",
+    ConditionType = ConditionType.GreaterThan,
+    Value = 2
 });
 
 var node4 = new DbAddPlugin("add1", new DbWriterParameter()
@@ -94,12 +117,12 @@ var graph = new DataPipelineGraph();
 
 graph.AddVertex(node1);// Read 
 graph.AddVertex(node2);// Sort
-graph.AddVertex(node3);// Limit
+/*graph.AddVertex(node3);// Where*/
 graph.AddVertex(node4);// add
 
 graph.AddEdge(node1,node2);
-graph.AddEdge(node2,node3);
-graph.AddEdge(node3,node4);
+/*graph.AddEdge(node2,node3);*/
+graph.AddEdge(node2,node4);
 
 var executor = new PipelineExecutor(graph);
 
