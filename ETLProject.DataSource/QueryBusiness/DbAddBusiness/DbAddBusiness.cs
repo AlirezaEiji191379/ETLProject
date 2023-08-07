@@ -43,10 +43,19 @@ internal class DbAddBusiness : IDbAddBusiness
         DatabaseConnectionParameters destinationConnection;
         if (!dbWriterParameter.UseInputConnection)
         {
-            var etlConnection = await _connectionRepository
-                .FindByCondition(x => x.Id == dbWriterParameter.DestinationConnectionId)
-                .FirstOrDefaultAsync();
-            destinationConnection = _databaseConnectionParameterAdapter.CreateDatabaseConnectionParameters(etlConnection);
+            try
+            {
+                var etlConnection = await _connectionRepository
+                    .FindByCondition(x => x.Id == dbWriterParameter.DestinationConnectionId)
+                    .FirstOrDefaultAsync();
+                destinationConnection = _databaseConnectionParameterAdapter.CreateDatabaseConnectionParameters(etlConnection);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
         }
         else
         {

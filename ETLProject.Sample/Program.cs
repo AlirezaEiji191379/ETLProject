@@ -3,6 +3,8 @@ using ETLProject.Common.Common.DIManager;
 using ETLProject.Common.Database;
 using ETLProject.Common.Table;
 using ETLProject.Contract.DBReader;
+using ETLProject.Contract.DbWriter;
+using ETLProject.Contract.DbWriter.Enums;
 using ETLProject.Contract.Sort;
 using ETLProject.DataSource.Common.DIManager;
 using ETLProject.Infrastructure;
@@ -20,18 +22,18 @@ var provider = serviceCollection.BuildServiceProvider();
 var node1 = new DbReaderPlugin("Reader1",new DbReaderContract()
 {
     Schema = "public",
-    TableName = "users",
+    TableName = "Users",
     DataSourceType = DataSourceType.Postgresql,
     SelectedColumns = new List<DbColumnDto>()
     {
         new DbColumnDto()
         {
-            Name = "id",
+            Name = "Id",
             ColumnType = ColumnType.Int32Type
         },
         new DbColumnDto()
         {
-            Name = "fullname",
+            Name = "FullName",
             ColumnType = ColumnType.StringType
         }
     },
@@ -51,20 +53,34 @@ var node2 = new OrderPlugin("Order1",new SortContract()
     {
         new OrderColumnDto()
         {
-            Name = "Id",
+            Name = "FullName",
             SortType = SortType.Ascending
         }
+    }
+});
+var node3 = new DbAddPlugin("add1", new DbWriterParameter()
+{
+    //UseInputConnection = true,
+    DestinationConnectionId = Guid.Parse("d8d9bd70-6184-4150-a2a8-5c873602735e"),
+    DbTransferAction = DbTransferAction.CreateInsert,
+    DestinationTableName = "UsersEtl",
+    DestinationTableSchema = "public",
+    BulkConfiguration = new BulkConfiguration()
+    {
+        BatchSize = 100
     }
 });
 ServiceProviderContainer.ServiceProvider = provider;
 var graph = new DataPipelineGraph();
 
-graph.AddVertex(node1);
-graph.AddVertex(node2);
+graph.AddVertex(node1);// Read 
+graph.AddVertex(node2);// Sort
+graph.AddVertex(node3);// add
 
 graph.AddEdge(node1,node2);
+graph.AddEdge(node2,node3);
 
 var executor = new PipelineExecutor(graph);
 
 
-await executor.RunGraph(node2.PluginId);
+await executor.RunGraph(node3.PluginId);
