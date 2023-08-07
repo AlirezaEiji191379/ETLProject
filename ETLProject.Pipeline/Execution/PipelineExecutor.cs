@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using ETLProject.Common.Table;
 using ETLProject.Pipeline.Abstractions;
+using ETLProject.Pipeline.Execution.PluginExecutions.Factory;
 using ETLProject.Pipeline.Graph;
 
 namespace ETLProject.Pipeline.Execution;
@@ -11,9 +12,11 @@ public class PipelineExecutor
     private DataPipelineGraph _graph;
     private readonly ConcurrentDictionary<Guid, TaskCompletionSource<ETLTable>> _nodeExecutionsById;
     private CancellationTokenSource _cancellationTokenSource;
+    private IPluginRunnerFactory _pluginRunnerFactory;
 
     public PipelineExecutor(DataPipelineGraph graph)
     {
+        _pluginRunnerFactory = new PluginRunnerFactory();
         _graph = graph;
         _nodeExecutionsById = new ConcurrentDictionary<Guid, TaskCompletionSource<ETLTable>>();
         _cancellationTokenSource = new CancellationTokenSource();
@@ -29,13 +32,14 @@ public class PipelineExecutor
     {
         var previousNodes = _graph.GetNodeDependencies(nodeId);        
         await RunPreviousNodes(nodeId,previousNodes,_cancellationTokenSource.Token);
-        var pluginExecutionTask = new PluginExecutionTask(_graph.GetNode(nodeId));
+        var currentPlugin = _graph.GetNode(nodeId);
+        var pluginRunner = _pluginRunnerFactory.GetPluginRunner(currentPlugin.PluginType,currentPlugin.PluginConfig);
         foreach (var lastNode in previousNodes)
         {
             _nodeExecutionsById.TryGetValue(lastNode.PluginId, out var tcs);
-            pluginExecutionTask.InputTables.Add(tcs.Task.Result);
+            pluginRunner.AddInputEtlTable(tcs.Task.Result);
         }
-        var result = await pluginExecutionTask.RunPlugin();
+        var result = await pluginRunner.RunPlugin();
         _nodeExecutionsById.TryGetValue(nodeId, out var currentTcs);
         currentTcs.SetResult(result);
     }
