@@ -5,5 +5,5 @@ namespace ETLProject.Pipeline.Abstractions;
 
 public interface IGraphParser
 {
-    DataPipelineGraph ParseGraphString(GraphDto graphDto);
+    DataPipelineGraph ParseGraph(GraphDto graphDto);
 }

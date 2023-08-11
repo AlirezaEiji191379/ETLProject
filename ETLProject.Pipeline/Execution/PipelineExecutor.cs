@@ -28,7 +28,7 @@ public class PipelineExecutor
         await RunGraphInternal(nodeId);
     }
     
-    public async Task RunGraphInternal(Guid nodeId)
+    private async Task RunGraphInternal(Guid nodeId)
     {
         var previousNodes = _graph.GetNodeDependencies(nodeId);        
         await RunPreviousNodes(nodeId,previousNodes,_cancellationTokenSource.Token);

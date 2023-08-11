@@ -16,7 +16,7 @@ public class GraphParser : IGraphParser
         _pipelineContainer = pipelineContainer;
     }
 
-    public DataPipelineGraph ParseGraphString(GraphDto graphDto)
+    public DataPipelineGraph ParseGraph(GraphDto graphDto)
     {
         var graph = new DataPipelineGraph();
         var nodeNames = new List<string>();
