@@ -25,11 +25,11 @@ public class GraphParser : IGraphParser
         foreach (var edge in graphDto.Edges)
         {
             AddToNodeList(nodeNames, edge);
-            //AddToSourceCountDictionary(inputEdgesCount, edge);
-            //AddToDestinationCountDictionary(outputEdgesCount, edge);
+            AddToSourceCountDictionary(inputEdgesCount, edge);
+            AddToDestinationCountDictionary(outputEdgesCount, edge);
         }
-        //CheckInputs(inputEdgesCount);
-        //CheckOutputs(outputEdgesCount);
+        CheckInputs(inputEdgesCount);
+        CheckOutputs(outputEdgesCount);
         CreateGraph(graphDto, nodeNames, graph);
         _pipelineContainer.AddPipeline(graph);
         return graph;
