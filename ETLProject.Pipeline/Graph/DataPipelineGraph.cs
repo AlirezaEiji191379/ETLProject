@@ -56,7 +56,10 @@ public class DataPipelineGraph
         return result;
     }
 
-
+    public IPlugin GetNodeByTitle(string title)
+    {
+        return _adjacencyList.Keys.First(node => node.PluginTitle == title);
+    }
 
     public IPlugin GetNode(Guid nodeId)
     {
