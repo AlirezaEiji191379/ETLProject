@@ -25,11 +25,11 @@ public class GraphParser : IGraphParser
         foreach (var edge in graphDto.Edges)
         {
             AddToNodeList(nodeNames, edge);
-            AddToSourceCountDictionary(inputEdgesCount, edge);
-            AddToDestinationCountDictionary(outputEdgesCount, edge);
+            //AddToSourceCountDictionary(inputEdgesCount, edge);
+            //AddToDestinationCountDictionary(outputEdgesCount, edge);
         }
-        CheckInputs(inputEdgesCount);
-        CheckOutputs(outputEdgesCount);
+        //CheckInputs(inputEdgesCount);
+        //CheckOutputs(outputEdgesCount);
         CreateGraph(graphDto, nodeNames, graph);
         _pipelineContainer.AddPipeline(graph);
         return graph;
@@ -154,25 +154,25 @@ public class GraphParser : IGraphParser
 
     private void AddToSourceCountDictionary(IDictionary<string, int> edgesCount, EdgeDto edge)
     {
-        if (edgesCount.ContainsKey(edge.Src))
-        {
-            edgesCount[edge.Src]++;
-        }
-        else
-        {
-            edgesCount.Add(edge.Src, 0);
-        }
-    }
-
-    private void AddToDestinationCountDictionary(IDictionary<string, int> edgesCount, EdgeDto edge)
-    {
         if (edgesCount.ContainsKey(edge.Dst))
         {
             edgesCount[edge.Dst]++;
         }
         else
         {
-            edgesCount.Add(edge.Dst, 0);
+            edgesCount.Add(edge.Dst, 1);
+        }
+    }
+
+    private void AddToDestinationCountDictionary(IDictionary<string, int> edgesCount, EdgeDto edge)
+    {
+        if (edgesCount.ContainsKey(edge.Src))
+        {
+            edgesCount[edge.Src]++;
+        }
+        else
+        {
+            edgesCount.Add(edge.Src, 1);
         }
     }
 

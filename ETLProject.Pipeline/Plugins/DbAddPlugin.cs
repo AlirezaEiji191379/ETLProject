@@ -13,6 +13,7 @@ public class DbAddPlugin : IPlugin
     {
         PluginId = Guid.NewGuid();
         PluginConfig = dbWriterParameter;
+        PluginTitle = pluginTitle;
     }
     public Guid PluginId { get; init; }
     public PluginType PluginType => PluginType.Write;
