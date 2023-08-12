@@ -4,15 +4,17 @@ using ETLProject.Common.Table;
 using ETLProject.Contract.Join;
 using ETLProject.DataSource.QueryBusiness.JoinBusiness.Abstractions;
 using ETLProject.Pipeline.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ETLProject.Pipeline.Execution.PluginExecutions;
 
 public class JoinPluginRunner : IPluginRunner
 {
-    public JoinPluginRunner(IJoinQueryBusiness joinQueryBusiness)
+    public JoinPluginRunner(JoinParameter joinParameter)
     {
-        _joinQueryBusiness = joinQueryBusiness;
+        _joinQueryBusiness = ServiceProviderContainer.ServiceProvider.GetService<IJoinQueryBusiness>();
         _inputTables = new List<ETLTable>();
+        _joinParameter = joinParameter;
     }
 
     public PluginType PluginType => PluginType.Join;
@@ -27,10 +29,5 @@ public class JoinPluginRunner : IPluginRunner
     public async Task<ETLTable> RunPlugin()
     {
         return await _joinQueryBusiness.JoinTables(_inputTables[0],_inputTables[1],_joinParameter);
-    }
-
-    public void SetPluginConfig(IPluginConfig pluginConfig)
-    {
-        _joinParameter = pluginConfig as JoinParameter;
     }
 }

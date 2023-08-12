@@ -3,6 +3,7 @@ using ETLProject.Common.PipeLine.Enums;
 using ETLProject.Contract.Aggregate;
 using ETLProject.Contract.DBReader;
 using ETLProject.Contract.DbWriter;
+using ETLProject.Contract.Join;
 using ETLProject.Contract.Limit;
 using ETLProject.Contract.Sort;
 using ETLProject.Contract.Where.Conditions;
@@ -30,6 +31,8 @@ public class PluginRunnerFactory : IPluginRunnerFactory
                 return new OrderPluginExecution(pluginConfig as SortContract);
             case PluginType.Where:
                 return new WherePluginExecution(pluginConfig as Condition);
+            case PluginType.Join:
+                return new JoinPluginRunner(pluginConfig as JoinParameter);
             default:
                 throw new NotSupportedException();
         }

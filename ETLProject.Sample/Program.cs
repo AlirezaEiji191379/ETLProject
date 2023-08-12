@@ -210,9 +210,3 @@ var graphDto = new GraphDto()
     }
 };
 
-var graphParser = provider.GetService<IGraphParser>();
-
-var graph = graphParser.ParseGraph(graphDto);
-
-var executor = new PipelineExecutor(graph);
-await executor.RunGraph(graph.GetNodeByTitle("Write1").PluginId);

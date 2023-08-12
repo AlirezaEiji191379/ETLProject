@@ -117,6 +117,13 @@ public class GraphParser : IGraphParser
                     throw new Exception("distinct can not have more than one input!");
                 }
             }
+            else if(source.Contains("Join"))
+            {
+                if (inputEdgesCount[source] != 2)
+                {
+                    throw new Exception("join can not have more than two inputs!");
+                }
+            }
         }
     }
 
@@ -147,6 +154,9 @@ public class GraphParser : IGraphParser
             {
             }
             else if (destination.Contains("Distinct"))
+            {
+            }
+            else if (destination.Contains("Join"))
             {
             }
         }
@@ -206,6 +216,10 @@ public class GraphParser : IGraphParser
         else if (pluginTitle.Contains("Distinct"))
         {
             return new DistinctPlugin(pluginTitle);
+        }
+        else if(pluginTitle.Contains("Join"))
+        {
+            return new JoinPlugin(pluginTitle,config.Join);
         }
         return null;
     }

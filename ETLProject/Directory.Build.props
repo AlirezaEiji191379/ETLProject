@@ -6,6 +6,7 @@
 		<PackageReference Include="FluentValidation" Version="11.6.0" />
 		<PackageReference Include="ETLProject.Contract" Version="1.0.2"/>
 		<PackageReference Include="ETLProject.Common" Version="1.0.2"/>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.21" />
 	</ItemGroup>
 
 </Project>
