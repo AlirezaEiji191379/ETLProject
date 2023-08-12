@@ -4,8 +4,12 @@ using ETLProject.Contract.DbConnectionContracts.Commands;
 using ETLProject.Contract.DbConnectionContracts.Queries;
 using ETLProject.DataSource.Common.DIManager;
 using ETLProject.Infrastructure;
+using ETLProject.Pipeline.Common;
 using ETLProject.Validators;
 using FluentValidation;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace ETLProject.DIManager;
 
@@ -16,7 +20,13 @@ public static class ApiDependencyInjector
         services.AddCommonServices();
         services.AddDataSourceQueryServices();
         services.AddInfrastructureServices();
-        services.AddControllers();
+        services.AddPipelineServices();
+        services.AddControllers()
+            .AddNewtonsoftJson(opts =>
+            {
+                opts.SerializerSettings.Converters.Add(new StringEnumConverter());
+                opts.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
+            });
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 

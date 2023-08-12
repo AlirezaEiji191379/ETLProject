@@ -1,6 +1,8 @@
-﻿namespace ETLProject.Contract.Limit;
+﻿using ETLProject.Common.PipeLine.Abstractions;
 
-public class LimitContract
+namespace ETLProject.Contract.Limit;
+
+public class LimitContract : IPluginConfig
 {
     public int Top { get; init; }
 }

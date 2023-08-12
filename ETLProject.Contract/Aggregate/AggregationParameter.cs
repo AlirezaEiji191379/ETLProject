@@ -1,6 +1,8 @@
-﻿namespace ETLProject.Contract.Aggregate;
+﻿using ETLProject.Common.PipeLine.Abstractions;
 
-public class AggregationParameter
+namespace ETLProject.Contract.Aggregate;
+
+public class AggregationParameter : IPluginConfig
 {
     public List<string> GroupByColumns { get; set; }
     public List<AggregateColumns> AggregateColumns { get; set; }

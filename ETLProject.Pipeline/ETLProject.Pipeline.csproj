@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ETLProject.DataSource\ETLProject.DataSource.csproj" />
+  </ItemGroup>
+
 </Project>
