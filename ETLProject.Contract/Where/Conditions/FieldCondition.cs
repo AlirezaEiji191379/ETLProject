@@ -2,7 +2,7 @@
 
 namespace ETLProject.Contract.Where.Conditions;
 
-public class FieldCondition : Condition
+public class FieldCondition
 {
     public string ColumnName { get; set; }
     public ConditionType ConditionType { get; set; }

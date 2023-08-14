@@ -2,6 +2,9 @@
 
 namespace ETLProject.Contract.Where.Conditions;
 
-public abstract class Condition : IPluginConfig
+public class Condition : IPluginConfig
 {
+    public FieldCondition? FieldCondition { get; set; }
+    public LogicalCondition? LogicalCondition { get; set; }
+    public bool IsFieldCondition { get; set; }
 }

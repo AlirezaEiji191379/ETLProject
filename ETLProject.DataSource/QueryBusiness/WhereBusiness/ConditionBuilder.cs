@@ -13,13 +13,13 @@ internal class ConditionBuilder : IConditionBuilder
 
     public Func<Query,Query> BuildCondition(Condition condition, string tableAliasName)
     {
-        if (condition is LogicalCondition logicalCondition)
+        if (!condition.IsFieldCondition)
         {
-            return BuildLogicalCondition(logicalCondition, tableAliasName);
+            return BuildLogicalCondition(condition.LogicalCondition, tableAliasName);
         }
-        else if (condition is FieldCondition fieldCondition)
+        else if (condition.IsFieldCondition)
         {
-            return BuildFieldCondition(fieldCondition, tableAliasName);
+            return BuildFieldCondition(condition.FieldCondition, tableAliasName);
         }
 
         return null;
@@ -55,14 +55,14 @@ internal class ConditionBuilder : IConditionBuilder
     {
         var internalQueries = logicalCondition.ChildConditions.Select(x =>
         {
-            if (x is LogicalCondition logical)
+            if (!x.IsFieldCondition)
             {
-                return BuildLogicalCondition(logical, tableAliasName);
+                return BuildLogicalCondition(x.LogicalCondition, tableAliasName);
             }
 
-            if (x is FieldCondition fieldCondition)
+            if (x.IsFieldCondition)
             {
-                return BuildFieldCondition(fieldCondition, tableAliasName);
+                return BuildFieldCondition(x.FieldCondition, tableAliasName);
             }
 
             return null;

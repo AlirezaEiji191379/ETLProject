@@ -25,7 +25,6 @@ public static class ApiDependencyInjector
             .AddNewtonsoftJson(opts =>
             {
                 opts.SerializerSettings.Converters.Add(new StringEnumConverter());
-                opts.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
             });
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
