@@ -29,7 +29,8 @@ public class GetDatabaseConnectionsQueryHandler : IRequestHandler<GetDatabaseCon
                     Port = x.Port,
                     ConnectionName = x.ConnectionName,
                     Id = x.Id,
-                    DataSourceType = x.DataSourceType
+                    DataSourceType = x.DataSourceType,
+                    Username = x.Username
                 }),
                 StatusCode = 200
             };
