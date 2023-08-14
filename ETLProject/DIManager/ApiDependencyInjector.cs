@@ -47,6 +47,7 @@ public static class ApiDependencyInjector
         services.AddSingleton<IValidator<DeleteConnectionCommand>,DeleteConnectionCommandValidator>();
         services.AddSingleton<IValidator<UpdateConnectionCommand>,UpdateConnectionCommandValidator>();
         services.AddSingleton<IValidator<GetDatabasesByConnectionDtoQuery>,GetDatabasesByConnectionDtoQueryValidator>();
+        services.AddSingleton<IValidator<TestConnectionCommand>,TestConnectionCommandValidator>();
         
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 

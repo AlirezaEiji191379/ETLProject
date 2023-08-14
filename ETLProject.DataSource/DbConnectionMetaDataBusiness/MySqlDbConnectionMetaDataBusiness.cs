@@ -3,10 +3,11 @@ using ETLProject.Contract.DbConnectionContracts;
 using ETLProject.DataSource.Abstractions;
 using ETLProject.DataSource.ColumnMapping;
 using ETLProject.DataSource.DbConnectionMetaDataBusiness.Abstractions;
+using MySql.Data.MySqlClient;
 using SqlKata;
 using SqlKata.DbTypes.DbColumn;
-using SqlKata.DbTypes.Enums;
 using SqlKata.Execution;
+using MySqlDbType = SqlKata.DbTypes.Enums.MySqlDbType;
 
 namespace ETLProject.DataSource.DbConnectionMetaDataBusiness;
 
@@ -81,7 +82,7 @@ internal class MySqlDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusiness
             }).ToList();
     }
 
-    public void TestConnection(ConnectionDto connectionDto)
+    public async Task TestConnection(ConnectionDto connectionDto)
     {
         var connectionParameter = new DatabaseConnectionParameters()
         {
@@ -91,9 +92,8 @@ internal class MySqlDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusiness
             Username = connectionDto.Username,
             Port = connectionDto.Port,
         };
-        using var connection = _dbConnectionProvider.GetConnection(connectionParameter);
-        connection.Open();
-        connection.Close();
+        await using var connection = _dbConnectionProvider.GetConnection(connectionParameter) as MySqlConnection;
+        await connection!.OpenAsync();
     }
 
 

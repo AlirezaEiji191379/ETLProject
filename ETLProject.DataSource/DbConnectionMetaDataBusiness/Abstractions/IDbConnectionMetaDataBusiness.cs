@@ -9,5 +9,5 @@ public interface IDbConnectionMetaDataBusiness
     Task<List<string>> GetDatabases(ConnectionDto connectionDto);
     Task<List<DbTableAttributes>> GetDatabaseTables(ConnectionDto connectionDto);
     Task<List<DbTableColumnInformation>> GetTableColumns(ConnectionDto connectionDto,string tableName);
-    void TestConnection(ConnectionDto connectionDto);
+    Task TestConnection(ConnectionDto connectionDto);
 }

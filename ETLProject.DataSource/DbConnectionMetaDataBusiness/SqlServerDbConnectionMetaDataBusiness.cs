@@ -1,4 +1,5 @@
-﻿using ETLProject.Common.Database;
+﻿using System.Data.SqlClient;
+using ETLProject.Common.Database;
 using ETLProject.Common.Table;
 using ETLProject.Contract.DbConnectionContracts;
 using ETLProject.DataSource.Abstractions;
@@ -78,7 +79,7 @@ internal class SqlServerDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusi
             }).ToList();
     }
 
-    public void TestConnection(ConnectionDto connectionDto)
+    public async Task TestConnection(ConnectionDto connectionDto)
     {
         var connectionParameter = new DatabaseConnectionParameters()
         {
@@ -88,9 +89,8 @@ internal class SqlServerDbConnectionMetaDataBusiness : IDbConnectionMetaDataBusi
             Username = connectionDto.Username,
             Port = connectionDto.Port,
         };
-        using var connection = _dbConnectionProvider.GetConnection(connectionParameter);
-        connection.Open();
-        connection.Close();
+        await using var connection = _dbConnectionProvider.GetConnection(connectionParameter) as SqlConnection;
+        await connection.OpenAsync();
     }
 
     private QueryFactory GetQueryFactory(ConnectionDto connectionDto)

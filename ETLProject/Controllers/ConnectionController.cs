@@ -110,5 +110,13 @@ public class ConnectionController : ControllerBase
         var result = await _mediator.Send(updateConnectionCommand);
         return StatusCode(result.StatusCode,new {Message = result.Message});
     }
+
+    [HttpPost]
+    [Route("Test")]
+    public async Task<IActionResult> TestConnection([FromBody] TestConnectionCommand testConnectionCommand)
+    {
+        var result = await _mediator.Send(testConnectionCommand);
+        return StatusCode(result.StatusCode,new { Message = result.Message});
+    }
     
 }
