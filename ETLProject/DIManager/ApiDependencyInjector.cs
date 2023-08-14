@@ -28,7 +28,17 @@ public static class ApiDependencyInjector
             });
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
-
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAnyUrl",
+                builder =>
+                {
+                    builder
+                        .AllowAnyHeader()
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod();
+                });
+        });
         services.AddSingleton<IValidator<DbConnectionInsertCommand>,DbConnectionInsertCommandValidator>();
         services.AddSingleton<IValidator<GetDatabasesByConnectionIdQuery>,GetDataBasesQueryValidator>();
         services.AddSingleton<IValidator<GetDatabaseTablesQuery>,GetDataBaseTablesQueryValidator>();
