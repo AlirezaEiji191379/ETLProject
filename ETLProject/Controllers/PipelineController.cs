@@ -1,6 +1,8 @@
-﻿using ETLProject.Contract.Pipeline;
+﻿using System.Text;
+using ETLProject.Contract.Pipeline;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace ETLProject.Controllers;
 
@@ -17,10 +19,15 @@ public class PipelineController : ControllerBase
 
     [HttpPost]
     [Route("Execute")]
-    public async Task<IActionResult> ExecutePipeline([FromBody] GraphDto graphDto)
+    public async Task<IActionResult> ExecutePipeline([FromForm] IFormFile file)
     {
+        using var memoryStream = new MemoryStream();
+        await file.CopyToAsync(memoryStream);
+        memoryStream.Seek(0, SeekOrigin.Begin);
+        using var reader = new StreamReader(memoryStream, Encoding.UTF8);
+        var fileContent = await reader.ReadToEndAsync();
+        var graphDto = JsonConvert.DeserializeObject<GraphDto>(fileContent);
         var result = await _mediator.Send(graphDto);
-        return StatusCode(result.StatusCode,result.Message);
+        return StatusCode(result.StatusCode, result.Message);
     }
-    
 }
