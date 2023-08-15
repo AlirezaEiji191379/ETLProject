@@ -30,7 +30,8 @@ public class GetDatabaseConnectionsQueryHandler : IRequestHandler<GetDatabaseCon
                     ConnectionName = x.ConnectionName,
                     Id = x.Id,
                     DataSourceType = x.DataSourceType.ToString(),
-                    Username = x.Username
+                    Username = x.Username,
+                    DatabaseName = x.DatabaseName
                 }),
                 StatusCode = 200
             };
