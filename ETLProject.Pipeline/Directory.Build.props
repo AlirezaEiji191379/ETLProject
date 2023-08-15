@@ -1,7 +1,7 @@
 ﻿<Project>
     <ItemGroup>
-        <PackageReference Include="ETLProject.Contract" Version="1.0.2"/>
-        <PackageReference Include="ETLProject.Common" Version="1.0.2"/>
+        <PackageReference Include="ETLProject.Contract" Version="1.0.4"/>
+        <PackageReference Include="ETLProject.Common" Version="1.0.4"/>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 </Project>
