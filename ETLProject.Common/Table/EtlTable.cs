@@ -19,7 +19,7 @@ namespace ETLProject.Common.Table
         {
             get
             {
-                var tableFullNameBuilder = new StringBuilder(TableSchema).Append(".").Append(TableName);
+                var tableFullNameBuilder = TableSchema is null ? new StringBuilder(TableName) : new StringBuilder(TableSchema).Append(".").Append(TableName);
                 if (AliasName == null)
                     return tableFullNameBuilder.ToString();
                 return tableFullNameBuilder.Append(" as ").Append(AliasName).ToString();

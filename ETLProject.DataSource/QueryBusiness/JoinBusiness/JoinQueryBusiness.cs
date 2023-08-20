@@ -13,6 +13,7 @@ namespace ETLProject.DataSource.QueryBusiness.JoinBusiness;
 internal class JoinQueryBusiness : IJoinQueryBusiness
 {
     private readonly IDataTransferStrategyProvider _dataTransferStrategyProvider;
+    private readonly IQueryFactoryProvider _queryFactoryProvider;
     private readonly IRandomStringGenerator _randomStringGenerator;
     private readonly IJoinValidator _validator;
     private readonly IJoinQueryMaker _joinQueryMaker;
@@ -20,12 +21,14 @@ internal class JoinQueryBusiness : IJoinQueryBusiness
     public JoinQueryBusiness(IDataTransferStrategyProvider dataTransferStrategyProvider,
         IRandomStringGenerator randomStringGenerator,
         IJoinValidator validator,
-        IJoinQueryMaker joinQueryMaker)
+        IJoinQueryMaker joinQueryMaker,
+        IQueryFactoryProvider queryFactoryProvider)
     {
         _dataTransferStrategyProvider = dataTransferStrategyProvider;
         _randomStringGenerator = randomStringGenerator;
         _validator = validator;
         _joinQueryMaker = joinQueryMaker;
+        _queryFactoryProvider = queryFactoryProvider;
     }
 
     public async Task<ETLTable> JoinTables(ETLTable leftTable, ETLTable rightTable, JoinParameter joinParameter)
@@ -39,6 +42,7 @@ internal class JoinQueryBusiness : IJoinQueryBusiness
         var resultTable = PrepareJoinResultTable(transferredTable, otherTable, joinParameter);
         return resultTable;
     }
+
     private ETLTable PrepareJoinResultTable(ETLTable transferredTable, ETLTable otherTable, JoinParameter joinParameter)
     {
         var isLeftTableConnection = joinParameter.UseLeftTableConnection;
@@ -56,6 +60,7 @@ internal class JoinQueryBusiness : IJoinQueryBusiness
         _joinQueryMaker.AddJoinQueryToResultTable(leftTable, rightTable, resultTable, joinParameter);
         return resultTable;
     }
+
     private static void PrepareResultTableColumns(ETLTable leftTable, ETLTable rightTable,
         JoinParameter joinParameter, ETLTable resultTable)
     {
@@ -66,6 +71,7 @@ internal class JoinQueryBusiness : IJoinQueryBusiness
             clonedColumn.Name = leftTableSelectedColumn.OutputTitle;
             resultTable.Columns.Add(clonedColumn);
         }
+
         foreach (var rightTableSelectedColumn in joinParameter.RigthTableSelectedColumns)
         {
             var clonedColumn = rightTable.Columns.First(x => x.Name == rightTableSelectedColumn.ColumnName).Clone();
@@ -73,6 +79,7 @@ internal class JoinQueryBusiness : IJoinQueryBusiness
             resultTable.Columns.Add(clonedColumn);
         }
     }
+
     private async Task<ETLTable> TransferTable(ETLTable tableToTransfer, ETLTable otherTable,
         BulkConfiguration bulkConfiguration)
     {
@@ -81,6 +88,7 @@ internal class JoinQueryBusiness : IJoinQueryBusiness
         {
             return tableToTransfer;
         }
+
         var transferredResultTable = new ETLTable();
         PrepareTransferredTable(tableToTransfer, otherTable, transferredResultTable);
 
@@ -95,11 +103,18 @@ internal class JoinQueryBusiness : IJoinQueryBusiness
         await dataTransferStrategy.TransferData(dataTransferParameter);
         return transferredResultTable;
     }
+
     private void PrepareTransferredTable(ETLTable tableToTransfer, ETLTable otherTable, ETLTable resultTable)
     {
         resultTable.TableName = GenerateRandomTempTableName(otherTable);
-        resultTable.TableSchema = otherTable.TableSchema;
+        resultTable.TableSchema = otherTable.DataSourceType == DataSourceType.Postgresql ? null : otherTable.TableSchema;
         resultTable.AliasName = _randomStringGenerator.GenerateRandomString(8);
+
+        if (otherTable.DbConnection == null)
+        {
+            otherTable.DbConnection = _queryFactoryProvider.GetDbConnection(otherTable.DatabaseConnection);
+        }
+
         resultTable.DbConnection = otherTable.DbConnection;
         resultTable.DatabaseConnection = otherTable.DatabaseConnection;
         resultTable.Columns = tableToTransfer.Columns.Select(x => x.Clone()).ToList();
@@ -107,6 +122,7 @@ internal class JoinQueryBusiness : IJoinQueryBusiness
         //
         resultTable.TableType = TableType.Temp;
     }
+
     private string GenerateRandomTempTableName(ETLTable otherTable)
     {
         var randomName = _randomStringGenerator.GenerateRandomString(10);

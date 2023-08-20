@@ -14,7 +14,7 @@ namespace ETLProject.DataSource.DataSourceInserting
         {
             //TODO : refactor query making
             var columnSet = string.Format($"({string.Join(",",etlTable.Columns.Select(x => x.Name))})");
-            var importQueryString = $"COPY {etlTable.TableName} {columnSet} FROM STDIN (FORMAT BINARY)";
+            var importQueryString = $"COPY \"{etlTable.TableName}\" {columnSet} FROM STDIN (FORMAT BINARY)";
             using var writer = (etlTable.DbConnection as NpgsqlConnection).BeginBinaryImport(importQueryString);
             foreach (DataRow row in dataTable.Rows)
             {

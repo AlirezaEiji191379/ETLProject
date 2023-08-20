@@ -46,6 +46,11 @@ namespace ETLProject.DataSource.Common.Providers
             return new QueryFactory(connection,compiler);
         }
 
+        public IDbConnection GetDbConnection(DatabaseConnectionParameters databaseConnectionParameters)
+        {
+            return _connectionProvider.GetConnection(databaseConnectionParameters);
+        }
+
         private Compiler CreateCompiler(DataSourceType dataSourceType)
         {
             var dataSource = _dataSourceTypeAdapter.CreateDataSourceFromDataSourceType(dataSourceType);
