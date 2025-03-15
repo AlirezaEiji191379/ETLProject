@@ -25,7 +25,7 @@ namespace ETLProject.DataSource.TableFactory
         public async Task CreateTable(ETLTable etlTable)
         {
             //SetTableName(etlTable);
-            SqlKata.Contract.CreateTable.TableType tableType = GetTableType(etlTable.TableType);
+            SqlKata.Contract.CreateTable.TableType tableType = SqlKata.Contract.CreateTable.TableType.Permanent;
             var columnMapper = _columnMapperProvider.GetColumnTypeMapper(etlTable.DataSourceType);
             var tableDefinition = etlTable.Columns.Select(etlColumn => new TableColumnDefinitionDto
             {
